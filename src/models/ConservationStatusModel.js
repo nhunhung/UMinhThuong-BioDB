@@ -1,36 +1,32 @@
 const { DataTypes } = require('sequelize');
-const Role = require('./RoleModel');
 const sequelize = require('../config/connectdb');
-const Users = sequelize.define('Users', {
-    users_id: {
+const ConservationStatus = sequelize.define('ConservationStatus', {
+    conservationstatus_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     },
-    username: {
+    endangeredLevel: {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    password: {
+    redListWorld: {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    firstname: {
+    redListVersion: {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    lastname: {
+    vietnamRedBook: {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    role_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Role,
-            key: 'role_id',
-        },
-    }
+    decree81: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+    },
+
 });
-Role.hasMany(Users, { foreignKey: 'role_id' });
-Users.belongsTo(Role, { foreignKey: 'role_id' });
-module.exports = Users;
+
+module.exports = ConservationStatus;

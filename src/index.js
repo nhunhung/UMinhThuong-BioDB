@@ -33,7 +33,7 @@ const SearchHistory = require('./models/SearchHistory');
 const Message = require('./models/MessageModel');
 const FileUpLoad = require('./models/FileUploadModel');
 app.get('/', (req, res) => {
-    res.send('hello world huy dz kkkuuu');
+    res.send('hello world');
 });
 
 (async () => {

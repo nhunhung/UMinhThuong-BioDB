@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # uminhthuong-test
 =======
 # testgit
@@ -7,3 +8,6 @@
 =======
 # testgit2
 >>>>>>> 65da3aea52f20dd8ed9262da6c382f0a803f9411
+=======
+# UMinhThuong-BioDB
+>>>>>>> 12c2bc91d8285dbc75ff1f74292a8eeb31e4a182

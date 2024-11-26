@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
-const Provinces = require('./Provinces');
-const sequelize = require('../config/database');
-
+const sequelize = require('../config/connectdb');
+const Provinces = require('./ProvincesModel');
 const Districts = sequelize.define('Districts', {
     districts_id: {
         type: DataTypes.INTEGER,
@@ -11,17 +10,9 @@ const Districts = sequelize.define('Districts', {
     name: {
         type: DataTypes.TEXT,
         allowNull: false,
-    },
-    provinces_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Provinces,
-            key: 'provinces_id',
-        },
-    },
-});
+    }
 
+});
 Provinces.hasMany(Districts, { foreignKey: 'provinces_id' });
 Districts.belongsTo(Provinces, { foreignKey: 'provinces_id' });
-
 module.exports = Districts;

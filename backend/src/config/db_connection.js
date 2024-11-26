@@ -12,14 +12,14 @@ const DbConnect = async () => {
         await sequelize.sync({ alter: true }); // Dùng { force: true } nếu muốn xóa và tạo lại bảng
         console.log('Database synchronized successfully!');
 
-        // Thêm dữ liệu mẫu (nếu cần)
-        const defaultRole = await Role.findOne({ where: { name: 'Tesing' } });
-        if (!defaultRole) {
-            await Role.create({ name: 'Testing' });
-            console.log('Sample data added to the database!');
-        } else {
-            console.log('Sample data already exists.');
-        }
+        // // Thêm dữ liệu mẫu (nếu cần)
+        // const defaultRole = await Role.findOne({ where: { name: 'Tesing' } });
+        // if (!defaultRole) {
+        //     await Role.create({ name: 'Testing' });
+        //     console.log('Sample data added to the database!');
+        // } else {
+        //     console.log('Sample data already exists.');
+        // }
     } catch (error) {
         console.error('Error during database initialization:', error.message);
     }

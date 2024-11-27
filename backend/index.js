@@ -44,35 +44,20 @@ app.get('/', (req, res) => {
     res.send('Hello World! The server is running.');
 });
 
-// Kiểm tra kết nối cơ sở dữ liệu
+// Kiểm tra kết nối và đồng bộ cơ sở dữ liệu
 db.sequelize.authenticate()
     .then(() => {
-        console.log('Connection to the database has been established successfully.');
+        console.log('Database connection established successfully.');
+        return db.sequelize.sync({ force: false }); // Đồng bộ cơ sở dữ liệu
+    })
+    .then(() => {
+        console.log('Database synced successfully.');
     })
     .catch((error) => {
-        console.error('Unable to connect to the database:', error.message);
+        console.error('Database error:', error.message);
     });
 
-// Đồng bộ cơ sở dữ liệu (Tùy chọn: Bạn có thể dùng `sync()` để tạo/đồng bộ các bảng trong cơ sở dữ liệu)
-db.sequelize.sync({ force: false }).then(() => {
-    console.log("Database synced successfully.");
-});
-// // Initialize the database
-// (async () => {
-//     try {
-//         // Sync all models with the database
-//         await sequelize.sync({ alter: true }); // Set `force: true` to recreate tables each time
-//         console.log('Database synchronized successfully!');
-
-//         // Add sample data if needed
-//         await Role.create({ name: 'Admin' });
-//         console.log('Sample data added to the database!');
-//     } catch (error) {
-//         console.error('Error during database initialization:', error);
-//     }
-// })();
-
-// Start the server
+// Khởi động server
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });

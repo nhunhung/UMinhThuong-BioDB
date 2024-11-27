@@ -10,8 +10,8 @@ const Family = require('./FamilyModel');
 const Genus = require('./GenusModel');
 
 const Orders = require('./OrdersModel');
-const Sample = require('./SampleModel');
-const LocationSample = require('./LocationSampleModel');
+// const Sample = require('./SampleModel');
+// const LocationSample = require('./LocationSampleModel');
 
 
 const Organism = sequelize.define('Organism', {

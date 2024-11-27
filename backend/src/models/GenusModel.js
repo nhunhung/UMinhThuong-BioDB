@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db.config');
-const Kingdom = require('./KingdomModel');
-const Phylum = require('./PhylumModel');
+// const Kingdom = require('./KingdomModel');
+// const Phylum = require('./PhylumModel');
 const Family = require('./FamilyModel');
 const Genus = sequelize.define('Genus', {
     genus_id: {

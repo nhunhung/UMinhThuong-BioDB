@@ -3,8 +3,8 @@ const sequelize = require('../config/db.config');
 const Provinces = require('./ProvincesModel');
 const Districts = require('./DistrictsModel');
 const Wards = require('./WardsModel');
-const Sample = require('./SampleModel');
-const Organism = require('./OrganismModel');
+// const Sample = require('./SampleModel');
+// const Organism = require('./OrganismModel');
 
 
 const LocationSample = sequelize.define('LocationSample', {
@@ -41,15 +41,6 @@ LocationSample.belongsTo(Districts, { foreignKey: 'districts_id' });
 Wards.hasMany(LocationSample, { foreignKey: 'wards_id' });
 LocationSample.belongsTo(Wards, { foreignKey: 'wards_id' });
 
-// Many-to-many relationship between LocationSample and Organism via Sample
-LocationSample.belongsToMany(Organism, {
-    through: Sample,
-    foreignKey: 'locationsample_id',
-});
-Organism.belongsToMany(LocationSample, {
-    through: Sample,
-    foreignKey: 'organism_id',
-});
 
 module.exports = LocationSample;
 // LocationSample.belongsToMany(Organism, {

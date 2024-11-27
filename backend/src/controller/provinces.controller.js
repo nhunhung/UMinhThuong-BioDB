@@ -1,4 +1,4 @@
-const { postaProvince, ERROR_CODES } = require("../service/provinces.service")
+const { postProvince, ERROR_CODES } = require("../service/provinces.service")
 const { validationResult } = require('express-validator');
 
 const createANewProvince = async (req, res) => {
@@ -9,7 +9,7 @@ const createANewProvince = async (req, res) => {
     try {
         const provincesData = req.body.name;
         console.log(">>> Check name == ", provincesData);
-        const newProvince = await postaProvince(provincesData);
+        const newProvince = await postProvince(provincesData);
        
         return res.status(201).json({ message: 'Province created successfully!', data: newProvince });
     } catch (error) {

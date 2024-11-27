@@ -1,19 +1,20 @@
-const Provinces = require("../models/ProvincesModel");
+const Provinces = require("../models/ProvincesModel")
 
 const ERROR_CODES = {
     MISSING_PROVINCE_DATA: 'MISSING_PROVINCE_NAME',
     INTERNAL_ERROR: 'INTERNAL_ERROR',
 };
 
-const postaProvince = async (provincesData) => {
+const postProvince = async (provincesData) => {
     try {
-        const province = await Provinces.create({name:provincesData});
+        const province = await Provinces.create({ name: provincesData });
         return province;
     } catch (error) {
         console.error("Error creating a new province: ", error.message);
         throw error;
-  }
+    }
 }
+
 module.exports = {
-    postaProvince, ERROR_CODES
+    postProvince, ERROR_CODES
 }

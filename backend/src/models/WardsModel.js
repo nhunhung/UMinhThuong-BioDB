@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db.config');
-const Provinces = require('./ProvincesModel');
+// const Provinces = require('./ProvincesModel');
 const Districts = require('./DistrictsModel');
 const Wards = sequelize.define('Wards', {
     wards_id: {

@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db.config');
-const Provinces = require('./ProvincesModel');
-const Districts = require('./DistrictsModel');
-const Organism = require('./OrganismModel');
+// const Provinces = require('./ProvincesModel');
+// const Districts = require('./DistrictsModel');
+// const Organism = require('./OrganismModel');
 const RecordInformation = sequelize.define('RecordInformation', {
     recordinformation_id: {
         type: DataTypes.INTEGER,

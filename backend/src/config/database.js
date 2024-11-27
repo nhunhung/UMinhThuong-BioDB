@@ -7,7 +7,7 @@ const db = {
     Sequelize: sequelize.constructor,
 };
 
-// Import các model (không cần gọi như hàm nữa)
+// Import các model 
 db.Kingdom = require("../models/KingdomModel");
 db.Phylum = require("../models/PhylumModel");
 db.Class = require("../models/ClassModel");

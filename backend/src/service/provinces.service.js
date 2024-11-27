@@ -1,4 +1,4 @@
-const Provinces = require("../models/Provinces");
+const Provinces = require("../models/ProvincesModel");
 
 const ERROR_CODES = {
     MISSING_PROVINCE_DATA: 'MISSING_PROVINCE_NAME',

@@ -11,13 +11,13 @@ const app = express();
 const provincesRoutes = require("./src/routes/provinces.routes");
 
 // import db connection
-const DbConnect = require("./src/config/db_connection");
+const db = require("./src/config/database");
 
 // // Import all models
 // const Role = require('./src/models/Role');
 // const Users = require('./src/models/User');
 // const Provinces = require('./src/models/Provinces');
-// const Districts = require('./src/models/Districts');
+// const Districts = require('./src/models/DistrictsModel');
 // const Wards = require('./src/models/Wards');
 // const LocationSample = require('./src/models/LocationSample');
 // const ConservationStatus = require('./src/models/ConservationStatus');
@@ -44,7 +44,19 @@ app.get('/', (req, res) => {
     res.send('Hello World! The server is running.');
 });
 
-DbConnect();
+// Kiểm tra kết nối cơ sở dữ liệu
+db.sequelize.authenticate()
+    .then(() => {
+        console.log('Connection to the database has been established successfully.');
+    })
+    .catch((error) => {
+        console.error('Unable to connect to the database:', error.message);
+    });
+
+// Đồng bộ cơ sở dữ liệu (Tùy chọn: Bạn có thể dùng `sync()` để tạo/đồng bộ các bảng trong cơ sở dữ liệu)
+db.sequelize.sync({ force: false }).then(() => {
+    console.log("Database synced successfully.");
+});
 // // Initialize the database
 // (async () => {
 //     try {

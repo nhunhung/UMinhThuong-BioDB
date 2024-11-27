@@ -1,23 +1,18 @@
 const { DataTypes } = require('sequelize');
-const Phylum = require('./Phylum');
-const sequelize = require('../config/database');
-
+const sequelize = require('../config/db.config');
+const Phylum = require('./PhylumModel');
 const Class = sequelize.define('Class', {
     class_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     },
-    name: DataTypes.TEXT,
-    phylum_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Phylum,
-            key: 'phylum_id',
-        },
-    },
-});
+    name: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+    }
 
+});
 Phylum.hasMany(Class, { foreignKey: 'phylum_id' });
 Class.belongsTo(Phylum, { foreignKey: 'phylum_id' });
 

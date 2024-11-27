@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
-const Role = require('./Role');
-const sequelize = require('../config/database');
+const Role = require('./RoleModel');
+const sequelize = require('../config/db.config');
 const Users = sequelize.define('Users', {
     users_id: {
         type: DataTypes.INTEGER,
@@ -10,6 +10,7 @@ const Users = sequelize.define('Users', {
     username: {
         type: DataTypes.TEXT,
         allowNull: false,
+        unique: true,
     },
     password: {
         type: DataTypes.TEXT,

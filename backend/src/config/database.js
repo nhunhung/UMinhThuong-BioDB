@@ -29,7 +29,7 @@ db.Message = require("../models/MessageModel");
 db.Orders = require("../models/OrdersModel");
 
 db.Organism = require("../models/OrganismModel");
-db.RecordInfomation = require("../models/RecordInformationModel");
+db.RecordInformation = require("../models/RecordInformationModel");
 db.Role = require("../models/RoleModel");
 
 db.Sample = require("../models/SampleModel");

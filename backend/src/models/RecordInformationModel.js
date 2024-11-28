@@ -23,7 +23,7 @@ const RecordInformation = sequelize.define('RecordInformation', {
         allowNull: false,
     },
     sampleQuantity: {
-        type: DataTypes.TEXT,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     recordDate: {

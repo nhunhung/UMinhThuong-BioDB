@@ -7,11 +7,21 @@ const port = process.env.PORT;
 const app = express();
 // const sequelize = require('./src/config/database');
 
-// import routes
-const provincesRoutes = require("./src/routes/provinces.routes");
-
 // import db connection
 const db = require("./src/config/database");
+
+// import routes API
+const provincesRoutes = require("./src/routes/provinces.routes");
+const districtsRoutes = require("./src/routes/districts.routes");
+const wardsRoutes = require("./src/routes/wards.routes");
+const locationSamplesRoutes = require("./src/routes/location_samples.routes");
+const sampleRoutes = require("./src/routes/sample.routes");
+const conservationStatusRoutes = require("./src/routes/conservation_status.routes");
+const groupOfOrganismsRoutes = require("./src/routes/group_of_organisms.routes");
+const recordInformationRoutes = require("./src/routes/record_information.routes");
+const kingdomRoutes = require("./src/routes/kingdom.routes");
+
+
 
 // // Import all models
 // const Role = require('./src/models/Role');
@@ -38,6 +48,14 @@ app.use(express.urlencoded({ extended: true })) // for form data
 
 // API base path
 app.use('/api/v1/provinces', provincesRoutes);
+app.use('/api/v1/districts', districtsRoutes);
+app.use('/api/v1/wards', wardsRoutes);
+app.use('/api/v1/location_samples', locationSamplesRoutes);
+app.use('/api/v1/sample', sampleRoutes);
+app.use('/api/v1/conservation_status', conservationStatusRoutes);
+app.use('/api/v1/group_of_organisms', groupOfOrganismsRoutes);
+app.use('/api/v1/record_info', recordInformationRoutes);
+app.use('/api/v1/kingdom', kingdomRoutes);
 
 // Define routes
 app.get('/', (req, res) => {

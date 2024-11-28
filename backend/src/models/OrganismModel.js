@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../config/connectdb');
+const sequelize = require('../config/db.config');
 const Kingdom = require('./KingdomModel');
 const Phylum = require('./PhylumModel');
 const Class = require('./ClassModel');
@@ -10,8 +10,8 @@ const Family = require('./FamilyModel');
 const Genus = require('./GenusModel');
 
 const Orders = require('./OrdersModel');
-const Sample = require('./SampleModel');
-const LocationSample = require('./LocationSampleModel');
+// const Sample = require('./SampleModel');
+// const LocationSample = require('./LocationSampleModel');
 
 
 const Organism = sequelize.define('Organism', {
@@ -74,9 +74,17 @@ Organism.belongsTo(Family, { foreignKey: 'family_id' });
 Genus.hasMany(Organism, { foreignKey: 'genus_id' });
 Organism.belongsTo(Genus, { foreignKey: 'genus_id' });
 
+// // Many-to-many relationship through Sample
+// Organism.belongsToMany(LocationSample, {
+//     through: Sample,
+//     foreignKey: 'organism_id',
+// });
+// LocationSample.belongsToMany(Organism, {
+//     through: Sample,
+//     foreignKey: 'locationsample_id',
+// });
 
 
-module.exports = Organism;
 // LocationSample.belongsToMany(Organism, {
 //     through: Sample,
 //     foreignKey: 'locationsample_id',
@@ -87,6 +95,7 @@ module.exports = Organism;
 //     foreignKey: 'organism_id',
 // });
 
+module.exports = Organism;
 
 // Sample.belongsToMany(Organism, {
 //     through: 'likersLikedToots',

@@ -41,11 +41,9 @@
 
 // SampleModel.js
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../config/connectdb');
+const sequelize = require('../config/db.config');
 const Organism = require('./OrganismModel');
 const LocationSample = require('./LocationSampleModel');
-// const LocationSample = require('./LocationSampleModel')
-// const Organism = require('./OrganismModel');
 
 const Sample = sequelize.define('Sample', {
     sample_id: {
@@ -66,6 +64,8 @@ const Sample = sequelize.define('Sample', {
         allowNull: false,
     },
 });
+
+// Many-to-many relationship through the Sample table
 LocationSample.belongsToMany(Organism, {
     through: Sample,
     foreignKey: 'locationsample_id',
@@ -74,6 +74,7 @@ Organism.belongsToMany(LocationSample, {
     through: Sample,
     foreignKey: 'organism_id',
 });
+
 module.exports = Sample;
 
 // Sample.belongsToMany(LocationSample, {

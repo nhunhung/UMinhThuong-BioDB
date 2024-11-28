@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/connectdb');
+const sequelize = require('../config/db.config');
 const GroupOfOrganisms = sequelize.define('GroupOfOrganisms', {
     groupoforganisms_id: {
         type: DataTypes.INTEGER,

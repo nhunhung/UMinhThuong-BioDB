@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/connectdb');
+const sequelize = require('../config/db.config');
 const ConservationStatus = sequelize.define('ConservationStatus', {
     conservationstatus_id: {
         type: DataTypes.INTEGER,

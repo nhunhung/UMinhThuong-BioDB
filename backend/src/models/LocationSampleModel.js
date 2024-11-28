@@ -1,10 +1,11 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/connectdb');
+const sequelize = require('../config/db.config');
 const Provinces = require('./ProvincesModel');
 const Districts = require('./DistrictsModel');
 const Wards = require('./WardsModel');
-const Sample = require('./SampleModel');
-const Organism = require('./OrganismModel');
+// const Sample = require('./SampleModel');
+// const Organism = require('./OrganismModel');
+
 
 const LocationSample = sequelize.define('LocationSample', {
     locationsample_id: {
@@ -20,7 +21,7 @@ const LocationSample = sequelize.define('LocationSample', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    longtitude: {
+    longitude: {
         type: DataTypes.TEXT,
         allowNull: false,
     },
@@ -28,9 +29,9 @@ const LocationSample = sequelize.define('LocationSample', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-
-
 });
+
+// Associations with Provinces, Districts, and Wards
 Provinces.hasMany(LocationSample, { foreignKey: 'provinces_id' });
 LocationSample.belongsTo(Provinces, { foreignKey: 'provinces_id' });
 
@@ -41,6 +42,7 @@ Wards.hasMany(LocationSample, { foreignKey: 'wards_id' });
 LocationSample.belongsTo(Wards, { foreignKey: 'wards_id' });
 
 
+module.exports = LocationSample;
 // LocationSample.belongsToMany(Organism, {
 //     through: Sample,
 //     foreignKey: 'locationsample_id',
@@ -56,7 +58,7 @@ LocationSample.belongsTo(Wards, { foreignKey: 'wards_id' });
 // });
 
 
-module.exports = LocationSample;
+
 // LocationSample.belongsToMany(Sample, {
 //     through: 'likedTootsLikers',
 //     foreignKey: 'locationsample_id',

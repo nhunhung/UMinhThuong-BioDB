@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/connectdb');
+const sequelize = require('../config/db.config');
 const Kingdom = require('./KingdomModel');
 const Phylum = sequelize.define('Phylum', {
     phylum_id: {

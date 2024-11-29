@@ -2,8 +2,8 @@ const { postSample } = require("../service/sample.service")
 
 const createNewSample = async (req, res) => {
     try {
-        const { dateCollected, collector, notes, locationsample_id, orgaism_id } = req.body;
-        const SampleData = { dateCollected, collector, notes, locationsample_id, orgaism_id };
+        const { locationsample_id, organism_id, recordNumber1, project, recordType, museumCode, specimenCode, typeSpecimen, recordNumber2, specimenQuantity, primaryCollector, collaborator, recordDate, recordMonth, recordYear } = req.body;
+        const SampleData = { locationsample_id, organism_id, recordNumber1, project, recordType, museumCode, specimenCode, typeSpecimen, recordNumber2, specimenQuantity, primaryCollector, collaborator, recordDate, recordMonth, recordYear };
 
         console.log(">>> Check name == ", SampleData);
         const newSample = await postSample(SampleData);

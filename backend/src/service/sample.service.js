@@ -4,11 +4,21 @@ const { Sample } = db;
 const postSample = async (SampleData) => {
     try {
         const sample = await Sample.create({
-            dateCollected: SampleData.dateCollected,
-            collector: SampleData.collector,
-            notes: SampleData.notes,
             locationsample_id: SampleData.locationsample_id,
-            orgaism_id:SampleData.orgaism_id
+            organism_id: SampleData.organism_id,
+            recordNumber1: SampleData.recordNumber1,
+            project:SampleData.project,
+            recordType:SampleData.recordType,
+            museumCode:SampleData.museumCode,
+            specimenCode:SampleData.specimenCode,
+            typeSpecimen:SampleData.typeSpecimen,
+            recordNumber2: SampleData.recordNumber2, 
+            specimenQuantity:SampleData.specimenQuantity,
+            primaryCollector:SampleData.primaryCollector,
+            collaborator: SampleData.collaborator,
+            recordDate:SampleData.recordDate,
+            recordMonth:SampleData.recordMonth,
+            recordYear:SampleData.recordYear 
         });
         return sample;
     } catch (error) {

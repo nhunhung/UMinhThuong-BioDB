@@ -1,7 +1,7 @@
 const express = require('express');
 const routerAPI = express.Router();
 const { createNewConservationStatus } = require("../controller/conservation_status.controller");
-const validateConservationStatus = require("../middleware/validateConservationStatusData");
+const validateConservationStatus = require("../middleware/validateData/validateConservationStatusData");
 
 
 routerAPI.post('/add', validateConservationStatus, createNewConservationStatus);

@@ -1,5 +1,5 @@
 const { body, validationResult } = require('express-validator');
-const db = require("../config/database");
+const db = require("../../config/database");
 const { Provinces, Districts, Wards } = db;
 
 const validateRecordInformation = [
@@ -34,13 +34,13 @@ const validateRecordInformation = [
         .withMessage('Project Name Related to the Sample is required.')
         .isInt({ gt: 0 })
         .withMessage('Sample Quantity must be a positive integer.'),
-    
+
     body('recorded')
         .notEmpty()
         .withMessage('Recorded is required.')
         .isString()
         .withMessage('Recorded must be a string.'),
-    
+
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {

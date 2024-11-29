@@ -1,7 +1,7 @@
 const express = require('express');
 const routerAPI = express.Router();
 const { createNewProvince } = require("../controller/provinces.controller");
-const validateProvince = require("../middleware/validateProvincesData");
+const validateProvince = require("../middleware/validateData/validateProvincesData");
 
 
 routerAPI.post('/add', validateProvince, createNewProvince);

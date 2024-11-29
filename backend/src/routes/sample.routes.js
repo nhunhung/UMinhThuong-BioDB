@@ -1,7 +1,7 @@
 const express = require('express');
 const routerAPI = express.Router();
-const { createNewSample} = require("../controller/sample.controller");
-const validateSample = require("../middleware/validateSampleData");
+const { createNewSample } = require("../controller/sample.controller");
+const validateSample = require("../middleware/validateData/validateSampleData");
 
 
 routerAPI.post('/add', validateSample, createNewSample);

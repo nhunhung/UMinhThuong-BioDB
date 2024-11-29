@@ -1,5 +1,5 @@
 const { body, validationResult } = require('express-validator');
-const db = require("../config/database");
+const db = require("../../config/database");
 const { Provinces } = db;
 
 const validateDistricts = [

@@ -18,7 +18,7 @@ const locationSamplesRoutes = require("./src/routes/location_samples.routes");
 const sampleRoutes = require("./src/routes/sample.routes");
 const conservationStatusRoutes = require("./src/routes/conservation_status.routes");
 const groupOfOrganismsRoutes = require("./src/routes/group_of_organisms.routes");
-const recordInformationRoutes = require("./src/routes/record_information.routes");
+
 const kingdomRoutes = require("./src/routes/kingdom.routes");
 
 
@@ -54,7 +54,7 @@ app.use('/api/v1/location_samples', locationSamplesRoutes);
 app.use('/api/v1/sample', sampleRoutes);
 app.use('/api/v1/conservation_status', conservationStatusRoutes);
 app.use('/api/v1/group_of_organisms', groupOfOrganismsRoutes);
-app.use('/api/v1/record_info', recordInformationRoutes);
+
 app.use('/api/v1/kingdom', kingdomRoutes);
 
 // Define routes

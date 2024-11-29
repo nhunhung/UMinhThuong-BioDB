@@ -4,11 +4,14 @@ const { ConservationStatus } = db;
 const postConservationStatus = async (conservationStatusData) => {
     try {
         const conservationStatus = await ConservationStatus.create({
-            endangeredLevel: conservationStatusData.endangeredLevel,
-            redListWorld: conservationStatusData.redListWorld,
-            redListVersion: conservationStatusData.redListVersion,
-            vietnamRedBook: conservationStatusData.vietnamRedBook,
-            decree81: conservationStatusData.decree81
+            iucnRedList: conservationStatusData.iucnRedList,
+            circular35: conservationStatusData.circular35 ,
+            endemic: conservationStatusData.endemic ,
+            decree64: conservationStatusData.decree64,
+            decree81: conservationStatusData.decree81 ,
+            vietnamRedList: conservationStatusData.vietnamRedList,
+            citesSpecies: conservationStatusData.citesSpecies ,
+            iucnRedListVersion: conservationStatusData.iucnRedListVersion ,
         });
         return conservationStatus;
     } catch (error) {

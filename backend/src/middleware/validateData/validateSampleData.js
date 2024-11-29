@@ -4,8 +4,7 @@ const { LocationSample, Organism } = db;
 
 const validateSample = [
     body("locationsample_id")
-        .notEmpty()
-        .withMessage("Location Sample ID is required.")
+        .optional()
         .isInt({ gt: 0 })
         .withMessage("Location Sample ID must be a positive integer.")
         .custom(async (value) => {
@@ -16,8 +15,7 @@ const validateSample = [
         }),
 
     body("organism_id")
-        .notEmpty()
-        .withMessage("Organism ID is required.")
+        .optional()
         .isInt({ gt: 0 })
         .withMessage("Organism ID must be a positive integer.")
         .custom(async (value) => {

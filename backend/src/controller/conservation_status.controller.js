@@ -2,10 +2,26 @@ const { postConservationStatus } = require("../service/conservation_status.servi
 
 const createNewConservationStatus = async (req, res) => {
     try {
-        const { endangeredLevel, redListWorld, redListVersion, vietnamRedBook, decree81 } = req.body;
-        const conservationStatusData = { endangeredLevel, redListWorld, redListVersion, vietnamRedBook, decree81 };
+        const { iucnRedList,
+            circular35,
+            endemic,
+            decree64,
+            decree81,
+            vietnamRedList,
+            citesSpecies,
+            iucnRedListVersion, } = req.body;
+        const conservationStatusData = {
+            iucnRedList,
+            circular35,
+            endemic,
+            decree64,
+            decree81,
+            vietnamRedList,
+            citesSpecies,
+            iucnRedListVersion,
+        };
 
-        console.log(">>> Check name == ", conservationStatusData);
+        console.log(">>> Check data input == ", conservationStatusData);
         const newConservationStatus = await postConservationStatus(conservationStatusData);
 
         return res.status(201).json({

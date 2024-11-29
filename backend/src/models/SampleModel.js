@@ -16,7 +16,7 @@ const Sample = sequelize.define('Sample', {
             model: LocationSample,
             key: 'locationsample_id', // Đảm bảo khóa ngoại đúng với bảng LocationSample
         },
-        allowNull: false,
+        allowNull: true,
     },
 
     organism_id: {
@@ -25,7 +25,7 @@ const Sample = sequelize.define('Sample', {
             model: Organism,
             key: 'organism_id', // Đảm bảo khóa ngoại đúng với bảng Organism
         },
-        allowNull: false, 
+        allowNull: true,
     },
 
     // Số hiệu thứ 1: recordNumber1 (String)

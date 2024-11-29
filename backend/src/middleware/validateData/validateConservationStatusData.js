@@ -1,35 +1,62 @@
 const { body, validationResult } = require('express-validator');
 
 const validateConservationStatus = [
-    body('endangeredLevel')
-        .notEmpty()
-        .withMessage('Endangered Level is required.')
-        .isString()
-        .withMessage('Endangered Level must be a string.'),
+    // Sách đỏ Thế giới: iucnRedList
+    body('iucnRedList')
+        .optional()
+        .isBoolean()
+        .withMessage('IUCN Red List must be a boolean value (true/false).'),
 
-    body('redListWorld')
-        .notEmpty()
-        .withMessage('Red List World is required.')
+    // Phiên bản sách đỏ Thế giới: iucnRedListVersion
+    body('iucnRedListVersion')
+        .optional()
         .isString()
-        .withMessage('Red List World must be a string.'),
+        .withMessage('IUCN Red List Version must be a string.')
+        .isLength({ max: 255 })
+        .withMessage('IUCN Red List Version must not exceed 255 characters.'),
 
-    body('redListVersion')
-        .notEmpty()
-        .withMessage('Red List Version is required.')
-        .isString()
-        .withMessage('Red List Version must be a string.'),
+    // Thương mại quốc tế các loài động vật nguy cấp: citesSpecies
+    body('citesSpecies')
+        .optional()
+        .isBoolean()
+        .withMessage('CITES Species must be a boolean value (true/false).'),
 
-    body('vietnamRedBook')
-        .notEmpty()
-        .withMessage('Vietnam Red Book is required.')
-        .isString()
-        .withMessage('Vietnam Red Book must be a string.'),
+    // Sách đỏ Việt Nam: vietnamRedList
+    body('vietnamRedList')
+        .optional()
+        .isBoolean()
+        .withMessage('Vietnam Red List must be a boolean value (true/false).'),
 
+    // Nghị định số 81/2021/NĐ-CP: decree81
     body('decree81')
-        .notEmpty()
-        .withMessage('Decree81 is required.')
+        .optional()
         .isString()
-        .withMessage('Decree81 must be a string.'),
+        .withMessage('Decree 81 must be a string.')
+        .isLength({ max: 255 })
+        .withMessage('Decree 81 must not exceed 255 characters.'),
+
+    // Nghị định số 64/2019/NĐ-CP: decree64
+    body('decree64')
+        .optional()
+        .isString()
+        .withMessage('Decree 64 must be a string.')
+        .isLength({ max: 255 })
+        .withMessage('Decree 64 must not exceed 255 characters.'),
+
+    // Đặc hữu: endemic
+    body('endemic')
+        .optional()
+        .isBoolean()
+        .withMessage('Endemic must be a boolean value (true/false).'),
+
+    // Thông tư 35/2018/TT-BTNMT: circular35
+    body('circular35')
+        .optional()
+        .isString()
+        .withMessage('Circular 35 must be a string.')
+        .isLength({ max: 255 })
+        .withMessage('Circular 35 must not exceed 255 characters.'),
+    
 
     (req, res, next) => {
         const errors = validationResult(req);

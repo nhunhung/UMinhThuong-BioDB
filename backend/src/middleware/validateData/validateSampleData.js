@@ -6,11 +6,11 @@ const validateSample = [
     body("locationsample_id")
         .optional()
         .isInt({ gt: 0 })
-        .withMessage("Location Sample ID must be a positive integer.")
+        .withMessage("LocationSample ID must be a positive integer.")
         .custom(async (value) => {
             const locationSample = await LocationSample.findByPk(value);
             if (!locationSample) {
-                throw new Error("Location Sample ID does not exist.");
+                throw new Error("LocationSample ID does not exist.");
             }
         }),
 

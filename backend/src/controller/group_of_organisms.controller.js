@@ -1,9 +1,12 @@
-const { postGroupOfOrganism } = require("../service/group_of_organisms.service")
+const { postGroupOfOrganism, deleteGroupOfOrganism } = require("../service/group_of_organisms.service")
 
 const createNewGroupOfOrganism = async (req, res) => {
     try {
-        const { logo, name} = req.body;
-        const groupOfOrganismData = {logo, name };
+        const { name } = req.body;
+        const logo = req.body.logo || "N/A";
+
+
+        const groupOfOrganismData = {name, logo};
 
         console.log(">>> Check name == ", groupOfOrganismData);
         const newGroupOfOrganism= await postGroupOfOrganism(groupOfOrganismData);
@@ -19,7 +22,19 @@ const createNewGroupOfOrganism = async (req, res) => {
             error: error.message
         });
     }
-
-
 }
-module.exports = { createNewGroupOfOrganism }
+const removeGroupOfOrganism = async (req, res) => {
+    const { groupoforganisms_id } = req.params;
+    console.log('Check groupoforganisms_id == ', groupoforganisms_id);
+
+    try {
+        const result = await deleteGroupOfOrganism(groupoforganisms_id);
+        return res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({
+            error: error.message || "Failed to delete group of organism",
+        });
+    }
+};
+
+module.exports = { createNewGroupOfOrganism, removeGroupOfOrganism }

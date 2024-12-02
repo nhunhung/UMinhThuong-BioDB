@@ -1,11 +1,12 @@
 const express = require('express');
-const dotenv = require('dotenv'); // Sửa cú pháp import dotenv
+const path = require("path");
+const fileUpload = require("express-fileupload");
+const dotenv = require('dotenv');
 dotenv.config();
 
 const hostname = process.env.HOST;
 const port = process.env.PORT;
 const app = express();
-// const sequelize = require('./src/config/database');
 
 // import db connection
 const db = require("./src/config/database");
@@ -23,10 +24,17 @@ const kingdomRoutes = require("./src/routes/kingdom.routes");
 const genusRoutes = require("./src/routes/genus.routes");
 const familiesRoutes = require("./src/routes/families.routes");
 const ordersRoutes = require("./src/routes/orders.routes");
+const classesRoutes = require("./src/routes/classes.routes");
+const phylumsRoutes = require("./src/routes/phylums.routes");
+const organismsRoutes = require("./src/routes/organisms.routes");
 
 //config req.body
 app.use(express.json()) // for json
 app.use(express.urlencoded({ extended: true })) // for form data
+
+// Middleware file-upload
+app.use(fileUpload());
+app.use("/uploads", express.static(path.join(__dirname, "./src/public/uploads")));
 
 // API base path
 app.use('/api/v1/provinces', provincesRoutes);
@@ -41,6 +49,9 @@ app.use('/api/v1/kingdom', kingdomRoutes);
 app.use('/api/v1/genus', genusRoutes);
 app.use('/api/v1/families', familiesRoutes);
 app.use('/api/v1/orders', ordersRoutes);
+app.use('/api/v1/classes', classesRoutes);
+app.use('/api/v1/phylums', phylumsRoutes);
+app.use('/api/v1/organisms', organismsRoutes);
 
 // Define routes
 app.get('/', (req, res) => {

@@ -7,8 +7,8 @@ const GroupOfOrganisms = sequelize.define('GroupOfOrganisms', {
         primaryKey: true,
     },
     logo: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     name: {
         type: DataTypes.TEXT,

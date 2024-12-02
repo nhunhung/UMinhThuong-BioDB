@@ -12,7 +12,7 @@ const postIdentification = async (identificationData) => {
             identificationMonth: identificationData.identificationMonth,
             identificationYear: identificationData.identificationYear,
             organism_id: identificationData.organism_id,
-            sample_id: identificationDatax.sample_id
+            sample_id: identificationData.sample_id
         });
         return identification;
     } catch (error) {

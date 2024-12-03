@@ -24,6 +24,14 @@ const Users = sequelize.define('Users', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
+    email: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        unique: true,
+        validate: {
+            isEmail: true,
+        },
+    },
     role_id: {
         type: DataTypes.INTEGER,
         references: {

@@ -11,6 +11,10 @@ const Kingdom = sequelize.define('Kingdom', {
         allowNull: false,
     }
 
-});
+},
+    {
+        tableName: 'Kingdom',
+        timestamps: false
+    });
 
 module.exports = Kingdom;

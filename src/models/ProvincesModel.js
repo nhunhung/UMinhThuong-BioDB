@@ -11,6 +11,10 @@ const Provinces = sequelize.define('Provinces', {
         allowNull: false,
     }
 
-});
+},
+    {
+        tableName: 'Provinces',
+        timestamps: false
+    });
 
 module.exports = Provinces;

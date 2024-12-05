@@ -12,6 +12,9 @@ const Districts = sequelize.define('Districts', {
         allowNull: false,
     }
 
+}, {
+    tableName: 'Districts',
+    timestamps: false
 });
 Provinces.hasMany(Districts, { foreignKey: 'provinces_id' });
 Districts.belongsTo(Provinces, { foreignKey: 'provinces_id' });

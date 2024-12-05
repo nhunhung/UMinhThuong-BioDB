@@ -15,6 +15,10 @@ const GroupOfOrganisms = sequelize.define('GroupOfOrganisms', {
         allowNull: false,
     }
 
-});
+},
+    {
+        tableName: 'GroupOfOrganisms',
+        timestamps: false
+    });
 
 module.exports = GroupOfOrganisms;

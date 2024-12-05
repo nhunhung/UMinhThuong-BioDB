@@ -24,13 +24,13 @@ const Users = sequelize.define('Users', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    role_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Role,
-            key: 'role_id',
-        },
+    email: {
+        type: DataTypes.TEXT,
+        allowNull: false,
     }
+}, {
+    tableName: 'Users',
+    timestamps: false
 });
 Role.hasMany(Users, { foreignKey: 'role_id' });
 Users.belongsTo(Role, { foreignKey: 'role_id' });

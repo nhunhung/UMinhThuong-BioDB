@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/connectdb');
-const Provinces = require('./ProvincesModel');
-const Districts = require('./DistrictsModel');
+
 const Users = require('./UsersModel');
 const Message = sequelize.define('Message', {
     message_id: {

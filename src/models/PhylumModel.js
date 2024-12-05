@@ -12,6 +12,9 @@ const Phylum = sequelize.define('Phylum', {
         allowNull: false,
     }
 
+}, {
+    tableName: 'Phylum',
+    timestamps: false
 });
 Kingdom.hasMany(Phylum, { foreignKey: 'kingdom_id' });
 Phylum.belongsTo(Kingdom, { foreignKey: 'kingdom_id' });

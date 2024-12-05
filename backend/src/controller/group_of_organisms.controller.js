@@ -2,13 +2,13 @@ const { postGroupOfOrganism, deleteGroupOfOrganism } = require("../service/group
 
 const createNewGroupOfOrganism = async (req, res) => {
     try {
-        const { name } = req.body;
+        const { goo_name } = req.body;
         const logo = req.body.logo || "N/A";
 
 
-        const groupOfOrganismData = {name, logo};
+        const groupOfOrganismData = { goo_name, logo};
 
-        console.log(">>> Check name == ", groupOfOrganismData);
+        console.log(">>> Check name == ", req.body.logo);
         const newGroupOfOrganism= await postGroupOfOrganism(groupOfOrganismData);
 
         return res.status(201).json({

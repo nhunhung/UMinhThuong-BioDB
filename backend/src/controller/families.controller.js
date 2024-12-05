@@ -2,8 +2,8 @@ const { postFamily } = require("../service/families.service")
 
 const createNewFamily = async (req, res) => {
     try {
-        const { name, order_id } = req.body;
-        const familyData = { name, order_id };
+        const { family_name, order_id } = req.body;
+        const familyData = { family_name, order_id };
 
         console.log(">>> Check input data == ", familyData);
         const newFamily = await postFamily(familyData);

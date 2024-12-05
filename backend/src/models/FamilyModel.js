@@ -10,7 +10,7 @@ const Family = sequelize.define('Family', {
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
+    family_name: {
         type: DataTypes.TEXT,
         allowNull: false,
     }

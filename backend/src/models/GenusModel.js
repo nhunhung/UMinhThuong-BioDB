@@ -9,7 +9,7 @@ const Genus = sequelize.define('Genus', {
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
+    genus_name: {
         type: DataTypes.TEXT,
         allowNull: false,
     }

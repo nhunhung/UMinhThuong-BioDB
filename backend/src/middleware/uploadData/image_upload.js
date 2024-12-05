@@ -29,9 +29,16 @@ const fileuploadMiddleware = (req, res, next) => {
             error: "File size must not exceed 1MB, suitable for logo/uploads."
         });
     }
+
     const timestamp = Date.now();
     const fileName = `${path.basename(image.name, fileExtension)}_${timestamp}${fileExtension}`;
-    const uploadPath = path.join(__dirname, "../public/uploads/", fileName);
+    let uploadPath;
+
+    if (fileType === 'img') {
+        uploadPath = path.join(__dirname, "../../public/uploads/img", fileName);
+    } else {
+        uploadPath = path.join(__dirname, "../../public/uploads/logo", fileName);
+    }
 
     image.mv(uploadPath, (err) => {
         if (err) {
@@ -41,10 +48,14 @@ const fileuploadMiddleware = (req, res, next) => {
             });
         }
 
-        req.body[fileType] = `uploads/${fileName}`;
+        if (fileType === 'img') {
+            req.body[fileType] = `http://localhost:3001/uploads/img/${fileName}`;
+        } else {
+            req.body[fileType] = `http://localhost:3001/uploads/logo/${fileName}`;
+        }
 
         next();
     });
-}
+};
 
 module.exports = fileuploadMiddleware;

@@ -2,8 +2,8 @@ const { postPhylum} = require("../service/phylums.service")
 
 const createNewPhylum = async (req, res) => {
     try {
-        const { name, kingdom_id } = req.body;
-        const phylumsData = { name, kingdom_id };
+        const { phylum_name, kingdom_id } = req.body;
+        const phylumsData = { phylum_name, kingdom_id };
 
         console.log(">>> Check data == ", phylumsData);
         const newPhylum = await postPhylum(phylumsData);

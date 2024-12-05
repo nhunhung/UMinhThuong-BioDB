@@ -2,8 +2,8 @@ const { postGenus } = require("../service/genus.service")
 
 const createNewGenus = async (req, res) => {
     try {
-        const { name, family_id } = req.body;
-        const genusData = { name, family_id };
+        const { genus_name, family_id } = req.body;
+        const genusData = { genus_name, family_id };
 
         console.log(">>> Check data == ", genusData);
         const newGenus = await postGenus(genusData);

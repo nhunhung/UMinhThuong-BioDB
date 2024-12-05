@@ -9,7 +9,7 @@ const Orders = sequelize.define('Orders', {
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
+    order_name: {
         type: DataTypes.TEXT,
         allowNull: false,
     }

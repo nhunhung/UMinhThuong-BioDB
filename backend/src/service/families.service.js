@@ -5,7 +5,7 @@ const postFamily = async (familyData) => {
     try {
         const family = await Family.create({
 
-            name: familyData.name,
+            family_name: familyData.family_name,
             order_id: familyData.order_id
         });
         return family;

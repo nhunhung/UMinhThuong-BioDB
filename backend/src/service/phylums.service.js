@@ -1,10 +1,10 @@
 const db = require("../config/database");
-const { Phylum } = db;
+const { Phylum} = db;
 
 const postPhylum = async (phylumsData) => {
     try {
         const phylum = await Phylum.create({
-            name: phylumsData.name,
+            phylum_name: phylumsData.phylum_name,
             kingdom_id: phylumsData.kingdom_id,
 
         });

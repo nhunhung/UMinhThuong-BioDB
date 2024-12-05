@@ -4,7 +4,7 @@ const { Orders } = db;
 const postOrder = async (ordersData) => {
     try {
         const order = await Orders.create({
-            name: ordersData.name,
+            order_name: ordersData.order_name,
             class_id: ordersData.class_id,
          
         });

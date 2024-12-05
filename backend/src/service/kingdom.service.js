@@ -4,7 +4,7 @@ const { Kingdom } = db;
 const postKingdom= async (kingdomData) => {
     try {
         const kingdom = await Kingdom.create({
-           name:kingdomData.name
+            kingdom_name: kingdomData.kingdom_name
         });
         return kingdom;
     } catch (error) {

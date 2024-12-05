@@ -4,7 +4,7 @@ const { Districts } = db;
 const postDistrict = async (districtsData) => {
     try {
         const district = await Districts.create({
-            name: districtsData.name,
+            district_name: districtsData.district_name,
             provinces_id: districtsData.provinces_id
          });
         return district;

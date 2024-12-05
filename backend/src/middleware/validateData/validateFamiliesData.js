@@ -3,7 +3,7 @@ const db = require("../../config/database");
 const { Orders } = db;
 
 const validateFamilies= [
-    body('name')
+    body('family_name')
         .notEmpty()
         .withMessage('Name is required.')
         .isString()

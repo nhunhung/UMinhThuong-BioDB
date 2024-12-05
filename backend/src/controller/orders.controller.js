@@ -2,8 +2,8 @@ const { postOrder } = require("../service/orders.service")
 
 const createNewOrder= async (req, res) => {
     try {
-        const { name, class_id } = req.body;
-        const ordersData = { name, class_id };
+        const { order_name, class_id } = req.body;
+        const ordersData = { order_name, class_id };
 
         console.log(">>> Check data == ", ordersData);
         const newOrder = await postOrder(ordersData);

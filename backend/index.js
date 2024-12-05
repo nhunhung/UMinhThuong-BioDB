@@ -27,10 +27,15 @@ const ordersRoutes = require("./src/routes/orders.routes");
 const classesRoutes = require("./src/routes/classes.routes");
 const phylumsRoutes = require("./src/routes/phylums.routes");
 const organismsRoutes = require("./src/routes/organisms.routes");
+const uploadRoutes = require('./src/routes/upload_file.routes');
+app.use('/api/v1/upload_excel', uploadRoutes);
 
 //config req.body
 app.use(express.json()) // for json
 app.use(express.urlencoded({ extended: true })) // for form data
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 // Middleware file-upload
 app.use(fileUpload());
@@ -52,6 +57,7 @@ app.use('/api/v1/orders', ordersRoutes);
 app.use('/api/v1/classes', classesRoutes);
 app.use('/api/v1/phylums', phylumsRoutes);
 app.use('/api/v1/organisms', organismsRoutes);
+// app.use('/api/v1/upload_excel', uploadExcelRoutes);
 
 // Define routes
 app.get('/', (req, res) => {
@@ -62,7 +68,7 @@ app.get('/', (req, res) => {
 db.sequelize.authenticate()
     .then(() => {
         console.log('Database connection established successfully.');
-        return db.sequelize.sync({ force: false }); // Đồng bộ cơ sở dữ liệu
+        return db.sequelize.sync({ force: true }); // Đồng bộ cơ sở dữ liệu //force: true | dev // alter: true | sync
     })
     .then(() => {
         console.log('Database synced successfully.');

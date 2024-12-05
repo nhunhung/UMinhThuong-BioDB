@@ -5,7 +5,7 @@ const postGenus = async (genusData) => {
     try {
         const genus = await Genus.create({
        
-            name: genusData.name,
+            genus_name: genusData.genus_name,
             family_id: genusData.family_id
         });
         return genus;

@@ -2,10 +2,10 @@ const { postClass } = require("../service/classes.service")
 
 const createNewClass = async (req, res) => {
     try {
-        const { name,
+        const { class_name,
             phylum_id } = req.body;
         const classesData = {
-            name,
+            class_name,
             phylum_id
         };
 

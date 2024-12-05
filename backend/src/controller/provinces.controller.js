@@ -2,7 +2,7 @@ const { postProvince } = require("../service/provinces.service")
 
 const createNewProvince = async (req, res) => {
     try{
-        const provincesData = req.body.name;
+        const provincesData = req.body.province_name;
         console.log(">>> Check name == ", provincesData);
         const newProvince = await postProvince(provincesData);
 

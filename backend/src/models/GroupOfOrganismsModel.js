@@ -10,7 +10,7 @@ const GroupOfOrganisms = sequelize.define('GroupOfOrganisms', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    name: {
+    goo_name: {
         type: DataTypes.TEXT,
         allowNull: false,
     }

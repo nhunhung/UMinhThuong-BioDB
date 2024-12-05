@@ -7,7 +7,7 @@ const postGroupOfOrganism = async (groupOfOrganismsData) => {
     try {
         const groupOfOrganism = await GroupOfOrganisms.create({
             logo: groupOfOrganismsData.logo,
-            name: groupOfOrganismsData.name
+            goo_name: groupOfOrganismsData.goo_name
         });
         return groupOfOrganism;
     } catch (error) {

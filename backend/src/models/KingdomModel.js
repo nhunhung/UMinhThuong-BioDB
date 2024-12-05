@@ -6,7 +6,7 @@ const Kingdom = sequelize.define('Kingdom', {
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
+    kingdom_name: {
         type: DataTypes.TEXT,
         allowNull: false,
     }

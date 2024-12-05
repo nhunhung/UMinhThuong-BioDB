@@ -4,7 +4,7 @@ const { Class } = db;
 const postClass = async (classesData) => {
     try {
         const class_sp = await Class.create({
-            name: classesData.name,
+            class_name: classesData.class_name,
             phylum_id: classesData.phylum_id
         });
         return class_sp;

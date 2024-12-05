@@ -2,8 +2,8 @@ const { postKingdom } = require("../service/kingdom.service")
 
 const createNewKingdom = async (req, res) => {
     try {
-        const { name } = req.body;
-        const kingdomData = { name };
+        const { kingdom_name } = req.body;
+        const kingdomData = { kingdom_name };
 
         console.log(">>> Check input data == ", kingdomData);
         const newKingdom = await postKingdom(kingdomData);

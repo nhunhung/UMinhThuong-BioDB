@@ -2,8 +2,8 @@ const { postWard } = require("../service/wards.service")
 
 const createNewWard = async (req, res) => {
     try {
-        const { name, districts_id } = req.body;
-        const wardsData = { name, districts_id };
+        const { ward_name, districts_id } = req.body;
+        const wardsData = { ward_name, districts_id };
 
         console.log(">>> Check name == ", wardsData);
         const newWard = await postWard(wardsData);

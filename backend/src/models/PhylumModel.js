@@ -7,7 +7,7 @@ const Phylum = sequelize.define('Phylum', {
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
+    phylum_name: {
         type: DataTypes.TEXT,
         allowNull: false,
     }

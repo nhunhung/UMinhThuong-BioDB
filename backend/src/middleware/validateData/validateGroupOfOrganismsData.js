@@ -1,7 +1,7 @@
 const { body, validationResult } = require('express-validator');
 
 const validateGroupOfOrganisms = [
-    body('name')
+    body('goo_name')
         .notEmpty()
         .withMessage('Name is required.')
         .isString()

@@ -1,0 +1,79 @@
+/* Header container */
+.header {
+    display: flex;
+    justify-content: space-between; /* Chia đều các phần tử trong header */
+    align-items: center; /* Căn giữa nội dung theo chiều dọc */
+    background-color: #eaf0f6; /* Màu nền */
+    padding: 0 20px; /* Khoảng cách bên trong */
+    height: 70px; /* Chiều cao header */
+}
+
+/* Logo */
+.header-logo img {
+    max-height: 50px; /* Chiều cao tối đa */
+    width: auto; /* Tự động giữ tỷ lệ */
+}
+
+/* Navigation menu */
+.header-nav {
+    display: flex; /* Căn ngang các mục */
+    gap: 20px; /* Khoảng cách giữa các liên kết */
+    align-items: center; /* Căn giữa dọc */
+}
+
+.header-nav a {
+    display: flex; /* Đảm bảo icon và text cùng hàng */
+    align-items: center;
+    gap: 8px; /* Khoảng cách giữa icon và text */
+    text-decoration: none; /* Xóa gạch chân */
+    color: #333; /* Màu chữ */
+    font-size: 16px; /* Kích thước chữ */
+    font-weight: 500; /* Đậm hơn chút */
+    transition: color 0.3s; /* Hiệu ứng hover */
+}
+
+.header-nav a:hover {
+    color: #17457a; /* Đổi màu khi hover */
+}
+
+/* Icon */
+.icon {
+    font-size: 1.2rem; /* Kích thước icon */
+}
+
+/* Action buttons */
+.header-actions {
+    display: flex; /* Căn ngang các nút */
+    gap: 10px; /* Khoảng cách giữa các nút */
+}
+
+.header-actions button {
+    padding: 8px 16px; /* Khoảng cách trong nút */
+    border-radius: 4px; /* Bo góc */
+    cursor: pointer; /* Con trỏ */
+    font-size: 14px; /* Kích thước chữ */
+    border: none; /* Xóa viền */
+}
+
+/* Đăng nhập button */
+.btn-outline {
+    background-color: white; /* Nền trắng */
+    border: 1px solid #ccc; /* Viền xám */
+    color: #333; /* Màu chữ */
+    transition: background-color 0.3s, color 0.3s; /* Hiệu ứng hover */
+}
+
+.btn-outline:hover {
+    background-color: #f0f0f0; /* Nền đổi màu */
+}
+
+/* Tiếng Việt button */
+.btn-primary {
+    background-color: #17457a; /* Nền xanh */
+    color: white; /* Chữ trắng */
+    transition: background-color 0.3s; /* Hiệu ứng hover */
+}
+
+.btn-primary:hover {
+    background-color: #0d3b66; /* Đổi nền khi hover */
+}

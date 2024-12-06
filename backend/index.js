@@ -8,7 +8,9 @@ const app = express();
 // const sequelize = require('./src/config/database');
 
 // import routes
-const provincesRoutes = require("./src/routes/provinces.routes");
+// const provincesRoutes = require("./src/routes/provinces.routes");
+
+const organismsRoutes = require("./src/routes/organism.routes");
 
 // import db connection
 const db = require("./src/config/database");
@@ -18,7 +20,7 @@ app.use(express.json()) // for json
 app.use(express.urlencoded({ extended: true })) // for form data
 
 // API base path
-app.use('/api/v1/provinces', provincesRoutes);
+app.use('/api/v1/organism', organismsRoutes);
 
 // Define routes
 app.get('/', (req, res) => {

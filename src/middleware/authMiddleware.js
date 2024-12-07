@@ -21,18 +21,20 @@ const authMiddleWare = (req, res, next) => {
         console.log('User', user)
     });
 
-
 }
+
 const authMiddleWareAdmin = (req, res, next) => {
     console.log('checkToken', req.headers.token)
     const token = req.headers.token.split(' ')[1]
     jwt.verify(token, process.env.ACCESS_TOKEN, function (err, user) {
-        if (err) {
-            return res.status(404).json({
-                message: 'The authencation',
-                status: 'ERROR',
-            })
-        }
+        // if (err) {
+        //     return res.status(404).json({
+        //         message: 'The authencation',
+        //         status: 'ERROR',
+        //     })
+        // }
+        console.log('Decoded User from Token:', user);
+
         if (user?.role_id === 1) {
             next()
         } else {
@@ -43,9 +45,23 @@ const authMiddleWareAdmin = (req, res, next) => {
         }
         console.log('User', user)
     });
-
+}
+const authMiddleWareUpdate = (req, res, next) => {
+    // console.log()
+    const token = req.headers.token.split(' ')[1]
+    jwt.verify(token, process.env.ACCESS_TOKEN, function(err, user){
+        if(err){
+            return res.status(404).json({
+                message:'The authencation',
+                status: 'ERROR',
+            })
+        }
+        if(user?.role_id === 1 || user?.role_id === 2){next()}
+        else { return res.status(404).json({ message: 'The authencation', status: 'ERROR'})};
+    })
 
 }
+
 const authUserMiddleWare = (req, res, next) => {
 
     console.log('req.header', req.headers)
@@ -82,6 +98,8 @@ const authUserMiddleWare = (req, res, next) => {
 module.exports = {
     authMiddleWare,
     authMiddleWareAdmin,
+    authMiddleWareUpdate,
     authUserMiddleWare,
+    
 
 }

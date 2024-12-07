@@ -1,9 +1,5 @@
 const { DataTypes } = require('sequelize');
-<<<<<<< HEAD:backend/src/models/GroupOfOrganismsModel.js
-const sequelize = require('../config/db.config');
-=======
 const sequelize = require('../config/connectdb');
->>>>>>> HUY:src/models/GroupOfOrganismsModel.js
 const GroupOfOrganisms = sequelize.define('GroupOfOrganisms', {
     groupoforganisms_id: {
         type: DataTypes.INTEGER,
@@ -12,21 +8,17 @@ const GroupOfOrganisms = sequelize.define('GroupOfOrganisms', {
     },
     logo: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
     },
     name: {
         type: DataTypes.TEXT,
         allowNull: false,
     }
 
-<<<<<<< HEAD:backend/src/models/GroupOfOrganismsModel.js
-});
-=======
 },
     {
         tableName: 'GroupOfOrganisms',
         timestamps: false
     });
->>>>>>> HUY:src/models/GroupOfOrganismsModel.js
 
 module.exports = GroupOfOrganisms;

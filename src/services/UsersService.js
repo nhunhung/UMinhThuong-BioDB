@@ -83,26 +83,24 @@ const loginUser = (userLogin) => {
                 id: checkUser.users_id,
                 role_id: checkUser.role_id
             })
+        
             console.log('access_token', access_token)
+            
             const refresh_token = await generalRefreshToken({
                 id: checkUser.users_id,
                 role_id: checkUser.role_id
             })
-
-
 
             return resolve({
                 status: 'OK',
                 message: 'SUCCESS',
                 access_token: access_token,
                 refresh_token: refresh_token
-
-
             })
-
 
         } catch (e) {
             reject(e)
+            console.log(e);
             console.log('not successs')
         }
     })

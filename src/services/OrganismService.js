@@ -1,368 +1,166 @@
-const Class = require("../models/ClassModel");
-const ConservationStatus = require("../models/ConservationStatusModel");
-const Districts = require("../models/DistrictsModel");
-const Family = require("../models/FamilyModel");
-const FileUpLoad = require("../models/FileUploadModel");
-const Genus = require("../models/GenusModel");
-const GroupOfOrganisms = require("../models/GroupOfOrganismsModel");
-const Kingdom = require("../models/KingdomModel");
-const LocationSample = require("../models/LocationSampleModel");
-const Message = require("../models/MessageModel");
-const Orders = require("../models/OrdersModel");
-const Organism = require("../models/OrganismModel");
-const Phylum = require("../models/PhylumModel");
-const Provinces = require("../models/ProvincesModel");
-
-const Role = require("../models/RoleModel");
-const Sample = require("../models/SampleModel");
-const Users = require("../models/UsersModel");
-const Wards = require("../models/WardsModel");
-const createOrganism = (data) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            // const { cultivated, hostPlantAnimal, generalNotes, museumNotes, informationSource, speciesNameLevel1, firstAuthor, subspeciesLevel1, speciesNameLevel2, secondAuthor, subspeciesLevel2, speciesNameLevel3, thirdAuthor, nomenclatureStatus, nomenclatureLevel, sientificName, authorName, commonName, publicationReference, yearOfAuthorName, synonymName, treeForm, lifeForm, ecologicalNiche, speciesDescription, habitat, distributionArea, ethnobotany, usageGroup, endangeredRareSpecies, class_id, groupOfOrganisms_id, conservationstatus_id, kingdom_id, order_id, family_id, genus_id, phylum_id } = data
-            const {
-                class_id,
-                groupoforganisms_id,
-                conservationstatus_id,
-                kingdom_id,
-                order_id,
-                family_id,
-                genus_id,
-                phylum_id,
-                ...optionalFields // Lấy tất cả các trường không bắt buộc còn lại
-            } = data;
-            const organismwithclass = await Class.findAll({
-                where: { class_id: class_id }
-            });
-            const organismwithgroup = await GroupOfOrganisms.findAll({
-                where: { groupoforganisms_id: groupoforganisms_id }
-            });
-            const organismwithconser = await ConservationStatus.findAll({
-                where: { conservationstatus_id: conservationstatus_id }
-            });
-            const organismwithkingdom = await Kingdom.findAll({
-                where: { kingdom_id: kingdom_id }
-            });
-            const organismwithorder = await Orders.findAll({
-                where: { order_id: order_id }
-            });
-            const organismwithfamily = await Family.findAll({
-                where: { family_id: family_id }
-            });
-            const organismwithgenus = await Genus.findAll({
-                where: { genus_id: genus_id }
-            });
-            const organismwithphylum = await Phylum.findAll({
-                where: { phylum_id: phylum_id }
-            });
-
-            if (organismwithclass.length === 0) {
-                return reject({
-                    status: 'ERROR',
-                    message: 'class_id not exist',
-
-                })
-            }
-            if (organismwithconser.length === 0) {
-                return reject({
-                    status: 'ERROR',
-                    message: 'conservationstatus_id not exist',
-
-                })
-            }
-            if (organismwithfamily.length === 0) {
-                return reject({
-                    status: 'ERROR',
-                    message: 'family_id not exist',
-
-                })
-            }
-            if (organismwithgenus.length === 0) {
-                return reject({
-                    status: 'ERROR',
-                    message: 'genus_id not exist',
-
-                })
-            }
-            if (organismwithgroup.length === 0) {
-                return reject({
-                    status: 'ERROR',
-                    message: 'groupoforganisms_id not exist',
-
-                })
-            }
-            if (organismwithkingdom.length === 0) {
-                return reject({
-                    status: 'ERROR',
-                    message: 'kingdom_id not exist',
-
-                })
-            }
-            if (organismwithorder.length === 0) {
-                return reject({
-                    status: 'ERROR',
-                    message: 'order_id not exist',
-
-                })
-            }
-            if (organismwithphylum.length === 0) {
-                return reject({
-                    status: 'ERROR',
-                    message: 'phylum_id not exist',
-
-                })
-            }
+const Organism = require('../models/OrganismModel');
+const Order = require('../models/OrdersModel');
+const Family = require('../models/FamilyModel');
+const Genus = require('../models/GenusModel');
+const GroupOfOrganism = require('../models/GroupOfOrganismsModel');
+const Phylum = require('../models/PhylumModel');
+const Kingdom = require('../models/KingdomModel');
+const Class = require('../models/ClassModel');
+const { sequelize, Op, literal } = require('sequelize');
+const { Sequelize } = require('../config/database');
 
 
-            // const createdOrganism = await Organism.create(
-            //     {
-            //         cultivated,
-            //         hostPlantAnimal,
-            //         generalNotes,
-            //         museumNotes,
-            //         informationSource,
-            //         speciesNameLevel1,
-            //         firstAuthor,
-            //         subspeciesLevel1,
-            //         speciesNameLevel2,
-            //         secondAuthor,
-            //         subspeciesLevel2,
-            //         speciesNameLevel3,
-            //         thirdAuthor,
-            //         nomenclatureStatus,
-            //         nomenclatureLevel,
-            //         sientificName,
-            //         authorName,
-            //         commonName,
-            //         publicationReference,
-            //         yearOfAuthorName,
-            //         synonymName,
-            //         treeForm,
-            //         lifeForm,
-            //         ecologicalNiche,
-            //         speciesDescription,
-            //         habitat,
-            //         distributionArea,
-            //         ethnobotany,
-            //         usageGroup,
-            //         endangeredRareSpecies,
-            //         groupOfOrganisms_id,
-            //         conservationstatus_id,
-            //         kingdom_id,
-            //         phylum_id,
-            //         class_id,
-            //         order_id,
-            //         family_id,
-            //         genus_id
-            //     }
-            // )
-            const createdOrganism = await Organism.create(
-                {
+const organismInclude = [
+  { model: Order, attributes: ['name'] },
+  { model: Family, attributes: ['name'] },
+  { model: Genus, attributes: ['name'] },
+  { model: GroupOfOrganism, attributes: ['name'] },
+];
 
-                    groupoforganisms_id,
-                    conservationstatus_id,
-                    kingdom_id,
-                    phylum_id,
-                    class_id,
-                    order_id,
-                    family_id,
-                    genus_id,
-                    ...optionalFields
-                }
-            )
-            if (createdOrganism) {
-                return resolve({
-                    status: 'OK',
-                    message: 'SUCCESS',
-                    data: createdOrganism
-                })
-            }
-        } catch (e) {
-            reject(e)
-            console.log('not success', e)
-        }
-    })
+const addCustomInclude = (addCustomIncludes = []) => {
+  return [...organismInclude, ...addCustomIncludes];
 }
-const updateOrganism = (organism_id, data) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const { class_id, groupoforganisms_id, conservationstatus_id, kingdom_id, phylum_id, order_id, family_id, genus_id } = data;
-            const checkOrganism = await Organism.findByPk(organism_id);  // Tìm theo khóa chính
-            console.log('check')
-            if (checkOrganism === null) {
-                return reject({
-                    status: 'ERROR',
-                    message: 'Organism is not defined'
-                })
 
-            }
-            if (class_id !== undefined) {
-                const organismwithclass = await Class.findAll({
-                    where: { class_id: class_id }
-                });
+//Lấy toàn bộ Organism
+const getAllOrganisms = async () => {
+  try {
+    return await Organism.findAll({
+      include: organismInclude
+    }); 
+  } catch (err) {
+    throw new Error(`Error fetching organisms ${err.message}`);
+  }
+};
 
-                if (organismwithclass.length === 0) {
-                    return reject({
-                        status: 'ERROR',
-                        message: 'class_id not exist',
+// Lấy Organism theo groupId
+const getOrganismsByGroups = async (groupIdsArray) => {
+  try {
+    const organisms = await Organism.findAll({
+      where: {
+        groupoforganisms_id: groupIdsArray  
+      },
+      include: organismInclude
+    });
 
-                    })
-                }
+    if (organisms.length === 0) {
+      throw new Error(`No organisms found in group with ID ${groupId}`);
+    }
+    return organisms;
+  } catch (err) {
+    throw new Error(`Error fetching organisms by group ID: ${err.message}`);
+  }
+};
 
+const getOrganinsmById = async (organism_Id) => {
+  try {
+    const customIncludes = [
+      { model: Kingdom, attributes: ['name'] },
+      { model: Phylum, attributes: ['name'] },
+      { model: Class, attributes: ['name'] },
+    ];
 
-            }
+    return await Organism.findByPk(organism_Id, {
+      include: addCustomInclude(customIncludes),  // Thêm includes vào phương thức findByPk
+    });
 
-            if (groupoforganisms_id !== undefined) {
-                const organismwithgroup = await GroupOfOrganisms.findAll({
-                    where: { groupoforganisms_id: groupoforganisms_id }
-                });
-
-                if (organismwithgroup.length === 0) {
-                    return reject({
-                        status: 'ERROR',
-                        message: 'groupoforganisms_id not exist',
-
-                    })
-                }
-
-
-            }
-            if (conservationstatus_id !== undefined) {
-                const organismwithconser = await ConservationStatus.findAll({
-                    where: { conservationstatus_id: conservationstatus_id }
-                });
-
-                if (organismwithconser.length === 0) {
-                    return reject({
-                        status: 'ERROR',
-                        message: 'conservationstatus_id not exist',
-
-                    })
-                }
-
-
-            }
-            if (kingdom_id !== undefined) {
-                const organismwithkingdom = await Kingdom.findAll({
-                    where: { kingdom_id: kingdom_id }
-                });
-
-                if (organismwithkingdom.length === 0) {
-                    return reject({
-                        status: 'ERROR',
-                        message: 'kingdom_id not exist',
-
-                    })
-                }
-
-
-            }
-            if (phylum_id !== undefined) {
-                const organismwithphylum = await Phylum.findAll({
-                    where: { phylum_id: phylum_id }
-                });
-
-                if (organismwithphylum.length === 0) {
-                    return reject({
-                        status: 'ERROR',
-                        message: 'phylum_id not exist',
-
-                    })
-                }
-
-
-            }
-            if (order_id !== undefined) {
-                const organismwithorder = await Orders.findAll({
-                    where: { order_id: order_id }
-                });
-
-                if (organismwithorder.length === 0) {
-                    return reject({
-                        status: 'ERROR',
-                        message: 'class_id not exist',
-
-                    })
-                }
-
-
-            }
-            if (family_id !== undefined) {
-                const organismwithfamily = await Family.findAll({
-                    where: { family_id: family_id }
-                });
-
-                if (organismwithfamily.length === 0) {
-                    return reject({
-                        status: 'ERROR',
-                        message: 'family_id not exist',
-
-                    })
-                }
-
-
-            }
-            if (genus_id !== undefined) {
-                const organismwithgenus = await Genus.findAll({
-                    where: { genus_id: genus_id }
-                });
-
-                if (organismwithgenus.length === 0) {
-                    return reject({
-                        status: 'ERROR',
-                        message: 'genus_id not exist',
-
-                    })
-                }
-
-
-            }
-
-
-            await Organism.update(data, { where: { organism_id } }); // Cập nhật dữ liệu
-            const updatedOrganism = await Organism.findByPk(organism_id); // Lấy lại dữ liệu đã cập nhật
-            return resolve({
-                status: 'OK',
-                message: 'SUCCESS',
-                data: updatedOrganism
-            })
-        } catch (e) {
-            reject(e)
-            console.log('not success', e)
-        }
-    })
+  } catch (err) {
+    throw new Error(`Error fetching organism by ID: ${err.message}`);
+  }
 }
-const deleteOrganism = (organism_id) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const organism = await Organism.findByPk(organism_id);
-            if (!organism_id) {
-                return reject({
-                    status: 'ERROR',
-                    message: 'Organism is not defined'
-                })
-            }
+
+const getOrganismByNames = async (kw) => {
+  try {
+    return await Organism.findAll({
+      where: {
+        [Op.or]: [
+          {
+            // Tìm kiếm trong scientificName, chỉ áp dụng unaccent() vào giá trị, giữ nguyên tên trường
+            [Op.iLike]: literal(`unaccent("scientificName") ILIKE unaccent('%${kw}%')`)
+          },
+          {
+            // Tìm kiếm trong commonName, chỉ áp dụng unaccent() vào giá trị, giữ nguyên tên trường
+            [Op.iLike]: literal(`unaccent("commonName") ILIKE unaccent('%${kw}%')`)
+          }
+        ]
+      },
+      include: organismInclude  // Các include liên quan đến organism (nếu có)
+    });
+  } catch (err) {
+    throw new Error(`Error fetching organisms: ${err.message}`);
+  }
+};
 
 
-            await Identification.destroy({ where: { organism_id: organism_id } });
-            Sample.destroy({ where: { organism_id: organism_id } })
+const updateOrganism = async (id, data) => {
+  try {
+    const organism = await Organism.findByPk(id);
+    if (!organism) {throw new Error('Organism not found');}
+    // Cập nhật thông tin organism với dữ liệu mới
+    const [updated] = await Organism.update(data, {
+      where: { organism_id: id }  // Điều kiện xác định organism cần cập nhật
+    });
+  } catch (err) {
+    throw new Error(`Error updating organism: ${err.message}`);
+  }
+};
 
-            await organism.destroy();
-            return resolve({
-                status: 'OK',
-                message: 'Delete Organism Succesfull',
+const deleteOrganism = async (organism_Id) => {
+  try {
+    // Tìm và xóa organism
+    const organism = await Organism.findByPk(organism_Id);
+    if (!organism) {
+      throw new Error('Organism not found');
+    }
+    await organism.destroy();
 
-            })
-        } catch (e) {
-            reject(e)
-            console.log('not success', e)
-        }
+    // Cập nhật lại các organism_id lớn hơn
+    await Organism.update(
+      { organism_id: sequelize.literal('organism_id - 1') },
+      {
+        where: { organism_id: { [Op.gt]: organism_Id } }
+      }
+    );
 
-    })
-}
+    return { message: 'Organism deleted and IDs updated successfully' };
+  } catch (err) {
+    throw new Error(`Error deleting organism: ${err.message}`);
+  }
+};
+
+
+const statisticOrganisms = async (group_ids) => {
+  try {
+    const result = await Organism.findAll({
+      attributes: [
+        // Lấy tên nhóm loài từ bảng "GroupOfOrganisms"
+        [Sequelize.literal(`(SELECT "name" FROM "GroupOfOrganisms" 
+          WHERE "GroupOfOrganisms"."groupoforganisms_id" = "Organism"."groupoforganisms_id")`), 'name'],
+
+        // Đếm số loài duy nhất (distinct scientificName)
+        [Sequelize.fn('COUNT', Sequelize.fn('DISTINCT', Sequelize.col('scientificName'))), 'Loài'],
+
+        // Tính tổng số "Ghi nhận" (số lần xuất hiện của scientificName)
+        [Sequelize.fn('COUNT', Sequelize.col('groupoforganisms_id')), 'Ghi nhận']  
+      ],
+      where: {
+        groupoforganisms_id: { [Op.in]: group_ids }
+      },
+      group: ['groupoforganisms_id'],  
+    });
+
+    return result;
+  } catch (err) {
+    throw new Error(`Error statistics organism: ${err.message}`);
+  }
+};
+
+
 module.exports = {
-    createOrganism,
-    updateOrganism,
-    deleteOrganism
-}
+  getAllOrganisms,
+  getOrganismsByGroups,
+  getOrganinsmById,
+  deleteOrganism,
+  updateOrganism,
+  statisticOrganisms,
+  getOrganismByNames
+};

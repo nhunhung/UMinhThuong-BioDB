@@ -1,64 +1,20 @@
-<<<<<<< HEAD:backend/src/models/LocationSampleModel.js
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
-const Provinces = require('./ProvincesModel');
-const Districts = require('./DistrictsModel');
-const Wards = require('./WardsModel');
-
-=======
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../config/connectdb');
 const Provinces = require('./ProvincesModel');
 const Districts = require('./DistrictsModel');
 const Wards = require('./WardsModel');
 require('events').setMaxListeners(20);
->>>>>>> HUY:src/models/LocationSampleModel.js
 const LocationSample = sequelize.define('LocationSample', {
     locationsample_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     },
-<<<<<<< HEAD:backend/src/models/LocationSampleModel.js
-    // Quốc gia: country (String) - Mặc định là Việt Nam
-=======
->>>>>>> HUY:src/models/LocationSampleModel.js
     country: {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: 'Việt Nam',
     },
-<<<<<<< HEAD:backend/src/models/LocationSampleModel.js
-    // Tỉnh: province (Foreign Key liên kết với bảng Provinces)
-    provinces_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: Provinces,
-            key: 'provinces_id',
-        },
-    },
-    // Huyện: district (Foreign Key liên kết với bảng Districts)
-    districts_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: Districts,
-            key: 'districts_id',
-        },
-    },
-    // Xã: ward (Foreign Key liên kết với bảng Wards)
-    wards_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: Wards,
-            key: 'wards_id',
-        },
-    },
-    // Làng thu mẫu: collectionVillage (String) - Tên làng thu mẫu
-=======
->>>>>>> HUY:src/models/LocationSampleModel.js
     collectionVillage: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -130,17 +86,11 @@ const LocationSample = sequelize.define('LocationSample', {
         allowNull: true,
         defaultValue: null,
     },
-<<<<<<< HEAD:backend/src/models/LocationSampleModel.js
-});
-
-// Associations
-=======
 
 }, {
     tableName: 'LocationSample',
     timestamps: false
 });
->>>>>>> HUY:src/models/LocationSampleModel.js
 Provinces.hasMany(LocationSample, { foreignKey: 'provinces_id' });
 LocationSample.belongsTo(Provinces, { foreignKey: 'provinces_id' });
 
@@ -149,9 +99,4 @@ LocationSample.belongsTo(Districts, { foreignKey: 'districts_id' });
 
 Wards.hasMany(LocationSample, { foreignKey: 'wards_id' });
 LocationSample.belongsTo(Wards, { foreignKey: 'wards_id' });
-<<<<<<< HEAD:backend/src/models/LocationSampleModel.js
-
 module.exports = LocationSample;
-=======
-module.exports = LocationSample;
->>>>>>> HUY:src/models/LocationSampleModel.js

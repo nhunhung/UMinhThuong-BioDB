@@ -1,11 +1,5 @@
 const { DataTypes } = require('sequelize');
-<<<<<<< HEAD:backend/src/models/LanguageModel.js
-const sequelize = require('../config/db.config');
-// const Provinces = require('./ProvincesModel');
-// const Districts = require('./DistrictsModel');
-=======
 const sequelize = require('../config/connectdb');
->>>>>>> HUY:src/models/LanguageModel.js
 const Users = require('./UsersModel');
 const Language = sequelize.define('Language', {
 

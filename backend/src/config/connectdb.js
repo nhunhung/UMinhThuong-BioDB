@@ -1,7 +1,8 @@
-require('dotenv').config();
+require('dotenv').config({ path: './src/.env' });
 const { Sequelize } = require('sequelize');
 
-// Khởi tạo Sequelize
+console.log(process.env.DB_USER); // Kiểm tra giá trị của DB_USER
+
 const sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -9,13 +10,13 @@ const sequelize = new Sequelize(
     {
         host: process.env.DB_HOST || 'localhost',
         port: process.env.DB_PORT || 5432,
-        dialect: 'postgres', // Chọn PostgreSQL làm cơ sở dữ liệu
-        logging: false, // Disable log SQL
+        dialect: 'postgres',
+        logging: false,  // Tắt log SQL
         pool: {
-            max: 5, // Max connection
-            min: 0, // Min connection
+            max: 5,
+            min: 0,
             acquire: 30000,
-            idle: 10000, // idle time before closing connection
+            idle: 10000,
         },
     }
 );

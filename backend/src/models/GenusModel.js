@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
-// const Kingdom = require('./KingdomModel');
-// const Phylum = require('./PhylumModel');
+const sequelize = require('../config/connectdb');
+const Phylum = require('./PhylumModel');
 const Family = require('./FamilyModel');
 const Genus = sequelize.define('Genus', {
     genus_id: {
@@ -13,8 +12,11 @@ const Genus = sequelize.define('Genus', {
         type: DataTypes.TEXT,
         allowNull: false,
     }
-
-});
+},
+    {
+        tableName: 'Genus',
+        timestamps: false
+    });
 Family.hasMany(Genus, { foreignKey: 'family_id' });
 Genus.belongsTo(Family, { foreignKey: 'family_id' });
 

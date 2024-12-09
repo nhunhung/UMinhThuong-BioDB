@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
+const sequelize = require('../config/connectdb');
 const Provinces = sequelize.define('Provinces', {
     provinces_id: {
         type: DataTypes.INTEGER,
@@ -11,6 +11,10 @@ const Provinces = sequelize.define('Provinces', {
         allowNull: false,
     }
 
-});
+},
+    {
+        tableName: 'Provinces',
+        timestamps: false
+    });
 
 module.exports = Provinces;

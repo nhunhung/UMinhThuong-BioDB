@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
+const sequelize = require('../config/connectdb');
 const Role = sequelize.define('Role', {
     role_id: {
         type: DataTypes.INTEGER,
@@ -11,6 +11,9 @@ const Role = sequelize.define('Role', {
         allowNull: false,
     }
 
+}, {
+    tableName: 'Role',
+    timestamps: false
 });
 
 module.exports = Role;

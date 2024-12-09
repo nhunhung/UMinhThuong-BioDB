@@ -1,49 +1,20 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = require('../config/connectdb');
 const Provinces = require('./ProvincesModel');
 const Districts = require('./DistrictsModel');
 const Wards = require('./WardsModel');
-
+require('events').setMaxListeners(20);
 const LocationSample = sequelize.define('LocationSample', {
     locationsample_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     },
-    // Quốc gia: country (String) - Mặc định là Việt Nam
     country: {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: 'Việt Nam',
     },
-    // Tỉnh: province (Foreign Key liên kết với bảng Provinces)
-    provinces_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: Provinces,
-            key: 'provinces_id',
-        },
-    },
-    // Huyện: district (Foreign Key liên kết với bảng Districts)
-    districts_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: Districts,
-            key: 'districts_id',
-        },
-    },
-    // Xã: ward (Foreign Key liên kết với bảng Wards)
-    wards_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: Wards,
-            key: 'wards_id',
-        },
-    },
-    // Làng thu mẫu: collectionVillage (String) - Tên làng thu mẫu
     collectionVillage: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -115,9 +86,11 @@ const LocationSample = sequelize.define('LocationSample', {
         allowNull: true,
         defaultValue: null,
     },
-});
 
-// Associations
+}, {
+    tableName: 'LocationSample',
+    timestamps: false
+});
 Provinces.hasMany(LocationSample, { foreignKey: 'provinces_id' });
 LocationSample.belongsTo(Provinces, { foreignKey: 'provinces_id' });
 
@@ -126,5 +99,4 @@ LocationSample.belongsTo(Districts, { foreignKey: 'districts_id' });
 
 Wards.hasMany(LocationSample, { foreignKey: 'wards_id' });
 LocationSample.belongsTo(Wards, { foreignKey: 'wards_id' });
-
 module.exports = LocationSample;

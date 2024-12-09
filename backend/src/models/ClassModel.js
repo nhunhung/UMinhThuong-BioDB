@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
+const sequelize = require('../config/connectdb');
 const Phylum = require('./PhylumModel');
 const Class = sequelize.define('Class', {
     class_id: {
@@ -11,7 +11,9 @@ const Class = sequelize.define('Class', {
         type: DataTypes.TEXT,
         allowNull: false,
     }
-
+}, {
+    tableName: 'Class',
+    timestamps: false
 });
 Phylum.hasMany(Class, { foreignKey: 'phylum_id' });
 Class.belongsTo(Phylum, { foreignKey: 'phylum_id' });

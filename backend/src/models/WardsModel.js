@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
-// const Provinces = require('./ProvincesModel');
+const sequelize = require('../config/connectdb');
+
 const Districts = require('./DistrictsModel');
 const Wards = sequelize.define('Wards', {
     wards_id: {
@@ -13,6 +13,9 @@ const Wards = sequelize.define('Wards', {
         allowNull: false,
     }
 
+}, {
+    tableName: 'Wards',
+    timestamps: false
 });
 Districts.hasMany(Wards, { foreignKey: 'districts_id' });
 Wards.belongsTo(Districts, { foreignKey: 'districts_id' });

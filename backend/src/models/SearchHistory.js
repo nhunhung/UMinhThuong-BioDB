@@ -1,7 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
-// const Provinces = require('./ProvincesModel');
-// const Districts = require('./DistrictsModel');
+const sequelize = require('../config/connectdb');
 const Users = require('./UsersModel');
 const SearchHistory = sequelize.define('SearchHistory', {
 

@@ -30,6 +30,8 @@ const organismsRoutes = require("./src/routes/organisms.routes");
 const uploadRoutes = require('./src/routes/upload_file.routes');
 app.use('/api/v1/upload_excel', uploadRoutes);
 
+const uploadImgRoutes = require('./src/routes/upload_img.routes');
+
 //config req.body
 app.use(express.json()) // for json
 app.use(express.urlencoded({ extended: true })) // for form data
@@ -57,7 +59,8 @@ app.use('/api/v1/orders', ordersRoutes);
 app.use('/api/v1/classes', classesRoutes);
 app.use('/api/v1/phylums', phylumsRoutes);
 app.use('/api/v1/organisms', organismsRoutes);
-// app.use('/api/v1/upload_excel', uploadExcelRoutes);
+
+app.use('/api/v1/upload_img', uploadImgRoutes);
 
 // Define routes
 app.get('/', (req, res) => {
@@ -78,6 +81,7 @@ db.sequelize.authenticate()
     });
 
 // Khởi động server
-app.listen(port, hostname, () => {
+const server = app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
+// server.timeout = 60000;

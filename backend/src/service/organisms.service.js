@@ -34,7 +34,7 @@ const postOrganism = async (organismsData) => {
             ethnobotany: organismsData.ethnobotany,
             usageGroup: organismsData.usageGroup,
             endangeredRareSpecies: organismsData.endangeredRareSpecies,
-            img: organismsData.img,
+            images: organismsData.images,
             conservationstatus_id: organismsData.conservationstatus_id,
             groupoforganisms_id: organismsData.groupoforganisms_id,
             kingdom_id: organismsData.kingdom_id,

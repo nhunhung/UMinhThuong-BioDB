@@ -164,7 +164,7 @@ const processExcelFile = async (filePath) => {
                 order_id: order.order_id,
                 family_id: family.family_id,
                 genus_id: genus.genus_id,
-                img: row.img
+                images: row.images
             }
             console.log("Organism: ", organismRowDt);
             const organism = await postOrganism(organismRowDt);

@@ -41,7 +41,7 @@ const createNewOrganism = async (req, res) => {
             order_id,
             family_id,
             genus_id } = req.body;
-        const img = req.body.img || "N/A";
+        const images = req.body.images || "N/A";
 
 
         const organismsData = {
@@ -75,7 +75,7 @@ const createNewOrganism = async (req, res) => {
             ethnobotany,
             usageGroup,
             endangeredRareSpecies,
-            img,
+            images,
             conservationstatus_id,
             groupoforganisms_id,
             kingdom_id,

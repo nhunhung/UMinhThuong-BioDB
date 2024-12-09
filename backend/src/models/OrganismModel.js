@@ -256,7 +256,7 @@ const Organism = sequelize.define('Organism', {
         defaultValue: false,
     },
 
-    img: {
+    images: {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: 'N/A',

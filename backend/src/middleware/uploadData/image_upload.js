@@ -1,61 +1,81 @@
 const path = require("path");
 
 const fileuploadMiddleware = (req, res, next) => {
-    if (!req.files || (!req.files.logo && !req.files.img)) {
+    if (!req.files || (!req.files.logo && !req.files.img && !req.files.images)) {
         return next();
     }
 
-    let image;
-    let fileType;
-
-    if (req.files.logo) {
-        image = req.files.logo;
-        fileType = 'logo';
-    } else if (req.files.img) {
-        image = req.files.img;
-        fileType = 'img';
-    }
-
     const allowedExtensions = /png|jpg|jpeg/;
-    const fileExtension = path.extname(image.name).toLowerCase();
-    if (!allowedExtensions.test(fileExtension)) {
-        return res.status(400).json({
-            error: "Only image files are allowed (png, jpg, jpeg)"
-        });
-    }
-
-    if (image.size > 1 * 1024 * 1024) {
-        return res.status(400).json({
-            error: "File size must not exceed 1MB, suitable for logo/uploads."
-        });
-    }
-
+    const maxSize = 5 * 1024 * 1024; // 1MB
     const timestamp = Date.now();
-    const fileName = `${path.basename(image.name, fileExtension)}_${timestamp}${fileExtension}`;
-    let uploadPath;
+    const uploadedFiles = []; // Lưu trữ thông tin các file đã upload
 
-    if (fileType === 'img') {
-        uploadPath = path.join(__dirname, "../../public/uploads/img", fileName);
-    } else {
-        uploadPath = path.join(__dirname, "../../public/uploads/logo", fileName);
+    // Xử lý từng loại file
+    const processFile = (image, fileType) => {
+        const fileExtension = path.extname(image.name).toLowerCase();
+        if (!allowedExtensions.test(fileExtension)) {
+            return { error: `File ${image.name} không đúng định dạng (chỉ chấp nhận png, jpg, jpeg).` };
+        }
+
+        if (image.size > maxSize) {
+            return { error: `File ${image.name} vượt quá giới hạn 5MB.` };
+        }
+
+        const fileName = `${path.basename(image.name, fileExtension)}_${timestamp}${fileExtension}`;
+        
+        let uploadPath;
+        if (fileType === 'img') {
+            uploadPath = path.join(__dirname, "../../public/uploads/img", fileName);
+        } else if (fileType === 'logo') {
+            uploadPath = path.join(__dirname, "../../public/uploads/logo", fileName);
+        } else if (fileType === 'images') {
+            uploadPath = path.join(__dirname, "../../public/uploads/images", fileName);
+        }
+
+        // Di chuyển file
+        try {
+            image.mv(uploadPath);
+            const fileUrl = `http://localhost:3001/uploads/${fileType}/${fileName}`;
+            uploadedFiles.push({ fileType, fileName, fileUrl });
+            return { success: fileUrl };
+        } catch (err) {
+            return { error: `Không thể upload file ${image.name}: ${err.message}` };
+        }
+    };
+
+    // Xử lý nhiều file trong mảng `images`
+    if (req.files.images) {
+        const images = Array.isArray(req.files.images) ? req.files.images : [req.files.images];
+        images.forEach((image) => {
+            const result = processFile(image, 'images');
+            if (result.error) {
+                return res.status(400).json({ error: result.error });
+            }
+        });
     }
 
-    image.mv(uploadPath, (err) => {
-        if (err) {
-            return res.status(500).json({
-                error: "Failed to upload the image",
-                details: err.message
-            });
+    // Xử lý file `logo`
+    if (req.files.logo) {
+        const result = processFile(req.files.logo, 'logo');
+        if (result.error) {
+            return res.status(400).json({ error: result.error });
         }
+        req.body.logo = uploadedFiles.find(file => file.fileType === 'logo')?.fileUrl;
+    }
 
-        if (fileType === 'img') {
-            req.body[fileType] = `http://localhost:3001/uploads/img/${fileName}`;
-        } else {
-            req.body[fileType] = `http://localhost:3001/uploads/logo/${fileName}`;
+    // Xử lý file `img`
+    if (req.files.img) {
+        const result = processFile(req.files.img, 'img');
+        if (result.error) {
+            return res.status(400).json({ error: result.error });
         }
+        req.body.img = uploadedFiles.find(file => file.fileType === 'img')?.fileUrl;
+    }
 
-        next();
-    });
+    // Gán danh sách ảnh đã upload vào request
+    req.body.images = uploadedFiles.filter(file => file.fileType === 'images').map(file => file.fileUrl);
+
+    next();
 };
 
 module.exports = fileuploadMiddleware;

@@ -8,7 +8,7 @@ const app = express();
 // const sequelize = require('./src/config/database');
 
 // import routes
-const authRoutes = require("./src/routes/auth");
+const authRoutesV1 = require("./src/routes/auth");
 
 // import message
 const messageRoutes = require('./src/routes/message.routes');
@@ -21,7 +21,7 @@ app.use(express.json()) // for json
 app.use(express.urlencoded({ extended: true })) // for form data
 
 // API base path
-app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/auth', authRoutesV1);
 
 // Define routes
 app.get('/', (req, res) => {
@@ -43,10 +43,10 @@ app.use('/api/v1/contact', messageRoutes);
 //         console.error('Error syncing database:', err.message);
 //     });
 
-const authRoutes = require('./src/routes/auth.routes'); // Thêm route
+const authRoutesV2 = require('./src/routes/auth.routes'); // Thêm route
 
 // Gắn route đăng nhập
-app.use('/api/v1/auth', authRoutes);
+app.use('/api/v2/auth', authRoutesV2);
 
 // Kiểm tra kết nối và đồng bộ cơ sở dữ liệu
 db.sequelize.authenticate()

@@ -25,11 +25,11 @@ const fileuploadMiddleware = (req, res, next) => {
         
         let uploadPath;
         if (fileType === 'img') {
-            uploadPath = path.join(__dirname, "../../public/uploads/img", fileName);
+            uploadPath = path.join(__dirname, "../../storage/uploads/img", fileName);
         } else if (fileType === 'logo') {
-            uploadPath = path.join(__dirname, "../../public/uploads/logo", fileName);
+            uploadPath = path.join(__dirname, "../../storage/uploads/logo", fileName);
         } else if (fileType === 'images') {
-            uploadPath = path.join(__dirname, "../../public/uploads/images", fileName);
+            uploadPath = path.join(__dirname, "../../storage/uploads/images", fileName);
         }
 
         // Di chuyển file

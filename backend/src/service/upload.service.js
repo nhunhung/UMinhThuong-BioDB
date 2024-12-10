@@ -1,25 +1,23 @@
 const XLSX = require("xlsx");
 const db = require("../config/database");
 const { QueryError, QueryTypes } = require("sequelize");
-const fs = require('fs');
+const fs = require("fs");
 
-
-const { postClass } = require("./classes.service")
-const { postConservationStatus } = require("./conservation_status.service")
-const { postDistrict } = require("./districts.service")
-const { postFamily } = require("./families.service")
-const { postGenus } = require("./genus.service")
-const { postGroupOfOrganism } = require("./group_of_organisms.service")
-const { postIdentification } = require("./identification.service")
-const { postKingdom } = require("./kingdom.service")
-const { postLocationSample } = require("./location_samples.service")
-const { postOrder } = require("./orders.service")
-const { postOrganism } = require("./organisms.service")
-const { postPhylum } = require("./phylums.service")
-const { postProvince } = require("./provinces.service")
-const { postSample } = require("./sample.service")
-const { postWard } = require("./wards.service")
-
+const { postClass } = require("./classes.service");
+const { postConservationStatus } = require("./conservation_status.service");
+const { postDistrict } = require("./districts.service");
+const { postFamily } = require("./families.service");
+const { postGenus } = require("./genus.service");
+const { postGroupOfOrganism } = require("./group_of_organisms.service");
+const { postIdentification } = require("./identification.service");
+const { postKingdom } = require("./kingdom.service");
+const { postLocationSample } = require("./location_samples.service");
+const { postOrder } = require("./orders.service");
+const { postOrganism } = require("./organisms.service");
+const { postPhylum } = require("./phylums.service");
+const { postProvince } = require("./provinces.service");
+const { postSample } = require("./sample.service");
+const { postWard } = require("./wards.service");
 
 const processExcelFile = async (filePath) => {
     // Read file
@@ -31,23 +29,21 @@ const processExcelFile = async (filePath) => {
     const data = XLSX.utils.sheet_to_json(sheet);
     const records = [];
 
-
-
     for (const row of data) {
         try {
             const province = await postProvince(row.province_name);
 
             const distictRowDt = {
                 district_name: row.district_name,
-                provinces_id: province.provinces_id
-            }
-            const district = await postDistrict(distictRowDt)
+                provinces_id: province.provinces_id,
+            };
+            const district = await postDistrict(distictRowDt);
 
             const wardRowDt = {
                 ward_name: row.ward_name,
-                districts_id: district.districts_id
-            }
-            const ward = await postWard(wardRowDt)
+                districts_id: district.districts_id,
+            };
+            const ward = await postWard(wardRowDt);
 
             const locationSampleRowDt = {
                 country: row.country,
@@ -65,9 +61,11 @@ const processExcelFile = async (filePath) => {
                 maxElevationRange: row.maxElevationRange,
                 elevationUnit: row.elevationUnit,
                 vn2000Longitude: row.vn2000Longitude,
-                vn2000Latitude: row.vn2000Latitude
-            }
-            const location_sample = await postLocationSample(locationSampleRowDt)
+                vn2000Latitude: row.vn2000Latitude,
+            };
+            const location_sample = await postLocationSample(
+                locationSampleRowDt
+            );
 
             const conservationStatusRowDt = {
                 iucnRedList: row.iucnRedList,
@@ -78,52 +76,52 @@ const processExcelFile = async (filePath) => {
                 decree64: row.decree64,
                 endemic: row.endemic,
                 circular35: row.circular35,
-
-
-            }
+            };
             // console.log("conservationStatusRowDt:", conservationStatusRowDt);
 
-            const conservation_status = await postConservationStatus(conservationStatusRowDt);
+            const conservation_status = await postConservationStatus(
+                conservationStatusRowDt
+            );
 
             const gooRowDt = {
                 // logo: row.logo,
-                goo_name: row.goo_name
-            }
+                goo_name: row.goo_name,
+            };
             const group_of_organism = await postGroupOfOrganism(gooRowDt);
 
             const kingdomRowDt = {
                 kingdom_name: row.kingdom_name,
-            }
+            };
             const kingdom = await postKingdom(kingdomRowDt);
 
             const phylumRowDt = {
                 phylum_name: row.phylum_name,
-                kingdom_id: kingdom.kingdom_id
-            }
+                kingdom_id: kingdom.kingdom_id,
+            };
             const phylum = await postPhylum(phylumRowDt);
 
             const classRowDt = {
                 class_name: row.class_name,
-                phylum_id: kingdom.phylum_id
-            }
+                phylum_id: kingdom.phylum_id,
+            };
             const class_or = await postClass(classRowDt);
 
             const orderRowDt = {
                 order_name: row.order_name,
-                class_id: class_or.class_id
-            }
+                class_id: class_or.class_id,
+            };
             const order = await postOrder(orderRowDt);
 
             const familyRowDt = {
                 family_name: row.family_name,
-                order_id: order.order_id
-            }
+                order_id: order.order_id,
+            };
             const family = await postFamily(familyRowDt);
 
             const genusRowDt = {
                 genus_name: row.genus_name,
-                family_id: family.family_id
-            }
+                family_id: family.family_id,
+            };
             const genus = await postGenus(genusRowDt);
 
             const organismRowDt = {
@@ -157,7 +155,8 @@ const processExcelFile = async (filePath) => {
                 ethnobotany: row.ethnobotany,
                 usageGroup: row.usageGroup,
                 endangeredRareSpecies: row.endangeredRareSpecies,
-                conservationstatus_id: conservation_status.conservationstatus_id,
+                conservationstatus_id:
+                    conservation_status.conservationstatus_id,
                 groupoforganisms_id: group_of_organism.groupoforganisms_id,
                 kingdom_id: kingdom.kingdom_id,
                 class_id: class_or.class_id,
@@ -165,8 +164,8 @@ const processExcelFile = async (filePath) => {
                 order_id: order.order_id,
                 family_id: family.family_id,
                 genus_id: genus.genus_id,
-                images: row.images
-            }
+                images: row.images,
+            };
             // console.log("Organism: ", organismRowDt);
             const organism = await postOrganism(organismRowDt);
 
@@ -185,12 +184,12 @@ const processExcelFile = async (filePath) => {
                 collaborator: row.collaborator,
                 recordDate: row.recordDate,
                 recordMonth: row.recordMonth,
-                recordYear: row.recordYear
-            }
+                recordYear: row.recordYear,
+            };
             const sample = await postSample(sampleRowDt);
 
             const identificationRowDt = {
-                identificationStatus: (row.identificationStatus),
+                identificationStatus: row.identificationStatus,
                 reference: row.reference,
                 identifier: row.identifier,
                 secondIdentifier: row.secondIdentifier,
@@ -199,11 +198,28 @@ const processExcelFile = async (filePath) => {
                 identificationYear: row.identificationYear,
                 organism_id: row.organism_id,
                 sample_id: row.sample_id,
+            };
+            const identification = await postIdentification(
+                identificationRowDt
+            );
 
-            }
-            const identification = await postIdentification(identificationRowDt);
-
-            records.push({ province, district, ward, location_sample, group_of_organism, kingdom, phylum, class_or, order, family, genus, conservation_status, identification, organism, sample });
+            records.push({
+                province,
+                district,
+                ward,
+                location_sample,
+                group_of_organism,
+                kingdom,
+                phylum,
+                class_or,
+                order,
+                family,
+                genus,
+                conservation_status,
+                identification,
+                organism,
+                sample,
+            });
         } catch (error) {
             console.error("Lỗi khi lưu dữ liệu:", error.message);
             throw new Error("Lỗi khi lưu dữ liệu vào database");
@@ -299,7 +315,7 @@ const getDetailsService = async () => {
     JOIN "Wards" wa ON l."wards_id" = wa."wards_id";
     `,
             {
-                type: QueryTypes.SELECT
+                type: QueryTypes.SELECT,
             }
         );
 
@@ -311,7 +327,87 @@ const getDetailsService = async () => {
 };
 
 const requiredHeaders = [
-    'recordNumber1', 'project', 'recordType', 'museumCode', 'specimenCode', 'typeSpecimen', 'recordNumber2', 'specimenQuantity', 'primaryCollector', 'collaborator', 'recordDate', 'recordMonth', 'recordYear', 'country', 'province_name', 'district_name', 'ward_name', 'collectionVillage', 'location', 'locationNotes', 'latitude', 'northSouth', 'longitude', 'eastWest', 'elevation', 'maxElevationRange', 'elevationUnit', 'vn2000Longitude', 'vn2000Latitude', 'identificationStatus', 'reference', 'identifier', 'secondIdentifier', 'identificationDate', 'identificationMonth', 'identificationYear', 'cultivated', 'hostPlantAnimal', 'generalNotes', 'museumNotes', 'informationSource', 'kingdom_name', 'phylum_name', 'class_name', 'order_name', 'goo_name', 'family_name', 'genus_name', 'speciesNameLevel1', 'firstAuthor', 'subspeciesLevel1', 'speciesNameLevel2', 'secondAuthor', 'subspeciesLevel2', 'speciesNameLevel3', 'thirdAuthor', 'nomenclatureStatus', 'nomenclatureLevel', 'scientificName', 'authorName', 'commonName', 'publicationReference', 'yearOfAuthorName', 'synonymName', 'lifeForm', 'treeForm', 'ecologicalNiche', 'speciesDescription', 'habitat', 'distributionArea', 'ethnobotany', 'usageGroup', 'endangeredRareSpecies', 'iucnRedList', 'iucnRedListVersion', 'citesSpecies', 'vietnamRedList', 'decree81', 'decree64', 'endemic', 'circular35'
+    "recordNumber1",
+    "project",
+    "recordType",
+    "museumCode",
+    "specimenCode",
+    "typeSpecimen",
+    "recordNumber2",
+    "specimenQuantity",
+    "primaryCollector",
+    "collaborator",
+    "recordDate",
+    "recordMonth",
+    "recordYear",
+    "country",
+    "province_name",
+    "district_name",
+    "ward_name",
+    "collectionVillage",
+    "location",
+    "locationNotes",
+    "latitude",
+    "northSouth",
+    "longitude",
+    "eastWest",
+    "elevation",
+    "maxElevationRange",
+    "elevationUnit",
+    "vn2000Longitude",
+    "vn2000Latitude",
+    "identificationStatus",
+    "reference",
+    "identifier",
+    "secondIdentifier",
+    "identificationDate",
+    "identificationMonth",
+    "identificationYear",
+    "cultivated",
+    "hostPlantAnimal",
+    "generalNotes",
+    "museumNotes",
+    "informationSource",
+    "kingdom_name",
+    "phylum_name",
+    "class_name",
+    "order_name",
+    "goo_name",
+    "family_name",
+    "genus_name",
+    "speciesNameLevel1",
+    "firstAuthor",
+    "subspeciesLevel1",
+    "speciesNameLevel2",
+    "secondAuthor",
+    "subspeciesLevel2",
+    "speciesNameLevel3",
+    "thirdAuthor",
+    "nomenclatureStatus",
+    "nomenclatureLevel",
+    "scientificName",
+    "authorName",
+    "commonName",
+    "publicationReference",
+    "yearOfAuthorName",
+    "synonymName",
+    "lifeForm",
+    "treeForm",
+    "ecologicalNiche",
+    "speciesDescription",
+    "habitat",
+    "distributionArea",
+    "ethnobotany",
+    "usageGroup",
+    "endangeredRareSpecies",
+    "iucnRedList",
+    "iucnRedListVersion",
+    "citesSpecies",
+    "vietnamRedList",
+    "decree81",
+    "decree64",
+    "endemic",
+    "circular35",
 ];
 
 const checkData = (fileBuffer) => {
@@ -322,38 +418,122 @@ const checkData = (fileBuffer) => {
 
     const logs = []; // Mảng chứa các log lỗi hoặc cảnh báo
 
-    const excelHeaders = rows[0].map(header => header.trim().toLowerCase()); // Loại bỏ khoảng trắng và chuyển thành chữ thường
+    const excelHeaders = rows[0].map((header) => header.trim().toLowerCase()); // Loại bỏ khoảng trắng và chuyển thành chữ thường
 
-    console.log('Excel headers after cleaning = ', excelHeaders); // Kiểm tra các cột đã đọc
+    console.log("Excel headers after cleaning = ", excelHeaders); // Kiểm tra các cột đã đọc
 
-    const requiredHeadersSet = new Set(requiredHeaders.map(header => header.toLowerCase())); // Đảm bảo requiredHeaders cũng chuyển thành chữ thường
+    const requiredHeadersSet = new Set(
+        requiredHeaders.map((header) => header.toLowerCase())
+    ); // Đảm bảo requiredHeaders cũng chuyển thành chữ thường
 
     // Kiểm tra các cột trong file Excel có khớp với các cột yêu cầu không
-    const missingHeaders = [...requiredHeadersSet].filter(column => !excelHeaders.includes(column));
+    const missingHeaders = [...requiredHeadersSet].filter(
+        (column) => !excelHeaders.includes(column)
+    );
 
     if (missingHeaders.length > 0) {
         // Tóm gọn thông báo lỗi về các cột thiếu
-        const missingHeadersMessage = `Thiếu các cột: ${missingHeaders.join(', ')}`;
+        const missingHeadersMessage = `Thiếu các cột: ${missingHeaders.join(
+            ", "
+        )}`;
         logs.push({
-            type: 'error',
+            type: "error",
             message: missingHeadersMessage,
         });
     }
 
     // Kiểm tra dữ liệu trống
+
+    const emptyCellsByColumn = {}; // Lưu danh sách hàng trống cho từng cột
+
     rows.slice(1).forEach((row, rowIndex) => {
         excelHeaders.forEach((header, colIndex) => {
-            // Sử dụng chỉ mục cột (colIndex) để truy xuất giá trị của ô
-            const cellValue = row[colIndex]; // Truy xuất giá trị ô theo chỉ mục
-            console.log("Check cell values = ", cellValue);
-            if (cellValue === undefined || cellValue === null || cellValue === '') {
-                logs.push({
-                    type: 'warning',
-                    message: `Dữ liệu trống tại hàng ${rowIndex + 2}, cột "${header}".`,
-                });
+            const cellValue = row[colIndex];
+            if (
+                cellValue === undefined ||
+                cellValue === null ||
+                cellValue === ""
+            ) {
+                if (!emptyCellsByColumn[header]) {
+                    emptyCellsByColumn[header] = [];
+                }
+                emptyCellsByColumn[header].push(rowIndex + 2); // Ghi lại số hàng
             }
         });
     });
+
+    // Tạo log gộp
+    Object.entries(emptyCellsByColumn).forEach(([header, rows]) => {
+        logs.push({
+            type: "warning",
+            message: `Cột "${header}" có dữ liệu trống tại các hàng: ${rows.join(
+                ", "
+            )}.`,
+        });
+    });
+
+    // Kiểm tra dữ liệu kiểu số
+    const numberColumns = {
+        latitude: { min: -90, max: 90 },
+        vn2000latitude: { min: -90, max: 90 },
+        longitude: { min: -180, max: 180 },
+        vn2000longitude: { min: -180, max: 180 },
+        elevation: { min: -500, max: 8848 }, // Độ cao từ mực nước biển (-500 đến 8848m)
+        maxelevationrange: { min: 0, max: 10000 }, // Khoảng dao động hợp lệ
+        recorddate: { min: 1, max: 31 },
+        recordmonth: { min: 1, max: 12 },
+        recordyear: { min: 0, max: new Date().getFullYear() }, // Từ năm 1900 đến hiện tại
+        identificationyear: { min: 0, max: new Date().getFullYear() },
+        yearofauthorname: { min: 0, max: new Date().getFullYear() },
+        identificationdate: { min: 1, max: 31 },
+        identificationmonth: { min: 1, max: 12 },
+        recordnumber2: {},
+        specimenquantity: {},
+    };
+
+    let errorLogs = []; // Mảng tạm để lưu thông báo lỗi
+
+    // Kiểm tra từng hàng dữ liệu cho các cột số
+    rows.slice(1).forEach((row, rowIndex) => {
+        Object.entries(numberColumns).forEach(([colName, { min, max }]) => {
+            const colIndex = excelHeaders.indexOf(colName);
+            if (colIndex !== -1) {
+                const cellValue = row[colIndex];
+                if (cellValue !== undefined && cellValue !== null && cellValue !== "") {
+                    const numValue = Number(cellValue);
+                    if (isNaN(numValue)) {
+                        errorLogs.push(`Giá trị không phải số tại hàng ${rowIndex + 2}, cột "${colName}".`);
+                    } else if (numValue < min || numValue > max) {
+                        errorLogs.push(`Giá trị tại hàng ${rowIndex + 2}, cột "${colName}" nằm ngoài khoảng hợp lệ (${min} - ${max}).`);
+                    }
+                }
+            }
+        });
+    });
+
+    // Kiểm tra các cột kiểu boolean
+    const booleanColumns = ["cultivated", "endangeredrarespecies", "iucnredlist", "citesspecies", "vietnamredlist", "endemic"]; // Danh sách các cột cần kiểm tra boolean
+
+    rows.slice(1).forEach((row, rowIndex) => {
+        booleanColumns.forEach((colName) => {
+            const colIndex = excelHeaders.indexOf(colName);
+            if (colIndex !== -1) {
+                const cellValue = row[colIndex];
+                const booleanValue = cellValue.toString().toLowerCase();
+                if (booleanValue !== "true" && booleanValue !== "false" && booleanValue !== "1" && booleanValue !== "0" && booleanValue !== "TRUE" && booleanValue !== "FALSE") {
+                    errorLogs.push(`Giá trị không phải boolean tại hàng ${rowIndex + 2}, cột "${colName}". Giá trị: "${cellValue}".`);
+                }
+            }
+        });
+    });
+
+    // Nếu có lỗi, push vào logs
+    if (errorLogs.length > 0) {
+        logs.push({
+            type: "error",
+            message: errorLogs.join("<br>"), // Gộp các lỗi thành một chuỗi với <br> để xuống dòng trong HTML
+        });
+    }
 
     return logs;
 };

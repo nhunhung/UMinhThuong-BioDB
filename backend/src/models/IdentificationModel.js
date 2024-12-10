@@ -42,7 +42,7 @@ const Identification = sequelize.define('Identification', {
     // Ngày định danh: identificationDate (Date)
     // Ngày định danh loài, có thể null, mặc định là null
     identificationDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.INTEGER,
         allowNull: true,
         defaultValue: null,
     },

@@ -12,12 +12,20 @@ const port = process.env.PORT;
 const app = express();
 
 // CORS Configuration
+const allowedOrigins = ['http://localhost:3000', 'http://192.168.145.1:3000'];
+
 app.use(cors({
-    origin: 'http://localhost:3000',  // Allow requests from frontend
+    origin: (origin, callback) => {
+        // Kiểm tra nếu origin nằm trong danh sách allowedOrigins
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true); // Cho phép yêu cầu
+        } else {
+            callback(new Error('Not allowed by CORS')); // Từ chối yêu cầu
+        }
+    },
     methods: 'GET,POST,PUT,DELETE',  // Allow HTTP methods
     allowedHeaders: 'Content-Type,Authorization'  // Allow these headers
 }));
-
 // Import db connection
 const db = require("./src/config/database");
 
@@ -56,7 +64,7 @@ app.use(bodyParser.json());
 app.use(fileUpload());
 
 // Serve static files for uploaded content
-app.use("/uploads", express.static(path.join(__dirname, "./src/public/uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "./src/storage/uploads")));
 
 // API base path
 app.use('/api/v1/provinces', provincesRoutes);

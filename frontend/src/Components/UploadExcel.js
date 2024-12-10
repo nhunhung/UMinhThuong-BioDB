@@ -51,12 +51,38 @@ const UploadExcel = () => {
       const ws = wb.Sheets[wb.SheetNames[0]];
       const jsonData = XLSX.utils.sheet_to_json(ws, { header: 1 });
       const rows = jsonData.slice(1); // Remove header row
+
+      // Danh sách các cột boolean cần xử lý
+      const booleanColumns = [
+        "cultivated",
+        "endangeredRareSpecies",
+        "iucnRedList",
+        "citesSpecies",
+        "vietnamRedList",
+        "endemic"
+      ];
+
+      // Chuyển đổi các giá trị boolean thành "Có" hoặc "KHÔNG"
+      rows.forEach((row, rowIndex) => {
+        booleanColumns.forEach((colName, colIndex) => {
+          const colIndexInRow = jsonData[0].indexOf(colName);
+          if (colIndexInRow !== -1) {
+            const cellValue = row[colIndexInRow];
+            const booleanValue = cellValue.toString().toLowerCase();
+            if (booleanValue === "true" || booleanValue === "1" || booleanValue === "TRUE") {
+              row[colIndexInRow] = "Có";  // Chuyển TRUE hoặc 1 thành "Có"
+            } else if (booleanValue === "false" || booleanValue === "0" || booleanValue === "FALSE" ) {
+              row[colIndexInRow] = "Không"; // Chuyển FALSE hoặc 0 thành "KHÔNG"
+            }
+          }
+        });
+      });
+
       setData(rows);
+      setDataVisible(false);
     };
-     setDataVisible(false);
     reader.readAsArrayBuffer(file);
   };
-
   // Check data handler
   const handleCheckData = async () => {
     if (!file) {
@@ -76,9 +102,13 @@ const UploadExcel = () => {
         const logs = response.data.logs;
         setLogData(logs);
         setLogVisible(true);
-        // Kiểm tra nếu logs rỗng và hiển thị dữ liệu
-        if (logs.length === 0) {
-          setDataVisible(true);  // Hiển thị dữ liệu nếu không có logs
+
+        // Kiểm tra xem có lỗi không, nếu có thì không hiển thị dữ liệu
+        const hasError = logs.some(log => log.type === 'error');
+        if (!hasError) {
+          setDataVisible(true);  // Hiển thị dữ liệu nếu không có logs error
+        } else {
+          setDataVisible(false);  // Ẩn dữ liệu nếu có logs error
         }
       }
     } catch (error) {
@@ -115,7 +145,14 @@ const UploadExcel = () => {
     setLogVisible(false);
     setDataVisible(false);
     setData([]);
+    setFile(null);
     setFileName('');
+
+    // Reset giá trị input file
+    const fileInput = document.getElementById("file-upload");
+    if (fileInput) {
+      fileInput.value = "";
+    }
   };
 
   // Handle file drag and drop
@@ -173,7 +210,11 @@ const UploadExcel = () => {
                     {logData.map((log, index) => (
                       <tr key={index} className={log.type === 'error' ? 'log-error' : 'log-warning'}>
                         <td>{log.type}</td>
-                        <td>{log.message}</td>
+                        <td
+                          dangerouslySetInnerHTML={{
+                            __html: log.message.replace(/\n/g, '<br>'), // Chuyển \n thành <br> để xuống dòng
+                          }}
+                        />
                       </tr>
                     ))}
                   </tbody>
@@ -186,7 +227,8 @@ const UploadExcel = () => {
             )}
           </div>
 
-         
+
+
 
         </section>
 

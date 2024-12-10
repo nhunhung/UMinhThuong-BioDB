@@ -1,7 +1,8 @@
 const XLSX = require("xlsx");
 const db = require("../config/database");
 const { QueryError, QueryTypes } = require("sequelize");
-// const {  } = require("../utils/convert_to_boolean");
+const fs = require('fs');
+
 
 const { postClass } = require("./classes.service")
 const { postConservationStatus } = require("./conservation_status.service")
@@ -80,7 +81,7 @@ const processExcelFile = async (filePath) => {
 
 
             }
-            console.log("conservationStatusRowDt:", conservationStatusRowDt);
+            // console.log("conservationStatusRowDt:", conservationStatusRowDt);
 
             const conservation_status = await postConservationStatus(conservationStatusRowDt);
 
@@ -166,7 +167,7 @@ const processExcelFile = async (filePath) => {
                 genus_id: genus.genus_id,
                 images: row.images
             }
-            console.log("Organism: ", organismRowDt);
+            // console.log("Organism: ", organismRowDt);
             const organism = await postOrganism(organismRowDt);
 
             const sampleRowDt = {
@@ -216,13 +217,89 @@ const getDetailsService = async () => {
     try {
         const details = await db.sequelize.query(
             `
-                SELECT f.family_name, o.order_name
-                FROM "Families" AS f
-                INNER JOIN "Orders" AS o 
-                ON f.order_id = o.order_id;
-            `,
+    SELECT 
+        o."organism_id",
+        o."cultivated",
+        o."hostPlantAnimal",
+        o."generalNotes",
+        o."informationSource",
+        o."museumNotes",
+        o."speciesNameLevel1",
+        o."firstAuthor",
+        o."speciesNameLevel2",
+        o."subspeciesLevel1",
+        o."secondAuthor",
+        o."subspeciesLevel2",
+        o."speciesNameLevel3",
+        o."thirdAuthor",
+        o."nomenclatureStatus",
+        o."nomenclatureLevel",
+        o."scientificName",
+        o."authorName",
+        o."commonName",
+        o."publicationReference",
+        o."yearOfAuthorName",
+        o."synonymName",
+        o."treeForm",
+        o."lifeForm",
+        o."ecologicalNiche",
+        o."speciesDescription",
+        o."habitat",
+        o."distributionArea",
+        o."ethnobotany",
+        o."usageGroup",
+        o."endangeredRareSpecies",
+        c."iucnRedList",
+        c."iucnRedListVersion",
+        c."citesSpecies",
+        c."vietnamRedList",
+        c."decree81",
+        c."decree64",
+        c."endemic",
+        c."circular35",
+        goo."goo_name",
+        k."kingdom_name",
+        p."phylum_name",
+        cl."class_name",
+        ord."order_name",
+        f."family_name",
+        g."genus_name",
+        ls."locationsample_id",
+        ls."recordNumber1",
+        ls."project",
+        ls."recordType",
+        ls."museumCode",
+        ls."specimenCode",
+        ls."typeSpecimen",
+        ls."recordNumber2",
+        ls."specimenQuantity",
+        ls."primaryCollector",
+        ls."collaborator",
+        ls."recordDate",
+        ls."recordMonth",
+        ls."recordYear",
+        l."country",
+        pr."province_name",
+        di."district_name",
+        wa."ward_name"
+
+    FROM "Organisms" o
+    JOIN "ConservationStatuses" c ON o."conservationstatus_id" = c."conservationstatus_id"
+    JOIN "GroupOfOrganisms" goo ON o."groupoforganisms_id" = goo."groupoforganisms_id"
+    JOIN "Kingdoms" k ON o."kingdom_id" = k."kingdom_id"
+    JOIN "Phylums" p ON o."phylum_id" = p."phylum_id"
+    JOIN "Classes" cl ON o."class_id" = cl."class_id"
+    JOIN "Orders" ord ON o."order_id" = ord."order_id"
+    JOIN "Families" f ON o."family_id" = f."family_id"
+    JOIN "genera" g ON o."genus_id" = g."genus_id"
+    JOIN "Samples" ls ON o."organism_id" = ls."organism_id"
+    JOIN "LocationSamples" l ON ls."locationsample_id" = l."locationsample_id"
+    JOIN "Provinces" pr ON l."provinces_id" = pr."provinces_id"
+    JOIN "Districts" di ON l."districts_id" = di."districts_id"
+    JOIN "Wards" wa ON l."wards_id" = wa."wards_id";
+    `,
             {
-                type: QueryTypes.SELECT,
+                type: QueryTypes.SELECT
             }
         );
 
@@ -232,4 +309,52 @@ const getDetailsService = async () => {
         throw new Error("Error");
     }
 };
-module.exports = { processExcelFile, getDetailsService };
+
+const requiredHeaders = [
+    'recordNumber1', 'project', 'recordType', 'museumCode', 'specimenCode', 'typeSpecimen', 'recordNumber2', 'specimenQuantity', 'primaryCollector', 'collaborator', 'recordDate', 'recordMonth', 'recordYear', 'country', 'province_name', 'district_name', 'ward_name', 'collectionVillage', 'location', 'locationNotes', 'latitude', 'northSouth', 'longitude', 'eastWest', 'elevation', 'maxElevationRange', 'elevationUnit', 'vn2000Longitude', 'vn2000Latitude', 'identificationStatus', 'reference', 'identifier', 'secondIdentifier', 'identificationDate', 'identificationMonth', 'identificationYear', 'cultivated', 'hostPlantAnimal', 'generalNotes', 'museumNotes', 'informationSource', 'kingdom_name', 'phylum_name', 'class_name', 'order_name', 'goo_name', 'family_name', 'genus_name', 'speciesNameLevel1', 'firstAuthor', 'subspeciesLevel1', 'speciesNameLevel2', 'secondAuthor', 'subspeciesLevel2', 'speciesNameLevel3', 'thirdAuthor', 'nomenclatureStatus', 'nomenclatureLevel', 'scientificName', 'authorName', 'commonName', 'publicationReference', 'yearOfAuthorName', 'synonymName', 'lifeForm', 'treeForm', 'ecologicalNiche', 'speciesDescription', 'habitat', 'distributionArea', 'ethnobotany', 'usageGroup', 'endangeredRareSpecies', 'iucnRedList', 'iucnRedListVersion', 'citesSpecies', 'vietnamRedList', 'decree81', 'decree64', 'endemic', 'circular35'
+];
+
+const checkData = (fileBuffer) => {
+    const workbook = XLSX.read(fileBuffer); // Đọc file Excel từ buffer
+    const sheetName = workbook.SheetNames[0]; // Chọn sheet đầu tiên
+    const worksheet = workbook.Sheets[sheetName];
+    const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 }); // Lấy dữ liệu dưới dạng mảng, header là dòng đầu tiên
+
+    const logs = []; // Mảng chứa các log lỗi hoặc cảnh báo
+
+    const excelHeaders = rows[0].map(header => header.trim().toLowerCase()); // Loại bỏ khoảng trắng và chuyển thành chữ thường
+
+    console.log('Excel headers after cleaning = ', excelHeaders); // Kiểm tra các cột đã đọc
+
+    const requiredHeadersSet = new Set(requiredHeaders.map(header => header.toLowerCase())); // Đảm bảo requiredHeaders cũng chuyển thành chữ thường
+
+    // Kiểm tra các cột trong file Excel có khớp với các cột yêu cầu không
+    const missingHeaders = [...requiredHeadersSet].filter(column => !excelHeaders.includes(column));
+
+    if (missingHeaders.length > 0) {
+        // Tóm gọn thông báo lỗi về các cột thiếu
+        const missingHeadersMessage = `Thiếu các cột: ${missingHeaders.join(', ')}`;
+        logs.push({
+            type: 'error',
+            message: missingHeadersMessage,
+        });
+    }
+
+    // Kiểm tra dữ liệu trống
+    rows.slice(1).forEach((row, rowIndex) => {
+        excelHeaders.forEach((header, colIndex) => {
+            // Sử dụng chỉ mục cột (colIndex) để truy xuất giá trị của ô
+            const cellValue = row[colIndex]; // Truy xuất giá trị ô theo chỉ mục
+            console.log("Check cell values = ", cellValue);
+            if (cellValue === undefined || cellValue === null || cellValue === '') {
+                logs.push({
+                    type: 'warning',
+                    message: `Dữ liệu trống tại hàng ${rowIndex + 2}, cột "${header}".`,
+                });
+            }
+        });
+    });
+
+    return logs;
+};
+module.exports = { processExcelFile, getDetailsService, checkData };

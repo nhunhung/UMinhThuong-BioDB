@@ -7,18 +7,18 @@ const postSample = async (SampleData) => {
             locationsample_id: SampleData.locationsample_id,
             organism_id: SampleData.organism_id,
             recordNumber1: SampleData.recordNumber1,
-            project:SampleData.project,
-            recordType:SampleData.recordType,
-            museumCode:SampleData.museumCode,
-            specimenCode:SampleData.specimenCode,
-            typeSpecimen:SampleData.typeSpecimen,
-            recordNumber2: SampleData.recordNumber2, 
-            specimenQuantity:SampleData.specimenQuantity,
-            primaryCollector:SampleData.primaryCollector,
+            project: SampleData.project,
+            recordType: SampleData.recordType,
+            museumCode: SampleData.museumCode,
+            specimenCode: SampleData.specimenCode,
+            typeSpecimen: SampleData.typeSpecimen,
+            recordNumber2: SampleData.recordNumber2,
+            specimenQuantity: SampleData.specimenQuantity,
+            primaryCollector: SampleData.primaryCollector,
             collaborator: SampleData.collaborator,
-            recordDate:SampleData.recordDate,
-            recordMonth:SampleData.recordMonth,
-            recordYear:SampleData.recordYear 
+            recordDate: SampleData.recordDate,
+            recordMonth: SampleData.recordMonth,
+            recordYear: SampleData.recordYear
         });
         return sample;
     } catch (error) {

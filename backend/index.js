@@ -2,16 +2,26 @@ const express = require('express');
 const path = require("path");
 const fileUpload = require("express-fileupload");
 const dotenv = require('dotenv');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
 dotenv.config();
 
 const hostname = process.env.HOST;
 const port = process.env.PORT;
 const app = express();
 
-// import db connection
+// CORS Configuration
+app.use(cors({
+    origin: 'http://localhost:3000',  // Allow requests from frontend
+    methods: 'GET,POST,PUT,DELETE',  // Allow HTTP methods
+    allowedHeaders: 'Content-Type,Authorization'  // Allow these headers
+}));
+
+// Import db connection
 const db = require("./src/config/database");
 
-// import routes API
+// Import routes API
 const provincesRoutes = require("./src/routes/provinces.routes");
 const districtsRoutes = require("./src/routes/districts.routes");
 const wardsRoutes = require("./src/routes/wards.routes");
@@ -28,19 +38,24 @@ const classesRoutes = require("./src/routes/classes.routes");
 const phylumsRoutes = require("./src/routes/phylums.routes");
 const organismsRoutes = require("./src/routes/organisms.routes");
 const uploadRoutes = require('./src/routes/upload_file.routes');
-app.use('/api/v1/upload_excel', uploadRoutes);
-
 const uploadImgRoutes = require('./src/routes/upload_img.routes');
 
-//config req.body
-app.use(express.json()) // for json
-app.use(express.urlencoded({ extended: true })) // for form data
+app.use('/api/v1/upload_excel', uploadRoutes);
+app.use('/api/v1/upload_img', uploadImgRoutes);
 
-const bodyParser = require('body-parser');
+// Config req.body parsing
+app.use(express.json()); // for JSON data
+app.use(express.urlencoded({ extended: true })); // for form data
+
+// Use body-parser for JSON
 app.use(bodyParser.json());
 
-// Middleware file-upload
+
+
+// Middleware for file upload
 app.use(fileUpload());
+
+// Serve static files for uploaded content
 app.use("/uploads", express.static(path.join(__dirname, "./src/public/uploads")));
 
 // API base path
@@ -60,18 +75,16 @@ app.use('/api/v1/classes', classesRoutes);
 app.use('/api/v1/phylums', phylumsRoutes);
 app.use('/api/v1/organisms', organismsRoutes);
 
-app.use('/api/v1/upload_img', uploadImgRoutes);
-
 // Define routes
 app.get('/', (req, res) => {
     res.send('Hello World! The server is running.');
 });
 
-// Kiểm tra kết nối và đồng bộ cơ sở dữ liệu
+// Test database connection and sync
 db.sequelize.authenticate()
     .then(() => {
         console.log('Database connection established successfully.');
-        return db.sequelize.sync({ force: true }); // Đồng bộ cơ sở dữ liệu //force: true | dev // alter: true | sync
+        return db.sequelize.sync({ force: true }); // Sync database schema (alter: true)
     })
     .then(() => {
         console.log('Database synced successfully.');
@@ -80,8 +93,7 @@ db.sequelize.authenticate()
         console.error('Database error:', error.message);
     });
 
-// Khởi động server
+// Start server
 const server = app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
-// server.timeout = 60000;

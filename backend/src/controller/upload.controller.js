@@ -1,8 +1,8 @@
-const { processExcelFile, getDetailsService } = require('../service/upload.service');
+const { processExcelFile, getDetailsService, checkData } = require('../service/upload.service');
 
 const uploadController = async (req, res) => {
     try {
-        console.log('Đường dẫn file nhận được:', req.file.path);
+        // console.log('Đường dẫn file nhận được:', req.file.path);
 
         const filePath = req.file.path; 
         // console.log('Path after processing:', filePath);
@@ -40,4 +40,21 @@ const getDetails = async(req, res) => {
         })
     }
 }
-module.exports = { uploadController, getDetails };
+
+
+
+const checkExcelData = async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ message: 'Không có file được tải lên' });
+    }
+    try {
+        const fileBuffer = req.file.buffer;
+        const logs = checkData(fileBuffer);
+        return res.status(200).json({ success: true, logs });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Có lỗi xảy ra khi kiểm tra file Excel.' });
+    }
+};
+
+module.exports = { uploadController, getDetails, checkExcelData };

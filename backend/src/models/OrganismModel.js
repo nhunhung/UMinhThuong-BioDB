@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db.config');
 const Kingdom = require('./KingdomModel');
 const Phylum = require('./PhylumModel');

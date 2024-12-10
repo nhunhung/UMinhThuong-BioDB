@@ -1,54 +1,44 @@
 const express = require('express');
-const dotenv = require('dotenv'); // Sửa cú pháp import dotenv
+const dotenv = require('dotenv');
 dotenv.config();
 
-const hostname = process.env.HOST;
-const port = process.env.PORT;
+const hostname = process.env.HOST || '127.0.0.1'; // Đảm bảo giá trị mặc định hợp lệ
+const port = process.env.PORT || 3000;
 const app = express();
-const sequelize = require('./src/config/database');
+const sequelize = require('./src/config/db.config'); // Đường dẫn đúng cho sequelize config
 
+// Import models để đảm bảo chúng được đăng ký với Sequelize
+require('./src/models/OrganismModel');
+require('./src/models/LocationSampleModel');
 
-// import routes
-const locationRoutes = require('./src/routes/locations');
+// Import routes
+const mapRoutes = require('./src/routes/map');
 
-// import db connection
-const db = require("./src/config/database");
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-//config req.body
-app.use(express.json()) // for json
-app.use(express.urlencoded({ extended: true })) // for form data
-
-// API base path
-//app.use('/api/v1/provinces', provincesRoutes);
 // Routes
-app.use('/api/locations', locationRoutes);
+app.use('/api', mapRoutes);
 
-
-// Define routes
 app.get('/', (req, res) => {
     res.send('Hello World! The server is running.');
 });
 
-
-
-//Kiểm tra kết nối và đồng bộ cơ sở dữ liệu
-db.sequelize.authenticate()
-    .then(() => {
+// Kiểm tra kết nối DB và đồng bộ
+(async () => {
+    try {
+        await sequelize.authenticate();
         console.log('Database connection established successfully.');
-        return db.sequelize.sync({ force: false }); // Đồng bộ cơ sở dữ liệu
-    })
-    .then(() => {
-       console.log('Database synced successfully.');
-   })
-    .catch((error) => {
-        console.error('Database error:', error.message);
-    });
 
- //Khởi động server
+        await sequelize.sync({ force: false }); // Không xóa bảng nếu đã tồn tại
+        console.log('Database synced successfully.');
+    } catch (error) {
+        console.error('Database error:', error.message);
+    }
+})();
+
+// Khởi động server
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
-
-
-
-

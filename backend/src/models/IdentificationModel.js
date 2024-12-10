@@ -1,10 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
+const sequelize = require('../config/connectdb');
 const Organism = require('./OrganismModel');
 const Sample = require('./SampleModel');
-
-
-
 const Identification = sequelize.define('Identification', {
     identification_id: {
         type: DataTypes.INTEGER,

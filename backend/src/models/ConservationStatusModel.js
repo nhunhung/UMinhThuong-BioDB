@@ -1,14 +1,11 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
-
+const sequelize = require('../config/connectdb');
 const ConservationStatus = sequelize.define('ConservationStatus', {
     conservationstatus_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     },
-
-    // Sách đỏ Thế giới: iucnRedList (Boolean) - Có trong danh sách Sách đỏ Thế giới
     iucnRedList: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
@@ -63,6 +60,9 @@ const ConservationStatus = sequelize.define('ConservationStatus', {
         allowNull: true,
         defaultValue: 'N/A', // Mặc định là 'N/A' nếu không có giá trị cụ thể
     },
+}, {
+    tableName: 'ConservationStatus',
+    timestamps: false
 });
 
 module.exports = ConservationStatus;

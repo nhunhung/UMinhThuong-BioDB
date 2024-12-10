@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
+const sequelize = require('../config/connectdb');
 const GroupOfOrganisms = sequelize.define('GroupOfOrganisms', {
     groupoforganisms_id: {
         type: DataTypes.INTEGER,
@@ -8,13 +8,17 @@ const GroupOfOrganisms = sequelize.define('GroupOfOrganisms', {
     },
     logo: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
     },
     name: {
         type: DataTypes.TEXT,
         allowNull: false,
     }
 
-});
+},
+    {
+        tableName: 'GroupOfOrganisms',
+        timestamps: false
+    });
 
 module.exports = GroupOfOrganisms;

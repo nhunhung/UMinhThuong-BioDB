@@ -1,0 +1,16 @@
+.main {
+  display: flex;
+  flex: 1;
+}
+
+
+.sidebar {
+  flex: 0 0 20%; /* Sidebar chiếm 40% */
+  background-color: #ddd; /* Màu nền cho Sidebar (tuỳ chỉnh) */
+}
+
+
+.card-list {
+  flex: 0 0 80%; /* CardList chiếm 60% */
+  background-color: #fff; /* Màu nền cho CardList (tuỳ chỉnh) */
+}

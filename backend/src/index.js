@@ -1,4 +1,4 @@
-
+const { swaggerSpec, swaggerUi } = require('./config/swagger');
 const hostname = '127.0.0.1';
 const express = require('express');
 const port = 3001;
@@ -31,6 +31,14 @@ const SearchHistory = require('./models/SearchHistory');
 const Message = require('./models/MessageModel');
 const FileUpLoad = require('./models/FileUploadModel');
 require('events').setMaxListeners(20); // Tăng giới hạn lên 20 (hoặc giá trị phù hợp)
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app._router.stack.forEach((middleware) => {
+    if (middleware.route) { // nếu middleware có route
+      console.log(`${Object.keys(middleware.route.methods).join(', ').toUpperCase()} ${middleware.route.path}`);
+    }
+  });
+  
 
 // const db = require("./config/database");
 app.get('/', (req, res) => {

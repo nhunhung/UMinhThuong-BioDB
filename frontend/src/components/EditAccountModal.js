@@ -1,5 +1,5 @@
 import React from 'react';
-import './EditAccountModal.css';
+import '../StyleCSS/EditAccountModal.css';
 
 function EditAccountModal({ account, onSave, onCancel, onChange }) {
     if (!account) return null;

@@ -1,0 +1,121 @@
+/* Container cho nội dung */
+.content {
+  padding: 30px 40px;
+  width: 100%;
+}
+
+/* Header */
+.content h4 {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+/* Form */
+.form {
+  display: flex; /* Đảm bảo các thành phần nằm trên một hàng */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  flex-wrap: nowrap; /* Ngăn chặn phần tử bị đẩy xuống hàng */
+  margin-bottom: 20px;
+  gap: 10px; /* Khoảng cách giữa các phần tử */
+}
+
+/* Input trong form */
+.form input {
+  padding: 10px 5px;
+  border: none;
+  border-radius: 2px;
+  width: 150px;
+  outline: none;
+}
+
+/* Select trong form */
+.form select {
+  padding: 10px 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: auto; /* Tự động co giãn theo nội dung */
+}
+
+/* Button trong form */
+.form button {
+  flex-shrink: 0; /* Ngăn nút bị co lại */
+  padding: 10px 15px;
+  background-color: #4caf50; /* Màu nền */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease; /* Hiệu ứng hover */
+}
+
+.form button:hover {
+  background-color: #388e3c;
+}
+
+/* Danh sách tài khoản */
+.account-list {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.account-list th,
+.account-list td {
+  padding: 15px;
+  text-align: left;
+}
+
+.account-list th {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+.account-list tr:hover {
+  background-color: #f5f5f5;
+}
+
+.button-container {
+  display: flex; /* Đặt các nút theo hàng ngang */
+  gap: 10px; /* Khoảng cách giữa các nút */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: start; /* Canh trái */
+}
+
+/* Nút chỉnh sửa và xóa */
+.edit-btn,
+.delete-btn {
+    padding: 7px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 80px; /* Kích thước nút đồng đều */
+    text-align: center;
+    font-size: 14px;
+    transition: background-color 0.3s ease; /* Hiệu ứng hover */
+}
+
+.edit-btn {
+  background-color: #daa300;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #c68d00;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Đảm bảo nút sửa và xóa nằm trên cùng một hàng */
+.button-container {
+  display: flex;
+  gap: 5px; /* Khoảng cách giữa nút */
+  align-items: center;
+}

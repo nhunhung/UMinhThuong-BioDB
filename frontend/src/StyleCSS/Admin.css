@@ -59,7 +59,7 @@
   position: relative;
   display: flex; /* Sử dụng flex để căn chỉnh chữ và icon trên một dòng */
   align-items: center; /* Căn giữa icon và chữ theo chiều dọc */
-  padding: 10px 5px;
+  padding: 10px 30px;
   margin: 10px;
   margin-bottom: 10px;
   font-weight: bold;

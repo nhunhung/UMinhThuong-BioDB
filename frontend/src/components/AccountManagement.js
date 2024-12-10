@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AccountManagement.css';
+import '../StyleCSS/AccountManagement.css';
 import EditAccountModal from './EditAccountModal';
 
 function AccountManagement() {
@@ -154,11 +154,15 @@ function AccountManagement() {
                   {account.lastName} {account.firstName}
                 </td>
                 <td>
+                <div className='button-container'>
                   <button className='edit-btn' onClick={() => handleEdit(account)}>
                     Sửa
                   </button>
-                  <button className='delete-btn' onClick={() => handleDelete(account.id)}>Xóa</button>
-                </td>
+                  <button className='delete-btn' onClick={() => handleDelete(account.id)}>
+                    Xóa
+                  </button>
+                </div>
+              </td>
             </tr>
           ))}
        </tbody>

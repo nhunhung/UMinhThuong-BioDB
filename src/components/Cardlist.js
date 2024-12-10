@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import '../StyleCSS/Cardlist.css';
 import L from "leaflet";
+/*
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale } from 'chart.js';
+ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
+*/
+
+/*
+Cài đặt biểu đồ trước khi chạy. Lệnh: npm install chart.js react-chartjs-2
+Cài đặt biểu đồ trước khi chạy. Lệnh: npm install chart.js react-chartjs-2
+*/ 
 
 // Đăng ký các phần của Chart.js mà bạn cần sử dụng
-ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
+
 
 
 const Cardlist = () => {
@@ -25,7 +33,7 @@ const Cardlist = () => {
         item.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    
+    /*
     // Dữ liệu cho biểu đồ tròn
   const chartData1 = {
     labels: ["undefined", "Thực vật hạt kín", "Khuyết thực vật", "Chim", "Cá", "Thú", "Bò sát", "Động vật không xương sống", "Lưỡng cư"],
@@ -71,7 +79,7 @@ const Cardlist = () => {
     ],
   };
 
-  
+  */
 
 
     // Chế độ hiển thị dạng lưới (grid)
@@ -133,6 +141,16 @@ const Cardlist = () => {
 
 
     // Chế độ hiển thị dạng đồ thị tròn (stats)
+
+    const renderStatsView = () => (
+      <div className="card-stats">
+          <p>Số lượng ghi nhận: {filteredItems.length}</p>
+          <p>Số nhóm sinh vật: 1</p>
+          <p>Số loài đặc biệt: 2</p>
+      </div>
+  );
+
+    /*
     const renderStatsView = () => (
         <div className="card-stats">
           <div style={{ display: "flex", justifyContent: "space-around" }}>
@@ -147,6 +165,7 @@ const Cardlist = () => {
           </div>
         </div>
       );
+      */
 
     
 

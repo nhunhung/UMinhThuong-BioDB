@@ -5,17 +5,16 @@ import L from 'leaflet';
 import '../StyleCSS/leaflet.css';
 
 
- // Import Leaflet
-
-
 
 const Cardlist = () => {
     const [viewMode, setViewMode] = useState("grid"); // Quản lý chế độ hiển thị
     const [searchTerm, setSearchTerm] = useState(""); // Quản lý giá trị ô tìm kiếm
-    const [currentPageList, setCurrentPageList] = useState(1); // Trang hiện tại cho card-list-view
+    const [currentPageGrid, setCurrentPageGrid] = useState(1); // Phân trang riêng cho Grid
+    const [currentPageList, setCurrentPageList] = useState(1); // Phân trang riêng cho List
 
 
-    const items = Array(200).fill({
+
+    const items = Array(400).fill({
         title: "",
         description: "",
         group: "",
@@ -23,7 +22,6 @@ const Cardlist = () => {
     });
 
     const itemsPerPageList = 20;
-
 
     const filteredItems = items.filter(item =>
         item.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -35,21 +33,47 @@ const Cardlist = () => {
     const indexOfFirstItemList = indexOfLastItemList - itemsPerPageList;
     const currentItemsList = filteredItems.slice(indexOfFirstItemList, indexOfLastItemList);
 
-    
-
 
     // Chế độ hiển thị dạng lưới (grid)
     const renderGridView = () => {
+        // Tính toán số lượng trang
+        const itemsPerPageGrid = 20; // 20 items mỗi trang
+        const totalPagesGrid = Math.ceil(filteredItems.length / itemsPerPageList); 
+        const indexOfLastItemGrid = currentPageGrid * itemsPerPageList; 
+        const indexOfFirstItemGrid = indexOfLastItemGrid - itemsPerPageList; 
+        const currentItemsGrid = filteredItems.slice(indexOfFirstItemGrid, indexOfLastItemGrid);
         return (
-            <div className="card-grid">
-                {filteredItems.map((item, index) => (
-                    <div className="card" key={index}>
-                        <img src={item.avatar} alt="Hình đại diện" className="card-avatar" />
-                        <h4>{item.genus}</h4>
-                        <p>{item.localName}</p>
-                        <p>{item.group}</p>
-                    </div>
-                ))}
+            <div>
+                {/* Hiển thị các card */}
+                <div className="card-grid">
+                    {currentItemsGrid.map((item, index) => (
+                        <div className="card" key={index}>
+                            <img src={item.avatar} alt="Hình đại diện" className="card-avatar" />
+                            <h4>{item.genus}</h4>
+                            <p>{item.localName}</p>
+                            <p>{item.group}</p>
+                        </div>
+                    ))}
+                </div>
+    
+                {/* Phân trang */}
+                <div className="pagination">
+                <button
+                    onClick={() => setCurrentPageGrid(currentPageGrid - 1)}
+                    disabled={currentPageGrid === 1}
+                >
+                    Previous
+                </button>
+                <span>
+                {`Page ${currentPageGrid} of ${totalPagesGrid}`}
+                </span>
+                <button
+                    onClick={() => setCurrentPageGrid(currentPageGrid + 1)}
+                    disabled={currentPageGrid === totalPagesGrid}
+                >
+                    Next
+                </button>
+                </div>
             </div>
         );
     };
@@ -58,7 +82,10 @@ const Cardlist = () => {
     // Chế độ hiển thị dạng danh sách (list)
     const renderListView = () => {
       // Tính toán số lượng trang
-      const totalPagesList = Math.ceil(filteredItems.length / itemsPerPageList);
+    const totalPagesList = Math.ceil(filteredItems.length / itemsPerPageList);
+    const indexOfLastItemList = currentPageList * itemsPerPageList;
+    const indexOfFirstItemList = indexOfLastItemList - itemsPerPageList;
+    const currentItemsList = filteredItems.slice(indexOfFirstItemList, indexOfLastItemList);    
   
       return (
           <div>
@@ -97,21 +124,21 @@ const Cardlist = () => {
   
               {/* Phân trang */}
               <div className="pagination">
-                  <button
-                      onClick={() => setCurrentPageList(currentPageList - 1)}
-                      disabled={currentPageList === 1}
-                  >
-                      Previous
-                  </button>
-                  <span>
-                      {`Page ${currentPageList} of ${totalPagesList}`}
-                  </span>
-                  <button
-                      onClick={() => setCurrentPageList(currentPageList + 1)}
-                      disabled={currentPageList === totalPagesList}
-                  >
-                      Next
-                  </button>
+              <button
+                onClick={() => setCurrentPageList(currentPageList - 1)}
+                disabled={currentPageList === 1}
+                >
+                    Previous
+                </button>
+                <span>
+                    {`Page ${currentPageList} of ${totalPagesList}`}
+                </span>
+                <button
+                    onClick={() => setCurrentPageList(currentPageList + 1)}
+                    disabled={currentPageList === totalPagesList}
+                >
+                    Next
+                </button>
               </div>
           </div>
       );

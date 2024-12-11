@@ -16,6 +16,7 @@ const PhylumRouter = require('./PhylumRouter')
 const KingdomRouter = require('./KingdomRouter')
 const OrganismRouter = require('./OrganismRouter')
 const SampleRouter = require('./SampleRouter')
+const MapRouter = require('./MapRouter')
 const IdentificationRouter = require('./IdentificationRouter')
 // const routes = (app) => {
 //     app.use('/api/role', RoleRouter);
@@ -58,6 +59,7 @@ const routes = (app) => {
         '/api/kingdom': KingdomRouter,
         '/api/organism': OrganismRouter,
         '/api/sample': SampleRouter,
+        '/api/map': MapRouter,
         '/api/identification': IdentificationRouter,
     };
 

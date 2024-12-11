@@ -4,11 +4,11 @@ const Users = require("../models/UsersModel");
 const createGroupOfOrganisms = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const { logo, name } = data;
+            const { logo, goo_name } = data;
             const createdGroupOfOrganisms = await GroupOfOrganisms.create(
                 {
                     logo,
-                    name
+                    goo_name
                 }
             )
             if (createdGroupOfOrganisms) {
@@ -59,6 +59,13 @@ const deleteGroupOfOrganisms = (groupoforganisms_id) => {
                     message: 'GroupOfOrganisms is not defined'
                 })
             }
+            // Delete the file if it exists
+            if (group.logo) {
+                const filePath = path.join(__dirname, "../storage/logo", group.logo);
+                if (fs.existsSync(filePath)) {
+                    fs.unlinkSync(filePath); // Remove the image file from disk
+                }
+            }
             await groupoforganisms.destroy();
 
 
@@ -74,9 +81,21 @@ const deleteGroupOfOrganisms = (groupoforganisms_id) => {
 
     })
 }
-
+const postGroupOfOrganism = async (groupOfOrganismsData) => {
+    try {
+        const groupOfOrganism = await GroupOfOrganisms.create({
+            logo: groupOfOrganismsData.logo,
+            goo_name: groupOfOrganismsData.goo_name
+        });
+        return groupOfOrganism;
+    } catch (error) {
+        console.error("Error creating a new group of organism: ", error.message);
+        throw error;
+    }
+}
 module.exports = {
     createGroupOfOrganisms,
     updateGroupOfOrganisms,
-    deleteGroupOfOrganisms
+    deleteGroupOfOrganisms,
+    postGroupOfOrganism
 }

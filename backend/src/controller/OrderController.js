@@ -2,8 +2,8 @@
 const OrderService = require("../services/OrderService")
 const createOrder = async (req, res) => {
     try {
-        const { name, class_id } = req.body;
-        if (!name || !class_id) {
+        const { order_name, class_id } = req.body;
+        if (!order_name || !class_id) {
             return res.status(400).json({
                 status: 'ERROR',
                 message: 'The input is required'
@@ -56,8 +56,31 @@ const deleteOrder = async (req, res) => {
         })
     }
 }
+const createNewOrder = async (req, res) => {
+    try {
+        const { order_name, class_id } = req.body;
+        const ordersData = { order_name, class_id };
+
+        console.log(">>> Check data == ", ordersData);
+        const newOrder = await OrderService.postOrder(ordersData);
+
+        return res.status(201).json({
+            message: 'Order created successfully!',
+            data: newOrder
+        });
+    } catch (error) {
+        console.error('Error:', error.message);
+        return res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message
+        });
+    }
+
+
+}
 module.exports = {
     createOrder,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+        createNewOrder
 }

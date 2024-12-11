@@ -9,7 +9,7 @@ const Wards = require("../models/WardsModel");
 const createWards = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const { name, districts_id } = data;
+            const { ward_name, districts_id } = data;
             const wardswithdistricts = await Districts.findAll({
                 where: { districts_id: districts_id }
             });
@@ -23,7 +23,7 @@ const createWards = (data) => {
             }
             const createdWards = await Wards.create(
                 {
-                    name,
+                    ward_name,
                     districts_id
                 }
             )
@@ -107,8 +107,22 @@ const deleteWards = (wards_id) => {
 
     })
 }
+const postWard = async (wardsData) => {
+    try {
+        const ward = await Wards.create({
+            ward_name: wardsData.ward_name,
+            districts_id: wardsData.districts_id
+        });
+        return ward;
+    } catch (error) {
+        console.error("Error creating a new ward: ", error.message);
+        throw error;
+    }
+}
+
 module.exports = {
     createWards,
     updateWards,
-    deleteWards
+    deleteWards,
+    postWard
 }

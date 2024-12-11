@@ -14,7 +14,7 @@ const Wards = require("../models/WardsModel");
 const createOrder = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const { name, class_id } = data;
+            const { order_name, class_id } = data;
             const orderwithclass = await Class.findAll({
                 where: { class_id: class_id }
             });
@@ -29,7 +29,7 @@ const createOrder = (data) => {
 
             const createdOrder = await Orders.create(
                 {
-                    name,
+                    order_name,
                     class_id
                 }
             )
@@ -130,8 +130,22 @@ const deleteOrder = (order_id) => {
 
     })
 }
+const postOrder = async (ordersData) => {
+    try {
+        const order = await Orders.create({
+            order_name: ordersData.order_name,
+            class_id: ordersData.class_id,
+
+        });
+        return order;
+    } catch (error) {
+        console.error("Error creating a new order: ", error.message);
+        throw error;
+    }
+}
 module.exports = {
     createOrder,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    postOrder
 }

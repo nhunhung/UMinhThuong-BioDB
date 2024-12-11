@@ -8,7 +8,7 @@ const Organism = require("../models/OrganismModel");
 const createGenus = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const { name, family_id } = data;
+            const { genus_name, family_id } = data;
             const genusWithfamily = await Family.findAll({
                 where: { family_id: family_id }
             });
@@ -23,7 +23,7 @@ const createGenus = (data) => {
 
             const createdGenus = await Genus.create(
                 {
-                    name,
+                    genus_name,
                     family_id
                 }
             )
@@ -112,8 +112,24 @@ const deleteGenus = (genus_id) => {
 
     })
 }
+const postGenus = async (genusData) => {
+    try {
+        const genus = await Genus.create({
+
+            genus_name: genusData.genus_name,
+            family_id: genusData.family_id
+        });
+        return genus;
+    } catch (error) {
+        console.error("Error creating a new genus: ", error.message);
+        throw error;
+    }
+}
+
+
 module.exports = {
     createGenus,
     updateGenus,
-    deleteGenus
+    deleteGenus,
+    postGenus
 }

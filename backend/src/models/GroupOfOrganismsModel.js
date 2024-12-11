@@ -7,10 +7,10 @@ const GroupOfOrganisms = sequelize.define('GroupOfOrganisms', {
         primaryKey: true,
     },
     logo: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: true,
     },
-    name: {
+    goo_name: {
         type: DataTypes.TEXT,
         allowNull: false,
     }

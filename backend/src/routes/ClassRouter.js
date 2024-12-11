@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const ClassController = require("../controller/ClassController");
 const { authMiddleWare } = require('../middleware/authMiddleware');
+
 router.post('/create', authMiddleWare, ClassController.createClass);
 router.put('/update/:id',authMiddleWare, ClassController.updateClass);
 router.delete('/delete/:id', authMiddleWare, ClassController.deleteClass);

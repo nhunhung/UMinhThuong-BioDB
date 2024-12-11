@@ -6,22 +6,34 @@ const OrganismDetailsDTO = require('../dtos/response/organismDetails.dto');
 
 const getAllOrganism = async (req, res) => {
   try {
-    // Lấy danh sách organisms đã được ánh xạ từ service
-    const organisms = await organismService.getAllOrganisms();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 16; 
+    const offset = (page - 1) * limit; 
+
+    // Lấy danh sách organisms từ service với phân trang
+    const organisms = await organismService.getAllOrganisms(limit, offset);
+
+    // Map organisms thành DTOs nếu cần thiết
     const organismsDTO = organisms.map(organism => new OrganismDTO(organism));
-    return res.status(200).json({organismsDTO});
+
+    // Trả về kết quả phân trang
+    return res.status(200).json({
+      page: page,
+      limit: limit,
+      organisms : organismsDTO
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 
 const getOrganismsByGroups = async (req, res) => {
   try {
     // Lấy các groupOfOrganismId từ query params (ví dụ: ?groupOfOrganismId=1&groupOfOrganismId=2 hoặc ?groupOfOrganismId=1)
-    let { groupOfOrganismId } = req.query;
-    console.log(groupOfOrganismId);
-    // Nếu chỉ có một giá trị, nó sẽ là một chuỗi, chúng ta cần chuyển nó thành mảng
+    let { groupOfOrganismId, page, limit } = req.query;
+
+    // Kiểm tra và xử lý giá trị groupOfOrganismId (nếu là chuỗi thì chuyển thành mảng)
     if (typeof groupOfOrganismId === 'string') {
       groupOfOrganismId = [groupOfOrganismId];  // Chuyển thành mảng với 1 phần tử
     }
@@ -34,18 +46,28 @@ const getOrganismsByGroups = async (req, res) => {
       return res.status(400).json({ message: "No group IDs provided" });
     }
 
-    // Lấy organisms theo các groupId
-    const organisms = await organismService.getOrganismsByGroups(groupIdsArray);
+    // Lấy tham số page và limit từ query string (mặc định page = 1, limit = 16)
+    page = parseInt(page) || 1;
+    limit = parseInt(limit) || 16;
+    const offset = (page - 1) * limit;
+
+    // Lấy organisms theo các groupId và phân trang
+    const organisms = await organismService.getOrganismsByGroups(limit, offset, groupIdsArray);
 
     // Chuyển đổi organisms thành DTO để trả về client
     const result = organisms.map(organism => new OrganismDTO(organism));
 
-    res.status(200).json(result);
+    res.status(200).json({
+      page: page,
+      limit: limit,
+      data: result
+    });
 
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
+
 
 //Lấy organism theo Id 
 const getOrganismById = async (req, res) => {

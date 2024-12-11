@@ -2,8 +2,8 @@
 const GenusService = require("../services/GenusService")
 const createGenus = async (req, res) => {
     try {
-        const { name, family_id } = req.body;
-        if (!name || !family_id) {
+        const { genus_name, family_id } = req.body;
+        if (!genus_name || !family_id) {
             return res.status(400).json({
                 status: 'ERROR',
                 message: 'The input is required'
@@ -56,8 +56,31 @@ const deleteGenus = async (req, res) => {
         })
     }
 }
+const createNewGenus = async (req, res) => {
+    try {
+        const { genus_name, family_id } = req.body;
+        const genusData = { genus_name, family_id };
+
+        console.log(">>> Check data == ", genusData);
+        const newGenus = await GenusService.postGenus(genusData);
+
+        return res.status(201).json({
+            message: 'Genus status created successfully!',
+            data: newGenus
+        });
+    } catch (error) {
+        console.error('Error:', error.message);
+        return res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message
+        });
+    }
+
+
+}
 module.exports = {
     createGenus,
     updateGenus,
-    deleteGenus
+    deleteGenus,
+    createNewGenus
 }

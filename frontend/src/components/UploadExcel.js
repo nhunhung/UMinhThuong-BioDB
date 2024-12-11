@@ -94,7 +94,7 @@ const UploadExcel = () => {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('http://localhost:3001/api/v1/upload_excel/checkData', formData, {
+      const response = await axios.post('http://localhost:3001/api/uploadExcel/checkData', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
@@ -127,7 +127,7 @@ const UploadExcel = () => {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('http://localhost:3001/api/v1/upload_excel/add', formData, {
+      const response = await axios.post('http://localhost:3001/api/uploadExcel/add', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 

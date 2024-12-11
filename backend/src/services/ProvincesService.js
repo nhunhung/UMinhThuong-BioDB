@@ -4,10 +4,10 @@ const Provinces = require("../models/ProvincesModel");
 const Role = require("../models/RoleModel");
 const Users = require("../models/UsersModel");
 const Wards = require("../models/WardsModel");
-const createProvinces = (name) => {
+const createProvinces = (province_name) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const createProvinces = await Provinces.create({ name })
+            const createProvinces = await Provinces.create({ province_name })
             if (createProvinces) {
                 return resolve({
                     status: 'OK',
@@ -78,9 +78,18 @@ const deleteProvinces = (provinces_id) => {
 
     })
 }
-
+const postProvince = async (provincesData) => {
+    try {
+        const province = await Provinces.create({ province_name: provincesData });
+        return province;
+    } catch (error) {
+        console.error("Error creating a new province: ", error.message);
+        throw error;
+    }
+}
 module.exports = {
     createProvinces,
     updatedProvinces,
-    deleteProvinces
+    deleteProvinces,
+    postProvince
 }

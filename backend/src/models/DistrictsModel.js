@@ -7,7 +7,7 @@ const Districts = sequelize.define('Districts', {
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
+    district_name: {
         type: DataTypes.TEXT,
         allowNull: false,
     }

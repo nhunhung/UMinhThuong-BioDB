@@ -13,7 +13,7 @@ const Wards = require("../models/WardsModel");
 const createFamily = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const { name, order_id } = data;
+            const { family_name, order_id } = data;
             const familywithorder = await Orders.findAll({
                 where: { order_id: order_id }
             });
@@ -28,7 +28,7 @@ const createFamily = (data) => {
 
             const createdFamily = await Family.create(
                 {
-                    name,
+                    family_name,
                     order_id
                 }
             )
@@ -117,8 +117,22 @@ const deleteFamily = (family_id) => {
 
     })
 }
+const postFamily = async (familyData) => {
+    try {
+        const family = await Family.create({
+
+            family_name: familyData.family_name,
+            order_id: familyData.order_id
+        });
+        return family;
+    } catch (error) {
+        console.error("Error creating a new family: ", error.message);
+        throw error;
+    }
+}
 module.exports = {
     createFamily,
     updateFamily,
-    deleteFamily
+    deleteFamily,
+    postFamily
 }

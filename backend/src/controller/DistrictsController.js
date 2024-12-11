@@ -2,8 +2,8 @@
 const DistrictsService = require("../services/DistrictsService")
 const createDistricts = async (req, res) => {
     try {
-        const { name, provinces_id } = req.body;
-        if (!name || !provinces_id) {
+        const { district_name, provinces_id } = req.body;
+        if (!district_name || !provinces_id) {
             return res.status(400).json({
                 status: 'ERROR',
                 message: 'The input is required'
@@ -56,8 +56,31 @@ const deleteDistricts = async (req, res) => {
         })
     }
 }
+const createNewDistrict = async (req, res) => {
+    try {
+        const { district_name, provinces_id } = req.body;
+        const districtsData = { district_name, provinces_id };
+
+        console.log(">>> Check name == ", districtsData);
+        const newDistrict = await DistrictsService.postDistrict(districtsData);
+
+        return res.status(201).json({
+            message: 'District created successfully!',
+            data: newDistrict
+        });
+    } catch (error) {
+        console.error('Error:', error.message);
+        return res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message
+        });
+    }
+
+
+}
 module.exports = {
     createDistricts,
     updateDistricts,
-    deleteDistricts
+    deleteDistricts,
+    createNewDistrict
 }

@@ -4,8 +4,8 @@ const KingdomService = require("../services/KingdomService")
 const createKingdom = async (req, res) => {
     try {
 
-        const { name } = req.body;
-        if (!name) {
+        const { kingdom_name } = req.body;
+        if (!kingdom_name) {
             return res.status(400).json({
                 status: 'ERROR',
                 message: 'The input is required'
@@ -13,7 +13,7 @@ const createKingdom = async (req, res) => {
         }
 
 
-        const respone = await KingdomService.createKingdom(name)
+        const respone = await KingdomService.createKingdom(kingdom_name)
         return res.status(200).json(respone)
 
     } catch (e) {
@@ -59,8 +59,31 @@ const deleteKingdom = async (req, res) => {
         })
     }
 }
+const createNewKingdom = async (req, res) => {
+    try {
+        const { kingdom_name } = req.body;
+        const kingdomData = { kingdom_name };
+
+        console.log(">>> Check input data == ", kingdomData);
+        const newKingdom = await postKingdom(kingdomData);
+
+        return res.status(201).json({
+            message: 'Kingdom created successfully!',
+            data: newKingdom
+        });
+    } catch (error) {
+        console.error('Error:', error.message);
+        return res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message
+        });
+    }
+
+
+}
 module.exports = {
     createKingdom,
     updateKingdom,
-    deleteKingdom
+    deleteKingdom,
+    createNewKingdom
 }

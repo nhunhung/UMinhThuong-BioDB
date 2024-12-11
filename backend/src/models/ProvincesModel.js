@@ -6,7 +6,7 @@ const Provinces = sequelize.define('Provinces', {
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
+    province_name: {
         type: DataTypes.TEXT,
         allowNull: false,
     }

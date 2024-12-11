@@ -17,7 +17,7 @@ const Wards = require("../models/WardsModel");
 const createPhylum = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const { name, kingdom_id } = data;
+            const { phylum_name, kingdom_id } = data;
             const phylumwithkingdom = await Kingdom.findAll({
                 where: { kingdom_id }
             });
@@ -32,7 +32,7 @@ const createPhylum = (data) => {
 
             const createdPhylum = await Phylum.create(
                 {
-                    name,
+                    phylum_name,
                     kingdom_id
                 }
             )
@@ -146,8 +146,22 @@ const deletePhylum = (phylum_id) => {
 
     })
 }
+const postPhylum = async (phylumsData) => {
+    try {
+        const phylum = await Phylum.create({
+            phylum_name: phylumsData.phylum_name,
+            kingdom_id: phylumsData.kingdom_id,
+
+        });
+        return phylum;
+    } catch (error) {
+        console.error("Error creating a new phylum: ", error.message);
+        throw error;
+    }
+}
 module.exports = {
     createPhylum,
     updatePhylum,
-    deletePhylum
+    deletePhylum,
+    postPhylum
 }

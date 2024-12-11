@@ -15,12 +15,12 @@ const Role = require("../models/RoleModel");
 const Users = require("../models/UsersModel");
 const Wards = require("../models/WardsModel");
 
-const createKingdom = (name) => {
+const createKingdom = (kingdom_name) => {
     return new Promise(async (resolve, reject) => {
 
         try {
 
-            const createdKingdom = await Kingdom.create({ name });
+            const createdKingdom = await Kingdom.create({ kingdom_name });
             if (createdKingdom) {
                 return resolve({
                     status: 'OK',
@@ -123,8 +123,20 @@ const deleteKingdom = (kingdom_id) => {
 
     })
 }
+const postKingdom = async (kingdomData) => {
+    try {
+        const kingdom = await Kingdom.create({
+            kingdom_name: kingdomData.kingdom_name
+        });
+        return kingdom;
+    } catch (error) {
+        console.error("Error creating a new kingdom: ", error.message);
+        throw error;
+    }
+}
 module.exports = {
     createKingdom,
     updateKingdom,
     deleteKingdom,
+    postKingdom
 }

@@ -2,8 +2,8 @@ const Role = require("../models/RoleModel");
 const GroupOfOrganismsService = require("../services/GroupOfOrganismsService")
 const createGroupOfOrganisms = async (req, res) => {
     try {
-       const {logo, name} = req.body
-        if (!name || !logo) {
+       const {logo, goo_name} = req.body
+        if (!goo_name || !logo) {
             return res.status(400).json({
                 status: 'ERROR',
                 message: 'The input is required'
@@ -55,8 +55,32 @@ const deleteGroupOfOrganisms = async (req, res) => {
         })
     }
 }
+const createNewGroupOfOrganism = async (req, res) => {
+    try {
+        const { goo_name } = req.body;
+        const logo = req.body.logo || "N/A";
+
+
+        const groupOfOrganismData = { goo_name, logo };
+
+        console.log(">>> Check name == ", req.body.logo);
+        const newGroupOfOrganism = await GroupOfOrganismsService.postGroupOfOrganism(groupOfOrganismData);
+
+        return res.status(201).json({
+            message: 'Group of organism status created successfully!',
+            data: newGroupOfOrganism
+        });
+    } catch (error) {
+        console.error('Error:', error.message);
+        return res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message
+        });
+    }
+}
 module.exports = {
     createGroupOfOrganisms,
     updateGroupOfOrganisms,
-    deleteGroupOfOrganisms
+    deleteGroupOfOrganisms,
+    createNewGroupOfOrganism
 }

@@ -8,7 +8,7 @@ const Wards = sequelize.define('Wards', {
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
+    ward_name: {
         type: DataTypes.TEXT,
         allowNull: false,
     }

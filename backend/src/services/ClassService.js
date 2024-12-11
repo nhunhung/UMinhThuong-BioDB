@@ -15,7 +15,7 @@ const Wards = require("../models/WardsModel");
 const createClass = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const { name, phylum_id } = data;
+            const { phylum_name, phylum_id } = data;
             const classwithphylum = await Phylum.findAll({
                 where: { phylum_id: phylum_id }
             });
@@ -30,7 +30,7 @@ const createClass = (data) => {
 
             const createdClass = await Class.create(
                 {
-                    name,
+                    class_name,
                     phylum_id
                 }
             )
@@ -139,8 +139,22 @@ const deleteClass = (class_id) => {
 
     })
 }
+
+const postClass = async (classesData) => {
+    try {
+        const class_sp = await Class.create({
+            class_name: classesData.class_name,
+            phylum_id: classesData.phylum_id
+        });
+        return class_sp;
+    } catch (error) {
+        console.error("Error creating a new class: ", error.message);
+        throw error;
+    }
+}
 module.exports = {
     createClass,
     updateClass,
-    deleteClass
+    deleteClass,
+    postClass,
 }

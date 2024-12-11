@@ -7,6 +7,9 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 const app = express();
 const sequelize = require('./config/connectdb');
+const fileUpload = require('express-fileupload');
+const cors = require('cors');
+
 // require import table
 const Role = require('./models/RoleModel');
 const Users = require('./models/UsersModel');
@@ -30,6 +33,22 @@ const Language = require('./models/LanguageModel');
 const SearchHistory = require('./models/SearchHistory');
 const Message = require('./models/MessageModel');
 const FileUpLoad = require('./models/FileUploadModel');
+// CORS Configuration
+const allowedOrigins = ['http://localhost:3000', 'http://192.168.145.1:3000'];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        // Kiểm tra nếu origin nằm trong danh sách allowedOrigins
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true); // Cho phép yêu cầu
+        } else {
+            callback(new Error('Not allowed by CORS')); // Từ chối yêu cầu
+        }
+    },
+    methods: 'GET,POST,PUT,DELETE',  // Allow HTTP methods
+    allowedHeaders: 'Content-Type,Authorization'  // Allow these headers
+}));
+
 require('events').setMaxListeners(20); // Tăng giới hạn lên 20 (hoặc giá trị phù hợp)
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -39,15 +58,24 @@ app._router.stack.forEach((middleware) => {
     }
   });
   
+// app.use(fileUpload());
+
 
 // const db = require("./config/database");
 app.get('/', (req, res) => {
     res.send('hello world');
 });
 
+// Middleware cho các route chung
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-app.use(cookieParser())
+app.use(cookieParser());
+
+// Tạo route /api/uploadImage và chỉ sử dụng middleware cần thiết cho nó
+app.use('/api/uploadImage', fileUpload());
+app.use('/api/uploadImage', bodyParser.json({ limit: '50mb' }));
+app.use('/api/uploadImage', bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use('/api/uploadImage', cookieParser());
 
 routes(app);
 

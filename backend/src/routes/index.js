@@ -17,6 +17,8 @@ const KingdomRouter = require('./KingdomRouter')
 const OrganismRouter = require('./OrganismRouter')
 const SampleRouter = require('./SampleRouter')
 const IdentificationRouter = require('./IdentificationRouter')
+const UploadImageRouter = require('./UploadImageRouter')
+const UploadExcelRouter = require('./UploadExcelRouter')
 // const routes = (app) => {
 //     app.use('/api/role', RoleRouter);
 //     app.use('/api/users', UsersRouter);
@@ -59,6 +61,8 @@ const routes = (app) => {
         '/api/organism': OrganismRouter,
         '/api/sample': SampleRouter,
         '/api/identification': IdentificationRouter,
+        '/api/uploadImage': UploadImageRouter,
+        '/api/uploadExcel': UploadExcelRouter,
     };
 
     // Kiểm tra từng router

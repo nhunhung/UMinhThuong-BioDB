@@ -2,8 +2,8 @@
 const WardsService = require("../services/WardsService")
 const createWards = async (req, res) => {
     try {
-        const { name, districts_id } = req.body;
-        if (!name || !districts_id) {
+        const { ward_name, districts_id } = req.body;
+        if (!ward_name || !districts_id) {
             return res.status(400).json({
                 status: 'ERROR',
                 message: 'The input is required'
@@ -54,6 +54,28 @@ const deleteWards = async (req, res) => {
             message: e
         })
     }
+}
+const createNewWard = async (req, res) => {
+    try {
+        const { ward_name, districts_id } = req.body;
+        const wardsData = { ward_name, districts_id };
+
+        console.log(">>> Check name == ", wardsData);
+        const newWard = await WardsService.postWard(wardsData);
+
+        return res.status(201).json({
+            message: 'Ward created successfully!',
+            data: newWard
+        });
+    } catch (error) {
+        console.error('Error:', error.message);
+        return res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message
+        });
+    }
+
+
 }
 module.exports = {
     createWards,

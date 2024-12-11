@@ -7,9 +7,9 @@ import AdminLoginForm from './components/AdminLoginForm';
 import UploadExcel from './components/UploadExcel';
 import Admin from './pages/Admin';
 import Header from './layout/header';
-import Home from './components/Home';
 import Footer from './layout/footer';
 import { LanguageProvider } from './components/LanguageContext';
+import Home from './components/Home';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -17,29 +17,23 @@ function App() {
   return (
     <LanguageProvider>
       <Router>
-        <Routes>
+      <Header />
 
-          <Route
-            path="/"
-            element={
-              <>
-                <Header />
-                <Home />
-                <Footer />
-              </>
-            }
-          />
+
+        <Routes>
 
           {/* <Route path="/" element={<Navigate to="/admin" />} /> */}
           {/* Trang đăng nhập */}
           {/* <Route path="/admin" element={isAuthenticated ? <Admin /> : <AdminLoginForm />} /> */}
-
+          <Route path="/" element={<Home />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/login" element={<AdminLoginForm />} />
           <Route path="/upload" element={<UploadExcel />} />
         </Routes>
         
       </Router>
+      <Footer />
+
     </LanguageProvider>
   );
 }

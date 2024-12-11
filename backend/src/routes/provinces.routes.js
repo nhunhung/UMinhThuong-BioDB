@@ -1,0 +1,11 @@
+const express = require('express');
+const routerAPI = express.Router();
+const { createANewProvince } = require("../controller/provinces.controller");
+const validateProvince = require("../middleware/validateProvincesData");
+
+
+routerAPI.post('/add', validateProvince, createANewProvince);
+
+
+
+module.exports = routerAPI;

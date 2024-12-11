@@ -4,6 +4,7 @@ import { Container } from 'postcss';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import AdminLoginForm from './components/AdminLoginForm';
+import UploadExcel from './components/UploadExcel';
 import Admin from './pages/Admin';
 import Header from './layout/header';
 import Home from './components/Home';
@@ -35,7 +36,9 @@ function App() {
 
           <Route path="/admin" element={<Admin />} />
           <Route path="/login" element={<AdminLoginForm />} />
+          <Route path="/upload" element={<UploadExcel />} />
         </Routes>
+        
       </Router>
     </LanguageProvider>
   );

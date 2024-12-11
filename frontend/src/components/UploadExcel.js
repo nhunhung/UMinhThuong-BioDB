@@ -3,15 +3,18 @@ import * as XLSX from 'xlsx';
 import "../StyleCSS/style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faListCheck, faDeleteLeft, faUpload } from "@fortawesome/free-solid-svg-icons";
+import axios from 'axios';
 
 const UploadExcel = () => {
   const [data, setData] = useState([]);
+  const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState('');
   const [logVisible, setLogVisible] = useState(false);
+  const [logData, setLogData] = useState([]);
   const [dataVisible, setDataVisible] = useState(false);
 
-  // Tiêu đề dữ liệu cố định
   const headers = [
+    // List of headers for the Excel file
     'Số hiệu thứ 1', 'Dự án', 'Kiểu ghi nhận', 'Mã bảo tàng', 'Mã mẫu vật',
     'Loại mẫu chuẩn', 'Số hiệu thứ 2', 'Số lượng mẫu vật', 'Người thu mẫu chính',
     'Cộng sự', 'Ngày ghi nhận', 'Tháng ghi nhận', 'Năm ghi nhận', 'Quốc gia',
@@ -31,12 +34,13 @@ const UploadExcel = () => {
     'Thông tư 35/2018/TT-BTNMT', 'Vị trí ảnh'
   ];
 
+  // Upload file handler
   const handleFileUpload = (file) => {
     if (!file) {
       console.error("No file provided");
       return;
     }
-
+    setFile(file);
     setFileName(file.name);
 
     const reader = new FileReader();
@@ -46,46 +50,119 @@ const UploadExcel = () => {
 
       const ws = wb.Sheets[wb.SheetNames[0]];
       const jsonData = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      const rows = jsonData.slice(1);
-      setData(rows);
-    };
+      const rows = jsonData.slice(1); // Remove header row
 
+      // Danh sách các cột boolean cần xử lý
+      const booleanColumns = [
+        "cultivated",
+        "endangeredRareSpecies",
+        "iucnRedList",
+        "citesSpecies",
+        "vietnamRedList",
+        "endemic"
+      ];
+
+      // Chuyển đổi các giá trị boolean thành "Có" hoặc "KHÔNG"
+      rows.forEach((row, rowIndex) => {
+        booleanColumns.forEach((colName, colIndex) => {
+          const colIndexInRow = jsonData[0].indexOf(colName);
+          if (colIndexInRow !== -1) {
+            const cellValue = row[colIndexInRow];
+            const booleanValue = cellValue.toString().toLowerCase();
+            if (booleanValue === "true" || booleanValue === "1" || booleanValue === "TRUE") {
+              row[colIndexInRow] = "Có";  // Chuyển TRUE hoặc 1 thành "Có"
+            } else if (booleanValue === "false" || booleanValue === "0" || booleanValue === "FALSE") {
+              row[colIndexInRow] = "Không"; // Chuyển FALSE hoặc 0 thành "KHÔNG"
+            }
+          }
+        });
+      });
+
+      setData(rows);
+      setDataVisible(false);
+    };
     reader.readAsArrayBuffer(file);
   };
+  // Check data handler
+  const handleCheckData = async () => {
+    if (!file) {
+      alert('Vui lòng chọn file!'); // Alert if no file is selected
+      return;
+    }
 
+    const formData = new FormData();
+    formData.append('file', file);
 
-  // Hàm để kiểm tra dữ liệu (hiển thị log)
-  const handleCheckData = () => {
-    setLogVisible(true);
+    try {
+      const response = await axios.post('http://localhost:3001/api/v1/upload_excel/checkData', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      if (response.data.success) {
+        const logs = response.data.logs;
+        setLogData(logs);
+        setLogVisible(true);
+
+        // Kiểm tra xem có lỗi không, nếu có thì không hiển thị dữ liệu
+        const hasError = logs.some(log => log.type === 'error');
+        if (!hasError) {
+          setDataVisible(true);  // Hiển thị dữ liệu nếu không có logs error
+        } else {
+          setDataVisible(false);  // Ẩn dữ liệu nếu có logs error
+        }
+      }
+    } catch (error) {
+      console.error('Có lỗi khi kiểm tra file:', error);
+    }
   };
 
-  // Hàm để hiển thị dữ liệu
-  const handleReadyData = () => {
-    setDataVisible(true);
+  // Upload data handler
+  const handleReadyData = async () => {
+    if (!file) {
+      alert('Vui lòng chọn file để upload!');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await axios.post('http://localhost:3001/api/v1/upload_excel/add', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      if (response.status === 200) {
+        alert('File đã được upload và dữ liệu đã được lưu!');
+      }
+    } catch (error) {
+      alert('Có lỗi xảy ra khi upload file');
+      console.error(error);
+    }
   };
 
-  // Hàm để xóa dữ liệu và chọn file mới
+  // Delete log and reset the form
   const handleDeleteLog = () => {
     setLogVisible(false);
     setDataVisible(false);
     setData([]);
+    setFile(null);
     setFileName('');
-  };
 
-  //KEO THA FILE
-  const handleFileDrop = (event) => {
-    event.preventDefault();
-
-    const files = event.dataTransfer?.files;
-
-    if (files && files.length > 0) {
-      const file = files[0];
-      handleFileUpload(file);
-    } else {
-      console.error("No files found in the drop event.");
+    // Reset giá trị input file
+    const fileInput = document.getElementById("file-upload");
+    if (fileInput) {
+      fileInput.value = "";
     }
   };
 
+  // Handle file drag and drop
+  const handleFileDrop = (event) => {
+    event.preventDefault();
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      handleFileUpload(files[0]);
+    }
+  };
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -95,10 +172,8 @@ const UploadExcel = () => {
     <div>
       <h2>Upload Excel</h2>
       <div className="App">
-
         {/* Form upload file */}
-        <section id='form'>
-
+        <section id="form">
           <div className="upload-container">
             <label
               htmlFor="file-upload"
@@ -106,7 +181,8 @@ const UploadExcel = () => {
               onDragOver={handleDragOver}
               onDrop={handleFileDrop}
             >
-              <FontAwesomeIcon style={{ fontSize: '30px', marginLeft: '30px', marginRight: '15px', color: '#5CACEE' }} icon={faUpload} /> {!fileName ? "Kéo và thả hoặc chọn tệp" : fileName}
+              <FontAwesomeIcon style={{ fontSize: '30px', marginLeft: '30px', marginRight: '15px', color: '#5CACEE' }} icon={faUpload} />
+              {!fileName ? "Kéo và thả hoặc chọn tệp" : fileName}
               <p className="file-format-note">
                 Chỉ chấp nhận tệp Excel định dạng <strong>.xlsx</strong> hoặc <strong>.xls</strong>.
               </p>
@@ -119,22 +195,46 @@ const UploadExcel = () => {
             </label>
           </div>
 
-          {/* Hiển thị log kiểm tra */}
-
-          <div className='log'>
-            {logVisible && (
-              <>
-                <FontAwesomeIcon icon={faCheck} />
-                {' Log kiểm tra'}
-              </>
+          {/* Display log data */}
+          <div className="log">
+            {logVisible ? (
+              logData.length > 0 ? (
+                <table className="log-table">
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th>Message</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {logData.map((log, index) => (
+                      <tr key={index} className={log.type === 'error' ? 'log-error' : 'log-warning'}>
+                        <td>{log.type}</td>
+                        <td
+                          dangerouslySetInnerHTML={{
+                            __html: log.message.replace(/\n/g, '<br>'), // Chuyển \n thành <br> để xuống dòng
+                          }}
+                        />
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>Sẵn sàng để upload và lưu dữ liệu</p>
+              )
+            ) : (
+              <p>No logs to display</p>
             )}
           </div>
 
+
+
+
         </section>
 
-        {/* Hiển thị dữ liệu dưới dạng bảng */}
-        <section id='table'>
-          <div className='button'>
+        {/* Data table */}
+        <section id="table">
+          <div className="button">
             <button className="btnCheck" onClick={handleCheckData}>
               <FontAwesomeIcon icon={faCheck} /> Kiểm tra dữ liệu
             </button>
@@ -146,7 +246,6 @@ const UploadExcel = () => {
             </button>
           </div>
           <div className="table-container">
-
             <table>
               <thead>
                 <tr>
@@ -167,16 +266,12 @@ const UploadExcel = () => {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={headers.length}>
-                        No rows to show
-                      </td>
+                      <td colSpan={headers.length}>No rows to show</td>
                     </tr>
                   )
                 )}
               </tbody>
-
             </table>
-
           </div>
         </section>
       </div>

@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https:fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif; /* Đổi font chữ toàn trang thành Arial */
+    font-family: 'Spartan', sans-serif;
 }
 
 .App {
@@ -29,7 +29,7 @@ h2 {
 }
 
 .upload-container {
-    height: 5rem;
+    height: 10rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,11 +40,12 @@ h2 {
 }
 
 .log {
-    height: 25rem;
+    height: 30rem;
     padding: 1.25rem;
     margin-top: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #e2e9e1;
+    overflow-y: auto; 
 }
 
 .upload-container,
@@ -66,9 +67,6 @@ h2 {
 
 #table .button {
     height: 4.125rem;
-    display: flex;
-    justify-content: flex-start; /* Dời các nút về phía bên trái */
-    gap: 0px; /* Thêm khoảng cách giữa các nút */
 }
 
 #table table {
@@ -78,11 +76,12 @@ h2 {
 }
 
 #table .table-container {
-    height: 25rem;
+    height: 30rem;
     overflow-y: auto;
     border: 1px solid #e2e9e1;
     border-radius: 4px;
     margin-top: 35px;
+    border: 1px solid #e2e9e1;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -90,7 +89,7 @@ h2 {
     border: 1px solid #e2e9e1;
     border-left: none;
     border-right: none;
-    height: 50px;
+    height: 70px;
     background-color: #43AC78;
     color: #FFF;
 }
@@ -103,15 +102,15 @@ h2 {
     border: 1px solid #ddd;
 }
 
-/* Cải thiện việc căn giữa chữ trong button */
-.button,
-button {
+.button {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px; /* Kích thước chữ trong button nhỏ hơn */
+    padding-top: 20px;
+}
+
+button {
+    font-size: 14px;
     font-weight: 600;
-    padding: 8px 20px; /* Điều chỉnh padding để vừa với chữ */
+    padding: 15px 30px;
     border-radius: 4px;
     margin-right: 20px;
     cursor: pointer;
@@ -121,10 +120,10 @@ button {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Các kiểu riêng cho từng button */
 .btnCheck {
     background-color: #EE7942;
     color: white;
+    height: 50px;
 }
 
 .btnCheck:hover {
@@ -135,6 +134,7 @@ button {
 .btnOK {
     background-color: #6E7B8B;
     color: white;
+    height: 50px;
 }
 
 .btnOK:hover {
@@ -145,6 +145,7 @@ button {
 .btnDelete {
     background-color: #E8E8E8;
     color: #6E7B8B;
+    height: 50px;
 }
 
 .btnDelete:hover {
@@ -152,7 +153,6 @@ button {
     transform: scale(1.05);
 }
 
-/* Ẩn input file */
 .upload-button input[type="file"] {
     display: none;
 }
@@ -161,8 +161,49 @@ button {
     font-size: 12px;
     color: #888;
     margin-top: 8px;
+  }
+  
+  .file-format-note strong {
+    color: #ff5733;
+  }
+
+ 
+.log ul {
+  list-style-type: none; /* Xóa dấu chấm đầu dòng */
+  padding: 0;
+  margin: 0;
 }
 
-.file-format-note strong {
-    color: #ff5733;
+.log ul li {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+.log-error {
+  color: red;
+}
+
+.log-warning {
+  color: orange;
+}
+
+.log p {
+  text-align: center;
+}
+
+.log-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.log-table th,
+.log-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.log-table th {
+  background-color: #f4f4f4;
 }

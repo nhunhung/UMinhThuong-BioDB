@@ -1,85 +1,41 @@
 import React, { useState } from "react";
 import '../StyleCSS/Cardlist.css';
-import L from "leaflet";
-/*
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale } from 'chart.js';
-ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
-*/
+import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
+import L from 'leaflet';
+import '../StyleCSS/leaflet.css';
 
-/*
-Cài đặt biểu đồ trước khi chạy. Lệnh: npm install chart.js react-chartjs-2
-Cài đặt biểu đồ trước khi chạy. Lệnh: npm install chart.js react-chartjs-2
-*/ 
 
-// Đăng ký các phần của Chart.js mà bạn cần sử dụng
+ // Import Leaflet
 
 
 
 const Cardlist = () => {
     const [viewMode, setViewMode] = useState("grid"); // Quản lý chế độ hiển thị
     const [searchTerm, setSearchTerm] = useState(""); // Quản lý giá trị ô tìm kiếm
+    const [currentPageList, setCurrentPageList] = useState(1); // Trang hiện tại cho card-list-view
 
 
-    const items = Array(36).fill({
+    const items = Array(200).fill({
         title: "",
         description: "",
         group: "",
         count: ""
     });
 
+    const itemsPerPageList = 20;
+
 
     const filteredItems = items.filter(item =>
         item.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    /*
-    // Dữ liệu cho biểu đồ tròn
-  const chartData1 = {
-    labels: ["undefined", "Thực vật hạt kín", "Khuyết thực vật", "Chim", "Cá", "Thú", "Bò sát", "Động vật không xương sống", "Lưỡng cư"],
-    datasets: [
-      {
-        label: "Loài",
-        data: [50, 200, 150, 50, 80, 120, 60, 20, 40], // Giá trị mẫu, back-end sẽ truyền vào
-        backgroundColor: [
-          "#FFC107", // undefined
-          "#4CAF50", // Thực vật hạt kín
-          "#FF5722", // Khuyết thực vật
-          "#00BCD4", // Chim
-          "#3F51B5", // Cá
-          "#8BC34A", // Thú
-          "#FF9800", // Bò sát
-          "#E91E63", // Động vật không xương sống
-          "#9C27B0", // Lưỡng cư
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
 
-  const chartData2 = {
-    labels: ["undefined", "Thực vật hạt kín", "Khuyết thực vật", "Chim", "Cá", "Thú", "Bò sát", "Động vật không xương sống", "Lưỡng cư"],
-    datasets: [
-      {
-        label: "Ghi nhận",
-        data: [100, 500, 300, 150, 250, 200, 90, 30, 40], // Giá trị mẫu, back-end sẽ truyền vào
-        backgroundColor: [
-          "#FFC107", // undefined
-          "#4CAF50", // Thực vật hạt kín
-          "#FF5722", // Khuyết thực vật
-          "#00BCD4", // Chim
-          "#3F51B5", // Cá
-          "#8BC34A", // Thú
-          "#FF9800", // Bò sát
-          "#E91E63", // Động vật không xương sống
-          "#9C27B0", // Lưỡng cư
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+    // Phân trang cho list
+    const indexOfLastItemList = currentPageList * itemsPerPageList;
+    const indexOfFirstItemList = indexOfLastItemList - itemsPerPageList;
+    const currentItemsList = filteredItems.slice(indexOfFirstItemList, indexOfLastItemList);
 
-  */
+    
 
 
     // Chế độ hiển thị dạng lưới (grid)
@@ -101,71 +57,159 @@ const Cardlist = () => {
 
     // Chế độ hiển thị dạng danh sách (list)
     const renderListView = () => {
-        return (
-            <table className="card-list-view">
-                <thead>
-                    <tr>
-                        <th>Chi tiết</th>
-                        <th>Hình đại diện</th>
-                        <th>Nhóm sinh vật</th>
-                        <th>Bộ</th>
-                        <th>Họ</th>
-                        <th>Chi</th>
-                        <th>Tên khoa học</th>
-                        <th>Tên tác giả</th>
-                        <th>Tên địa phương</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredItems.map((item, index) => (
-                        <tr key={index}>
-                            <td>{item.details}</td>
-                            <td>
-                                <img src={item.avatar} alt="Hình đại diện" className="table-avatar" />
-                            </td>
-                            <td>{item.group}</td>
-                            <td>{item.order}</td>
-                            <td>{item.family}</td>
-                            <td>{item.genus}</td>
-                            <td>{item.scientificName}</td>
-                            <td>{item.author}</td>
-                            <td>{item.localName}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        );
-    };
+      // Tính toán số lượng trang
+      const totalPagesList = Math.ceil(filteredItems.length / itemsPerPageList);
+  
+      return (
+          <div>
+              <table className="card-list-view">
+                  <thead>
+                      <tr>
+                          <th>Chi tiết</th>
+                          <th>Hình đại diện</th>
+                          <th>Nhóm sinh vật</th>
+                          <th>Bộ</th>
+                          <th>Họ</th>
+                          <th>Chi</th>
+                          <th>Tên khoa học</th>
+                          <th>Tên tác giả</th>
+                          <th>Tên địa phương</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {currentItemsList.map((item, index) => (
+                          <tr key={index}>
+                              <td>{item.details}</td>
+                              <td>
+                                  <img src={item.avatar} alt="Hình đại diện" className="table-avatar" />
+                              </td>
+                              <td>{item.group}</td>
+                              <td>{item.order}</td>
+                              <td>{item.family}</td>
+                              <td>{item.genus}</td>
+                              <td>{item.scientificName}</td>
+                              <td>{item.author}</td>
+                              <td>{item.localName}</td>
+                          </tr>
+                      ))}
+                  </tbody>
+              </table>
+  
+              {/* Phân trang */}
+              <div className="pagination">
+                  <button
+                      onClick={() => setCurrentPageList(currentPageList - 1)}
+                      disabled={currentPageList === 1}
+                  >
+                      Previous
+                  </button>
+                  <span>
+                      {`Page ${currentPageList} of ${totalPagesList}`}
+                  </span>
+                  <button
+                      onClick={() => setCurrentPageList(currentPageList + 1)}
+                      disabled={currentPageList === totalPagesList}
+                  >
+                      Next
+                  </button>
+              </div>
+          </div>
+      );
+  };
+  
 
 
 
 
     // Chế độ hiển thị dạng đồ thị tròn (stats)
-
-    const renderStatsView = () => (
-      <div className="card-stats">
-          <p>Số lượng ghi nhận: {filteredItems.length}</p>
-          <p>Số nhóm sinh vật: 1</p>
-          <p>Số loài đặc biệt: 2</p>
-      </div>
-  );
-
-    /*
-    const renderStatsView = () => (
-        <div className="card-stats">
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <div style={{ width: "45%" }}>
-              <h4>Loài</h4>
-              <Pie data={chartData1} />
+    
+    const renderStatsView = () => {
+        const speciesData = [
+            { name: 'undefined', value: 50 },
+            { name: 'Thực vật hạt kín', value: 120 },
+            { name: 'Khuyết thực vật', value: 80 },
+            { name: 'Chim', value: 150 },
+            { name: 'Thú', value: 100 },
+            { name: 'Bò sát', value: 90 },
+            { name: 'Động vật không xương sống', value: 70 },
+            { name: 'Lưỡng cư', value: 30 },
+            { name: 'Cá', value: 77 },
+        ];
+    
+        const recordsData = [
+            { name: 'undefined', value: 100 },
+            { name: 'Thực vật hạt kín', value: 300 },
+            { name: 'Khuyết thực vật', value: 200 },
+            { name: 'Chim', value: 400 },
+            { name: 'Thú', value: 300 },
+            { name: 'Bò sát', value: 250 },
+            { name: 'Động vật không xương sống', value: 150 },
+            { name: 'Lưỡng cư', value: 80 },
+            { name: 'Cá', value: 150 },
+        ];
+    
+        const COLORS = [
+            '#f9c74f',
+            '#90be6d',
+            '#f94144',
+            '#43aa8b',
+            '#577590',
+            '#277da1',
+            '#f3722c',
+            '#4d908e',
+            '#577590',
+        ];
+    
+        return (
+            <div className="card-stats" style={{ display: 'flex', justifyContent: 'space-around' }}>
+                {/* Biểu đồ 1 */}
+                <div>
+                    <h3>Loài: 767</h3>
+                    <PieChart width={400} height={400}>
+                        <Pie
+                            data={speciesData}
+                            dataKey="value"
+                            nameKey="name"
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={150}
+                            label
+                        >
+                            {speciesData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                        </Pie>
+                        <Tooltip />
+                        <Legend />
+                    </PieChart>
+                </div>
+    
+                {/* Biểu đồ 2 */}
+                <div>
+                    <h3>Ghi nhận: 1664</h3>
+                    <PieChart width={400} height={400}>
+                        <Pie
+                            data={recordsData}
+                            dataKey="value"
+                            nameKey="name"
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={150}
+                            label
+                        >
+                            {recordsData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                        </Pie>
+                        <Tooltip />
+                        <Legend />
+                    </PieChart>
+                </div>
             </div>
-            <div style={{ width: "45%" }}>
-              <h4>Ghi nhận</h4>
-              <Pie data={chartData2} />
-            </div>
-          </div>
-        </div>
-      );
-      */
+        );
+    };
+  
+
 
     
 
@@ -178,18 +222,31 @@ const Cardlist = () => {
     
       // Khởi tạo bản đồ Leaflet
       React.useEffect(() => {
-        if (viewMode === "map") {
-          const map = L.map("map").setView([9.58739, 105.0552], 10); // Vị trí ban đầu của bản đồ
-    
+        const mapContainer = document.getElementById("map");
+        console.log("Map container found:", !!mapContainer); // Kiểm tra phần tử map
+        console.log("Leaflet ID exists:", mapContainer?._leaflet_id);
+      
+        if (mapContainer && !mapContainer._leaflet_id) {
+          const map = L.map("map").setView([9.58739, 105.0552], 10);
+          console.log("Map initialized");
+      
           L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution:
-              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
           }).addTo(map);
-    
-          L.marker([9.58739, 105.0552]).addTo(map).bindPopup("Đây là vị trí mẫu").openPopup();
+      
+          console.log("Tile layer added");
+      
+          L.marker([9.58739, 105.0552])
+            .addTo(map)
+            .bindPopup("Đây là vị trí mẫu")
+            .openPopup();
+      
+          setTimeout(() => {
+            map.invalidateSize(); // Xử lý lỗi không load kích thước
+            console.log("Map size updated");
+          }, 100);
         }
-      }, [viewMode]);
-
+      }, []);
 
     const renderView = () => {
         switch (viewMode) {

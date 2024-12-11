@@ -129,7 +129,7 @@ const Sidebar = () => {
         <div className="filter-box">
           <button
             className="dropdown-btn"
-            onClick={() => handleDropdownToggle(4)}
+            onClick={() => handleDropdownToggle(5)}
           >
             ► Người ghi nhận
           </button>
@@ -141,7 +141,7 @@ const Sidebar = () => {
         <div className="filter-box">
           <button
             className="dropdown-btn"
-            onClick={() => handleDropdownToggle(4)}
+            onClick={() => handleDropdownToggle(6)}
           >
             ► Tình trạng bảo tồn
           </button>
@@ -153,7 +153,7 @@ const Sidebar = () => {
         <div className="filter-box">
           <button
             className="dropdown-btn"
-            onClick={() => handleDropdownToggle(4)}
+            onClick={() => handleDropdownToggle(7)}
           >
             ► Loại đặc hữu
           </button>
@@ -165,7 +165,7 @@ const Sidebar = () => {
         <div className="filter-box">
           <button
             className="dropdown-btn"
-            onClick={() => handleDropdownToggle(4)}
+            onClick={() => handleDropdownToggle(8)}
           >
             ► Loại ngoại lai
           </button>

@@ -22,34 +22,40 @@ const addCustomInclude = (addCustomIncludes = []) => {
 }
 
 //Lấy toàn bộ Organism
-const getAllOrganisms = async () => {
+const getAllOrganisms = async (limit, offset) => {
   try {
     return await Organism.findAll({
-      include: organismInclude
-    }); 
+      include: organismInclude,
+      limit: limit,     // Giới hạn số lượng kết quả mỗi trang
+      offset: offset    // Vị trí bắt đầu (dựa vào page và limit)
+    });
   } catch (err) {
-    throw new Error(`Error fetching organisms ${err.message}`);
+    throw new Error(`Error fetching organisms: ${err.message}`);
   }
 };
 
 // Lấy Organism theo groupId
-const getOrganismsByGroups = async (groupIdsArray) => {
+const getOrganismsByGroups = async (limit, offset, groupIdsArray) => {
   try {
     const organisms = await Organism.findAll({
       where: {
-        groupoforganisms_id: groupIdsArray  
+        groupoforganisms_id: groupIdsArray  // Lọc theo nhóm sinh vật
       },
-      include: organismInclude
+      include: organismInclude,
+      limit: limit,      // Giới hạn số lượng sinh vật mỗi trang
+      offset: offset     // Vị trí bắt đầu (tính từ page và limit)
     });
 
     if (organisms.length === 0) {
-      throw new Error(`No organisms found in group with ID ${groupId}`);
+      throw new Error(`No organisms found in the specified group(s)`);
     }
+
     return organisms;
   } catch (err) {
     throw new Error(`Error fetching organisms by group ID: ${err.message}`);
   }
 };
+
 
 const getOrganinsmById = async (organism_Id) => {
   try {

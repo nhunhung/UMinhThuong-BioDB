@@ -2,7 +2,7 @@ const { Op } = require('sequelize');
 const Organism = require('../models/OrganismModel');
 const LocationSample = require('../models/LocationSampleModel');
 const Sample = require('../models/SampleModel');
-const MapService = require('../models/MapService');
+const MapService = require('../services/MapService');
 
 async function getOrganismsWithLocation(req, res) {
     try {

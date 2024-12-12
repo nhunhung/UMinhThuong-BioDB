@@ -9,6 +9,7 @@ import Header from './layout/header';
 import Footer from './layout/footer';
 import { LanguageProvider } from './components/LanguageContext';
 import Home from './components/Home';
+import LookupPage from './pages/LookupPage'
 
 function FooterWrapper() {
   const location = useLocation();
@@ -30,6 +31,7 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/login" element={<AdminLoginForm />} />
           <Route path="/upload" element={<UploadExcel />} />
+          <Route path="/lookup" element={<LookupPage />} />
         </Routes>
 
         <FooterWrapper />

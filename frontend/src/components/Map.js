@@ -1,25 +1,43 @@
-import React from "react";
-import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
+import React, { useState, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
 
-const Map = () => {
-    const defaultLat = 9.5715; // Vĩ độ của Vườn Quốc gia U Minh Thượng
-    const defaultLng = 105.1055; // Kinh độ của Vườn Quốc gia U Minh Thượng
+import "leaflet/dist/leaflet.css";
+import osm from "./osm-providers";
+
+
+const markerIcon = new L.Icon({
+    iconUrl: "./assets/images/position.webp",
+    iconSize: [30, 30],
+    iconAnchor: [17, 46], 
+    popupAnchor: [0, -46], 
+});
+
+
+
+const MarkersMap = () => {
+    const ZOOM_LEVEL = 9;
+    const mapRef = useRef();
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
-            <div className="w-full h-96 max-w-4xl bg-white shadow-lg rounded-lg">
-                <LoadScript googleMapsApiKey="AIzaSyDaOulQACiJzBfqumbsqg_-vKha8fCnL-s">
-                    <GoogleMap
-                        mapContainerClassName="w-full h-full"
-                        center={{ lat: defaultLat, lng: defaultLng }}
-                        zoom={14} // Zoom mặc định để hiển thị chi tiết
-                    >
-                        <Marker position={{ lat: defaultLat, lng: defaultLng }} />
-                    </GoogleMap>
-                </LoadScript>
+        <>
+            <div className="row">
+                <div className="col text-center">
+                    <div className="col">
+                        <MapContainer center={[9.5715, 105.1055]} zoom={ZOOM_LEVEL} ref={mapRef} style={{ height: "400px", width: "100%" }}>
+                            <TileLayer
+                                url={osm.maptiler.url}
+                                attribution={osm.maptiler.attribution}
+                            />
+                            <Marker position={[9.5715, 105.1055]}
+                                icon={markerIcon}
+                            ></Marker>
+                        </MapContainer>
+                    </div>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
-export default Map;
+export default MarkersMap;

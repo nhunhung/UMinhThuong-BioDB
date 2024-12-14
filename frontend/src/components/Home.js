@@ -136,7 +136,7 @@ const Home = () => {
 
 
                 <div className="tw-flex tw-justify-center tw-items-center tw-space-x-4 tw-p-4">
-                    <div className="tw-flex tw-flex-col tw-items-center tw-bg-white tw-shadow-lg tw-rounded-lg tw-p-4 tw-w-1/4 tw-min-h-[200px] tw-transform tw-transition-transform tw-duration-300 tw-hover:tw-scale-110">
+                    <div className="tw-flex tw-flex-col tw-items-center tw-bg-white tw-shadow-lg tw-rounded-lg tw-p-4 tw-w-1/4 tw-min-h-[200px] tw-transform tw-transition-transform tw-duration-300 hover:tw-scale-110">
                         <div className="tw-flex tw-justify-center tw-w-full tw-mb-2">
                             <img
                                 src="./assets/images/logo_wwf-d3294140.png"
@@ -147,7 +147,7 @@ const Home = () => {
                         <p className="tw-text-center tw-font-semibold">Quỹ Quốc tế Bảo vệ Thiên nhiên (WWF)</p>
                     </div>
 
-                    <div className="tw-flex tw-flex-col tw-items-center tw-bg-white tw-shadow-lg tw-rounded-lg tw-p-4 tw-w-1/4 tw-min-h-[200px] tw-transform tw-transition-transform tw-duration-300 tw-hover:tw-scale-110">
+                    <div className="tw-flex tw-flex-col tw-items-center tw-bg-white tw-shadow-lg tw-rounded-lg tw-p-4 tw-w-1/4 tw-min-h-[200px] tw-transform tw-transition-transform tw-duration-300 hover:tw-scale-110">
                         <div className="tw-flex tw-w-full tw-mb-2 tw-space-x-2">
                             <img
                                 src="./assets/images/logo_ecology-4cc4fdbc.png"
@@ -163,7 +163,7 @@ const Home = () => {
                         <p className="tw-text-center tw-font-semibold">Viện Sinh thái học Miền Nam<br />Trung tâm Ứng dụng KH&CN Tiền Giang</p>
                     </div>
 
-                    <div className="tw-flex tw-flex-col tw-items-center tw-bg-white tw-shadow-lg tw-rounded-lg tw-p-4 tw-w-1/4 tw-min-h-[200px] tw-transform tw-transition-transform tw-duration-300 tw-hover:tw-scale-110">
+                    <div className="tw-flex tw-flex-col tw-items-center tw-bg-white tw-shadow-lg tw-rounded-lg tw-p-4 tw-w-1/4 tw-min-h-[200px] tw-transform tw-transition-transform tw-duration-300 hover:tw-scale-110">
                         <div className="tw-flex tw-justify-center tw-w-full tw-mb-2">
                             <img
                                 src="./assets/images/logo-9478606c.png"

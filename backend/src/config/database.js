@@ -1,4 +1,4 @@
-const sequelize = require("../config/db.config");
+const sequelize = require("./connectdb");
 const { DataTypes } = require("sequelize");
 
 // Khởi tạo object `db`
@@ -7,7 +7,7 @@ const db = {
     Sequelize: sequelize.constructor,
 };
 
-// Import các model 
+// Import các model
 db.Kingdom = require("../models/KingdomModel");
 db.Phylum = require("../models/PhylumModel");
 db.Class = require("../models/ClassModel");
@@ -17,7 +17,7 @@ db.Provinces = require("../models/ProvincesModel");
 db.Wards = require("../models/WardsModel");
 
 db.ConservationStatus = require("../models/ConservationStatusModel");
-db.Family= require("../models/FamilyModel");
+db.Family = require("../models/FamilyModel");
 db.FileUpload = require("../models/FileUploadModel");
 
 db.Genus = require("../models/GenusModel");
@@ -29,11 +29,11 @@ db.Message = require("../models/MessageModel");
 db.Orders = require("../models/OrdersModel");
 
 db.Organism = require("../models/OrganismModel");
-db.RecordInfomation = require("../models/RecordInformationModel");
+db.Identification = require("../models/IdentificationModel");
 db.Role = require("../models/RoleModel");
 
 db.Sample = require("../models/SampleModel");
-db.SearchHistory = require("../models/SearchHistoryModel");
+db.SearchHistory = require("../models/SearchHistory");
 db.Users = require("../models/UsersModel");
 
 // Thiết lập quan hệ giữa các models nếu có

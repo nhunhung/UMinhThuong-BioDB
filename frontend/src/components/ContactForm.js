@@ -1,4 +1,8 @@
 import React from "react";
+<<<<<<< HEAD
+=======
+import Map from "./Map";
+>>>>>>> main
 import "./../StyleCSS/ContactForm.css";
 
 const ContactForm = () => {
@@ -9,6 +13,7 @@ const ContactForm = () => {
 
   return (
     <div className="contact-page">
+<<<<<<< HEAD
       {/* Form liên hệ */}
       <div className="form-container">
         <form onSubmit={handleSubmit}>
@@ -36,6 +41,43 @@ const ContactForm = () => {
             Gửi
           </button>
         </form>
+=======
+      <div className="contact-container">
+        {/* Bên trái: Map */}
+        <div className="map-container">
+          <Map />
+        </div>
+
+        {/* Bên phải: Form liên hệ */}
+        <div className="form-container">
+          <h2>Liên hệ với chúng tôi</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="fullName">Họ và tên</label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Họ và tên"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="message">Nội dung tin nhắn</label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Nội dung tin nhắn"
+                rows="5"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" className="submit-button">
+              Gửi
+            </button>
+          </form>
+        </div>
+>>>>>>> main
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
-// const Provinces = require('./ProvincesModel');
-// const Districts = require('./DistrictsModel');
+const sequelize = require('../config/connectdb');
+const Provinces = require('./ProvincesModel');
+const Districts = require('./DistrictsModel');
 const Users = require('./UsersModel');
 const FileUpLoad = sequelize.define('FileUpload', {
     fileupload_id: {
@@ -21,8 +21,6 @@ const FileUpLoad = sequelize.define('FileUpload', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-
-
 },
     {
         tableName: 'FileUpload',

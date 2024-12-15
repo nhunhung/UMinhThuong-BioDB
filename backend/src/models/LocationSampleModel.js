@@ -1,37 +1,96 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config');
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = require('../config/connectdb');
 const Provinces = require('./ProvincesModel');
 const Districts = require('./DistrictsModel');
 const Wards = require('./WardsModel');
-// const Sample = require('./SampleModel');
-// const Organism = require('./OrganismModel');
-
-
+require('events').setMaxListeners(20);
 const LocationSample = sequelize.define('LocationSample', {
     locationsample_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+    country: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: 'Việt Nam',
     },
+    collectionVillage: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: 'N/A',
+    },
+    // Địa danh: location (String) - Mặc định là 'VQG U Minh Thượng'
+    location: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: 'VQG U Minh Thượng',
+    },
+    // Ghi chú về địa điểm ghi mẫu: locationNotes (String) - Ghi chú về địa điểm
+    locationNotes: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: 'N/A',
+    },
+    // Vĩ độ: latitude (Float)
     latitude: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+        type: DataTypes.FLOAT,
+        allowNull: true,
+        defaultValue: null,
     },
+    // Bắc/Nam: northSouth (String)
+    northSouth: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: 'N/A',
+    },
+    // Kinh độ: longitude (Float)
     longitude: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+        type: DataTypes.FLOAT,
+        allowNull: true,
+        defaultValue: null,
     },
-    description: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+    // Đông/Tây: eastWest (String)
+    eastWest: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: 'N/A',
     },
-});
+    // Độ Cao: elevation (Float)
+    elevation: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+        defaultValue: null,
+    },
+    // Độ cao cao nhất loài phân bố: maxElevationRange (Float)
+    maxElevationRange: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+        defaultValue: null,
+    },
+    // Đơn vị độ cao: elevationUnit (String)
+    elevationUnit: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: 'm',
+    },
+    // Kinh độ VN2000: vn2000Longitude (Float)
+    vn2000Longitude: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+        defaultValue: null,
+    },
+    // Vĩ độ VN2000: vn2000Latitude (Float)
+    vn2000Latitude: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+        defaultValue: null,
+    },
 
-// Associations with Provinces, Districts, and Wards
+}, {
+    tableName: 'LocationSample',
+    timestamps: false
+});
 Provinces.hasMany(LocationSample, { foreignKey: 'provinces_id' });
 LocationSample.belongsTo(Provinces, { foreignKey: 'provinces_id' });
 
@@ -40,36 +99,4 @@ LocationSample.belongsTo(Districts, { foreignKey: 'districts_id' });
 
 Wards.hasMany(LocationSample, { foreignKey: 'wards_id' });
 LocationSample.belongsTo(Wards, { foreignKey: 'wards_id' });
-
-
 module.exports = LocationSample;
-// LocationSample.belongsToMany(Organism, {
-//     through: Sample,
-//     foreignKey: 'locationsample_id',
-// });
-
-// LocationSample.belongsToMany(Organism, {
-//     through: Sample,
-//     foreignKey: 'locationsample_id',
-// });
-// Organism.belongsToMany(LocationSample, {
-//     through: Sample,
-//     foreignKey: 'organism_id',
-// });
-
-
-
-// LocationSample.belongsToMany(Sample, {
-//     through: 'likedTootsLikers',
-//     foreignKey: 'locationsample_id',
-// });
-
-
-// LocationSample.belongsToMany(Sample, {
-//     through: 'likedTootsLikers',
-//     foreignKey: 'locationsample_id',
-// });
-// Sample.belongsToMany(LocationSample, {
-//     through: 'likedTootsLikers',
-//     foreignKey: 'sample_id',
-// });

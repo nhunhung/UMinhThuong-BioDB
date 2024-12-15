@@ -1,12 +1,5 @@
-<<<<<<< HEAD
-// App.js
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import LoginForm from './components/LoginForm'; 
-import ContactForm from './components/ContactForm';
-=======
 // src/App.js
-import './App.css';
+//import './App.css';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import AdminLoginForm from './components/AdminLoginForm';
@@ -25,32 +18,11 @@ function FooterWrapper() {
   // Chỉ hiển thị footer ở đường dẫn "/"
   return location.pathname === '/' ? <Footer /> : null;
 }
->>>>>>> main
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
-<<<<<<< HEAD
-    <Router>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Login</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-        </ul>
-      </nav>
-      <div>
-        <Routes>
-          <Route path="/" element={<LoginForm />} />
-          <Route path="/contact" element={<ContactForm />} />
-        </Routes>
-      </div>
-    </Router>
-=======
     <LanguageProvider>
       <Router>
         <Header />
@@ -67,7 +39,6 @@ function App() {
         <FooterWrapper />
       </Router>
     </LanguageProvider>
->>>>>>> main
   );
 }
 

@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.9",
+    "cors": "^2.8.5",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "postcss": "^8.4.49",

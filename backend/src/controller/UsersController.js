@@ -130,10 +130,69 @@ const deleteUsers = async (req, res) => {
         })
     }
 }
+
+const getUserProfile = (req, res) => {
+    // Truy cập thông tin người dùng từ req.user sau khi token đã được xác thực
+    const userId = req.user.id;  // ID người dùng đã được lưu vào req.user khi xác thực token
+
+    Users.findOne({
+        where: { users_id: userId },
+        attributes: ['users_id', 'username', 'firstname', 'lastname', 'email', 'role_id', 'avatar']
+    })
+    .then(user => {
+        if (!user) {
+            return res.status(404).json({
+                status: 'ERROR',
+                message: 'User not found'
+            });
+        }
+
+        return res.status(200).json({
+            status: 'OK',
+            message: 'SUCCESS',
+            user: {
+                users_id: user.users_id,
+                username: user.username,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+                role_id: user.role_id,
+                avatar: user.avatar
+            }
+        });
+    })
+    .catch(error => {
+        return res.status(500).json({
+            status: 'ERROR',
+            message: 'Server error',
+            error: error.message
+        });
+    });
+};
+
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await UsersService.getAllUsers();  // Lấy tất cả người dùng từ dịch vụ
+        return res.status(200).json({
+            status: 'SUCCESS',
+            data: users
+        });
+    } catch (e) {
+        return res.status(500).json({
+            message: 'Error fetching users',
+            error: e.message,
+        });
+    }
+};
+
+
+
 module.exports = {
+    getUserProfile,
     createUsers,
     updateUsers,
     deleteUsers,
     loginUser,
-    updateUsersPassword
+    updateUsersPassword,
+    getAllUsers
 }

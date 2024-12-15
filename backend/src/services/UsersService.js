@@ -94,9 +94,18 @@ const loginUser = (userLogin) => {
             return resolve({
                 status: 'OK',
                 message: 'SUCCESS',
+                user: {
+                    users_id: checkUser.users_id,
+                    username: checkUser.username,
+                    firstname: checkUser.firstname,
+                    lastname: checkUser.lastname,
+                    email: checkUser.email,
+                    role_id: checkUser.role_id,
+                    avatar: checkUser.avatar 
+                },
                 access_token: access_token,
                 refresh_token: refresh_token
-            })
+            });
 
         } catch (e) {
             reject(e)
@@ -259,10 +268,23 @@ const deleteUsers = (users_id) => {
 
     })
 }
+
+const getAllUsers = async () => {
+    try {
+        const users = await Users.findAll();   
+
+        return users;
+    } catch (e) {
+        throw new Error('Error fetching users');
+    }
+};
+
+
 module.exports = {
     createUsers,
     updateUsers,
     deleteUsers,
     loginUser,
-    updateUsersPassword
+    updateUsersPassword,
+    getAllUsers
 }

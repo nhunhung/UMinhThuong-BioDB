@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const Role = require('./RoleModel');
 const sequelize = require('../config/connectdb');
+
 const Users = sequelize.define('Users', {
     users_id: {
         type: DataTypes.INTEGER,
@@ -27,11 +28,17 @@ const Users = sequelize.define('Users', {
     email: {
         type: DataTypes.TEXT,
         allowNull: false,
-    }
+    },
+    avatar: {
+        type: DataTypes.STRING, 
+        allowNull: true, 
+    },
 }, {
     tableName: 'Users',
-    timestamps: false
+    timestamps: true,
 });
+
 Role.hasMany(Users, { foreignKey: 'role_id' });
 Users.belongsTo(Role, { foreignKey: 'role_id' });
+
 module.exports = Users;

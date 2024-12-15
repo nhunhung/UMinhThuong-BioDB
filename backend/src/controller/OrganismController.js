@@ -7,8 +7,8 @@ const OrganismDetailsDTO = require('../dtos/response/organismDetails.dto');
 const getAllOrganism = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 16; 
-    const offset = (page - 1) * limit; 
+    const limit = parseInt(req.query.limit) || 16;
+    const offset = (page - 1) * limit;
 
     // Lấy danh sách organisms từ service với phân trang
     const organisms = await organismService.getAllOrganisms(limit, offset);
@@ -20,7 +20,7 @@ const getAllOrganism = async (req, res) => {
     return res.status(200).json({
       page: page,
       limit: limit,
-      organisms : organismsDTO
+      organisms: organismsDTO
     });
   } catch (err) {
     console.error(err);
@@ -102,11 +102,11 @@ const getOrganismByNames = async (req, res) => {
     }
 
     // Ánh xạ organisms qua DTO
-    const organismsDTO = organisms.map(organism => new OrganismDTO(organism));    
+    const organismsDTO = organisms.map(organism => new OrganismDTO(organism));
 
     // Trả về kết quả
     return res.status(200).json({ organisms: organismsDTO });
-    
+
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -117,10 +117,10 @@ const updateOrganism = async (req, res) => {
   const { organism_Id } = req.params;
   const data = req.body;
   try {
-    
+
     await organismService.updateOrganism(organism_Id, data);
     const organismDTO = await organismService.getOrganinsmById(organism_Id);
-    res.json({ message: 'Organism updated successfully', organism : organismDTO });
+    res.json({ message: 'Organism updated successfully', organism: organismDTO });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: err.message });
@@ -133,7 +133,7 @@ const statisticOrganism = async (req, res) => {
     const { groupOfOrganismId } = req.query;
 
     console.log(groupOfOrganismId);
-    
+
     if (!groupOfOrganismId) {
       return res.status(400).json({ message: 'groupOfOrganismId is required' });
     }
@@ -163,7 +163,30 @@ const deleteOrganismController = async (req, res) => {
     return res.status(500).json({ message: err.message }); // Trả về lỗi nếu có
   }
 };
+const getDetailOrganisms = async (req, res) => {
+  try {
+    const id = req.params.id;
 
+
+    if (!id) {
+      return res.status(200).json({
+        status: 'ERR',
+        message: 'The  id is required'
+      })
+    }
+
+    const respone = await organismService.getDetailOrganism(id)
+
+    return res.status(200).json(respone)
+
+
+  } catch (e) {
+    return res.status(404).json({
+      message: e
+    })
+  }
+
+}
 module.exports = {
   getAllOrganism,
   getOrganismsByGroups,
@@ -171,5 +194,6 @@ module.exports = {
   deleteOrganismController,
   updateOrganism,
   statisticOrganism,
-  getOrganismByNames
+  getOrganismByNames,
+  getDetailOrganisms
 };

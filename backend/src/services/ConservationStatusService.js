@@ -89,10 +89,40 @@ const postConservationStatus = async (conservationStatusData) => {
         throw error;
     }
 }
+const getDetailConservationStatus = (conservationstatus_id) => {
+    return new Promise(async (resolve, reject) => {
 
+        try {
+            const data = await ConservationStatus.findOne({
+                where: { conservationstatus_id: conservationstatus_id }
+            })
+
+            if (data === null) {
+                return reject({
+                    status: 'ERROR',
+                    message: 'data is not defined'
+                })
+            }
+
+
+
+            return resolve({
+                status: 'OK',
+                message: 'lay thong tin  thanh cong',
+                data: data
+
+
+            })
+        } catch (e) {
+            reject(e)
+            console.log('lay thong tin  that bai')
+        }
+    })
+}
 module.exports = {
     createConservationStatus,
     updateConservationStatus,
     deleteConservationStatus,
-    postConservationStatus
+    postConservationStatus,
+    getDetailConservationStatus
 }

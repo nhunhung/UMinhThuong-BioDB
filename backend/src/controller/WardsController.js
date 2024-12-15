@@ -77,8 +77,33 @@ const createNewWard = async (req, res) => {
 
 
 }
+const getDetailWards = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+
+        if (!id) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The  id is required'
+            })
+        }
+
+        const respone = await WardsService.getDetailWards(id);
+
+        return res.status(200).json(respone)
+
+
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+
+}
 module.exports = {
     createWards,
     updateWards,
-    deleteWards
+    deleteWards,
+    getDetailWards
 }

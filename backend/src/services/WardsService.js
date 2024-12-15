@@ -119,10 +119,40 @@ const postWard = async (wardsData) => {
         throw error;
     }
 }
+const getDetailWards = (wards_id) => {
+    return new Promise(async (resolve, reject) => {
 
+        try {
+            const wards = await Wards.findOne({
+                where: { wards_id: wards_id }
+            })
+
+            if (wards === null) {
+                return reject({
+                    status: 'ERROR',
+                    message: 'wards is not defined'
+                })
+            }
+
+
+
+            return resolve({
+                status: 'OK',
+                message: 'lay thong tin wards thanh cong',
+                data: wards
+
+
+            })
+        } catch (e) {
+            reject(e)
+            console.log('lay thong tin wards that bai')
+        }
+    })
+}
 module.exports = {
     createWards,
     updateWards,
     deleteWards,
-    postWard
+    postWard,
+    getDetailWards
 }

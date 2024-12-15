@@ -191,10 +191,40 @@ const postLocationSample = async (locationSampleData) => {
         throw error;
     }
 }
+const getDetailLocationSample = (locationsample_id) => {
+    return new Promise(async (resolve, reject) => {
 
+        try {
+            const data = await LocationSample.findOne({
+                where: { locationsample_id: locationsample_id }
+            })
+
+            if (data === null) {
+                return reject({
+                    status: 'ERROR',
+                    message: 'data is not defined'
+                })
+            }
+
+
+
+            return resolve({
+                status: 'OK',
+                message: 'lay thong tin  thanh cong',
+                data: data
+
+
+            })
+        } catch (e) {
+            reject(e)
+            console.log('lay thong tin  that bai')
+        }
+    })
+}
 module.exports = {
     createLocationSample,
     updateLocationSample,
     deleteLocationSample,
-    postLocationSample
+    postLocationSample,
+    getDetailLocationSample
 }

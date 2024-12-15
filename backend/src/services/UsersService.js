@@ -83,9 +83,9 @@ const loginUser = (userLogin) => {
                 id: checkUser.users_id,
                 role_id: checkUser.role_id
             })
-        
+
             console.log('access_token', access_token)
-            
+
             const refresh_token = await generalRefreshToken({
                 id: checkUser.users_id,
                 role_id: checkUser.role_id
@@ -101,7 +101,7 @@ const loginUser = (userLogin) => {
                     lastname: checkUser.lastname,
                     email: checkUser.email,
                     role_id: checkUser.role_id,
-                    avatar: checkUser.avatar 
+                    avatar: checkUser.avatar
                 },
                 access_token: access_token,
                 refresh_token: refresh_token
@@ -218,14 +218,14 @@ const updateUsersPassword = (users_id, passwordObj) => {
                 });
             }
 
-           
+
             const hash = bcrypt.hashSync(password, 10);
 
-           
+
             checkUsers.password = hash;
             await checkUsers.save();
 
-           
+
             const updatedUsers = await Users.findByPk(users_id);
             return resolve({
                 status: 'OK',
@@ -271,7 +271,7 @@ const deleteUsers = (users_id) => {
 
 const getAllUsers = async () => {
     try {
-        const users = await Users.findAll();   
+        const users = await Users.findAll();
 
         return users;
     } catch (e) {
@@ -286,5 +286,6 @@ module.exports = {
     deleteUsers,
     loginUser,
     updateUsersPassword,
-    getAllUsers
+    getAllUsers,
+
 }

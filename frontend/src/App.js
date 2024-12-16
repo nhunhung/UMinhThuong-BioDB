@@ -10,6 +10,7 @@ import Footer from './layout/footer';
 import { LanguageProvider } from './components/LanguageContext';
 import Home from './components/Home';
 import LookupPage from './pages/LookupPage'
+import ContactForm from './components/ContactForm';
 
 function FooterWrapper() {
   const location = useLocation();
@@ -17,14 +18,19 @@ function FooterWrapper() {
   // Chỉ hiển thị footer ở đường dẫn "/"
   return location.pathname === '/' ? <Footer /> : null;
 }
-
+function HeaderWrapper() {
+  const location = useLocation();
+  // Không hiển thị header ở trang admin
+  return location.pathname === '/admin' ? null : <Header />;
+}
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <LanguageProvider>
       <Router>
-        <Header />
+
+        <HeaderWrapper />
 
         <Routes>
           <Route path="/" element={<Home />} />
@@ -32,6 +38,7 @@ function App() {
           <Route path="/login" element={<AdminLoginForm />} />
           <Route path="/upload" element={<UploadExcel />} />
           <Route path="/lookup" element={<LookupPage />} />
+          <Route path="/contact" element={<ContactForm />} />
         </Routes>
 
         <FooterWrapper />

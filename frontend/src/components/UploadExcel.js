@@ -169,7 +169,7 @@ const UploadExcel = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginLeft: '50px' }}>
       <h2>Upload Excel</h2>
       <div className="App">
         {/* Form upload file */}

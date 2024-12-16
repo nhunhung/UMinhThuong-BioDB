@@ -3,7 +3,7 @@ import '../StyleCSS/Cardlist.css';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import L from 'leaflet';
 import '../StyleCSS/leaflet.css';
-
+import b1 from '../assets/images/b1.png';
 
 
 const Cardlist = () => {
@@ -38,9 +38,9 @@ const Cardlist = () => {
     const renderGridView = () => {
         // Tính toán số lượng trang
         const itemsPerPageGrid = 20; // 20 items mỗi trang
-        const totalPagesGrid = Math.ceil(filteredItems.length / itemsPerPageList); 
-        const indexOfLastItemGrid = currentPageGrid * itemsPerPageList; 
-        const indexOfFirstItemGrid = indexOfLastItemGrid - itemsPerPageList; 
+        const totalPagesGrid = Math.ceil(filteredItems.length / itemsPerPageList);
+        const indexOfLastItemGrid = currentPageGrid * itemsPerPageList;
+        const indexOfFirstItemGrid = indexOfLastItemGrid - itemsPerPageList;
         const currentItemsGrid = filteredItems.slice(indexOfFirstItemGrid, indexOfLastItemGrid);
         return (
             <div>
@@ -48,31 +48,31 @@ const Cardlist = () => {
                 <div className="card-grid">
                     {currentItemsGrid.map((item, index) => (
                         <div className="card" key={index}>
-                            <img src={item.avatar} alt="Hình đại diện" className="card-avatar" />
+                            <img src={b1} alt="Hình đại diện" className="card-avatar" />
                             <h4>{item.genus}</h4>
                             <p>{item.localName}</p>
                             <p>{item.group}</p>
                         </div>
                     ))}
                 </div>
-    
+
                 {/* Phân trang */}
                 <div className="pagination">
-                <button
-                    onClick={() => setCurrentPageGrid(currentPageGrid - 1)}
-                    disabled={currentPageGrid === 1}
-                >
-                    Previous
-                </button>
-                <span>
-                {`Page ${currentPageGrid} of ${totalPagesGrid}`}
-                </span>
-                <button
-                    onClick={() => setCurrentPageGrid(currentPageGrid + 1)}
-                    disabled={currentPageGrid === totalPagesGrid}
-                >
-                    Next
-                </button>
+                    <button
+                        onClick={() => setCurrentPageGrid(currentPageGrid - 1)}
+                        disabled={currentPageGrid === 1}
+                    >
+                        Previous
+                    </button>
+                    <span>
+                        {`Page ${currentPageGrid} of ${totalPagesGrid}`}
+                    </span>
+                    <button
+                        onClick={() => setCurrentPageGrid(currentPageGrid + 1)}
+                        disabled={currentPageGrid === totalPagesGrid}
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
         );
@@ -81,75 +81,75 @@ const Cardlist = () => {
 
     // Chế độ hiển thị dạng danh sách (list)
     const renderListView = () => {
-      // Tính toán số lượng trang
-    const totalPagesList = Math.ceil(filteredItems.length / itemsPerPageList);
-    const indexOfLastItemList = currentPageList * itemsPerPageList;
-    const indexOfFirstItemList = indexOfLastItemList - itemsPerPageList;
-    const currentItemsList = filteredItems.slice(indexOfFirstItemList, indexOfLastItemList);    
-  
-      return (
-          <div>
-              <table className="card-list-view">
-                  <thead>
-                      <tr>
-                          <th>Chi tiết</th>
-                          <th>Hình đại diện</th>
-                          <th>Nhóm sinh vật</th>
-                          <th>Bộ</th>
-                          <th>Họ</th>
-                          <th>Chi</th>
-                          <th>Tên khoa học</th>
-                          <th>Tên tác giả</th>
-                          <th>Tên địa phương</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      {currentItemsList.map((item, index) => (
-                          <tr key={index}>
-                              <td>{item.details}</td>
-                              <td>
-                                  <img src={item.avatar} alt="Hình đại diện" className="table-avatar" />
-                              </td>
-                              <td>{item.group}</td>
-                              <td>{item.order}</td>
-                              <td>{item.family}</td>
-                              <td>{item.genus}</td>
-                              <td>{item.scientificName}</td>
-                              <td>{item.author}</td>
-                              <td>{item.localName}</td>
-                          </tr>
-                      ))}
-                  </tbody>
-              </table>
-  
-              {/* Phân trang */}
-              <div className="pagination">
-              <button
-                onClick={() => setCurrentPageList(currentPageList - 1)}
-                disabled={currentPageList === 1}
-                >
-                    Previous
-                </button>
-                <span>
-                    {`Page ${currentPageList} of ${totalPagesList}`}
-                </span>
-                <button
-                    onClick={() => setCurrentPageList(currentPageList + 1)}
-                    disabled={currentPageList === totalPagesList}
-                >
-                    Next
-                </button>
-              </div>
-          </div>
-      );
-  };
-  
+        // Tính toán số lượng trang
+        const totalPagesList = Math.ceil(filteredItems.length / itemsPerPageList);
+        const indexOfLastItemList = currentPageList * itemsPerPageList;
+        const indexOfFirstItemList = indexOfLastItemList - itemsPerPageList;
+        const currentItemsList = filteredItems.slice(indexOfFirstItemList, indexOfLastItemList);
+
+        return (
+            <div>
+                <table className="card-list-view">
+                    <thead>
+                        <tr>
+                            <th>Chi tiết</th>
+                            <th>Hình đại diện</th>
+                            <th>Nhóm sinh vật</th>
+                            <th>Bộ</th>
+                            <th>Họ</th>
+                            <th>Chi</th>
+                            <th>Tên khoa học</th>
+                            <th>Tên tác giả</th>
+                            <th>Tên địa phương</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentItemsList.map((item, index) => (
+                            <tr key={index}>
+                                <td>{item.details}</td>
+                                <td>
+                                    <img src={item.avatar} alt="Hình đại diện" className="table-avatar" />
+                                </td>
+                                <td>{item.group}</td>
+                                <td>{item.order}</td>
+                                <td>{item.family}</td>
+                                <td>{item.genus}</td>
+                                <td>{item.scientificName}</td>
+                                <td>{item.author}</td>
+                                <td>{item.localName}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                {/* Phân trang */}
+                <div className="pagination">
+                    <button
+                        onClick={() => setCurrentPageList(currentPageList - 1)}
+                        disabled={currentPageList === 1}
+                    >
+                        Previous
+                    </button>
+                    <span>
+                        {`Page ${currentPageList} of ${totalPagesList}`}
+                    </span>
+                    <button
+                        onClick={() => setCurrentPageList(currentPageList + 1)}
+                        disabled={currentPageList === totalPagesList}
+                    >
+                        Next
+                    </button>
+                </div>
+            </div>
+        );
+    };
+
 
 
 
 
     // Chế độ hiển thị dạng đồ thị tròn (stats)
-    
+
     const renderStatsView = () => {
         const speciesData = [
             { name: 'undefined', value: 50 },
@@ -162,7 +162,7 @@ const Cardlist = () => {
             { name: 'Lưỡng cư', value: 30 },
             { name: 'Cá', value: 77 },
         ];
-    
+
         const recordsData = [
             { name: 'undefined', value: 100 },
             { name: 'Thực vật hạt kín', value: 300 },
@@ -174,7 +174,7 @@ const Cardlist = () => {
             { name: 'Lưỡng cư', value: 80 },
             { name: 'Cá', value: 150 },
         ];
-    
+
         const COLORS = [
             '#f9c74f',
             '#90be6d',
@@ -186,7 +186,7 @@ const Cardlist = () => {
             '#4d908e',
             '#577590',
         ];
-    
+
         return (
             <div className="card-stats" style={{ display: 'flex', justifyContent: 'space-around' }}>
                 {/* Biểu đồ 1 */}
@@ -210,7 +210,7 @@ const Cardlist = () => {
                         <Legend />
                     </PieChart>
                 </div>
-    
+
                 {/* Biểu đồ 2 */}
                 <div>
                     <h3>Ghi nhận: 1664</h3>
@@ -235,45 +235,45 @@ const Cardlist = () => {
             </div>
         );
     };
-  
 
 
-    
+
+
 
     // Chế độ hiển thị dạng bản đồ (map)
     const renderMapView = () => (
         <div className="card-map">
-          <div id="map" style={{ height: "100%" }}></div>
+            <div id="map" style={{ height: "100%" }}></div>
         </div>
-      );
-    
-      // Khởi tạo bản đồ Leaflet
-      React.useEffect(() => {
+    );
+
+    // Khởi tạo bản đồ Leaflet
+    React.useEffect(() => {
         const mapContainer = document.getElementById("map");
         console.log("Map container found:", !!mapContainer); // Kiểm tra phần tử map
         console.log("Leaflet ID exists:", mapContainer?._leaflet_id);
-      
+
         if (mapContainer && !mapContainer._leaflet_id) {
-          const map = L.map("map").setView([9.58739, 105.0552], 10);
-          console.log("Map initialized");
-      
-          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-          }).addTo(map);
-      
-          console.log("Tile layer added");
-      
-          L.marker([9.58739, 105.0552])
-            .addTo(map)
-            .bindPopup("Đây là vị trí mẫu")
-            .openPopup();
-      
-          setTimeout(() => {
-            map.invalidateSize(); // Xử lý lỗi không load kích thước
-            console.log("Map size updated");
-          }, 100);
+            const map = L.map("map").setView([9.58739, 105.0552], 10);
+            console.log("Map initialized");
+
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }).addTo(map);
+
+            console.log("Tile layer added");
+
+            L.marker([9.58739, 105.0552])
+                .addTo(map)
+                .bindPopup("Đây là vị trí mẫu")
+                .openPopup();
+
+            setTimeout(() => {
+                map.invalidateSize(); // Xử lý lỗi không load kích thước
+                console.log("Map size updated");
+            }, 100);
         }
-      }, []);
+    }, []);
 
     const renderView = () => {
         switch (viewMode) {

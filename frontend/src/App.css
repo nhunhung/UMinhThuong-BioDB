@@ -107,12 +107,16 @@
 
 
 .sidebar {
-  flex: 0 0 20%; /* Sidebar chiếm 40% */
-  background-color: #ddd; /* Màu nền cho Sidebar (tuỳ chỉnh) */
+ 
+  background-color: #ddd; 
+ width: 340px !important;
+position:absolute !important;
+
 }
 
 
 .card-list {
   flex: 0 0 80%; /* CardList chiếm 60% */
   background-color: #fff; /* Màu nền cho CardList (tuỳ chỉnh) */
+  margin-left:320px !important;
 }

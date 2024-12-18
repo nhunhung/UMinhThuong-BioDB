@@ -10,3 +10,15 @@ h1, h2, h3, h4, h5, h6 {
 p, span, a {
   font-family: 'Arial', sans-serif;
 }
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; 
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+}
+

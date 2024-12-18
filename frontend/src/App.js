@@ -1,5 +1,4 @@
 // src/App.js
-import './App.css';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import AdminLoginForm from './components/AdminLoginForm';

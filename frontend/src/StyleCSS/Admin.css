@@ -11,7 +11,6 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 10;
 }
 
 .header-left {
@@ -38,7 +37,6 @@
   margin-right: 5px;
 }
 
-/* Sidebar cố định, cuộn theo trang */
 .sidebar {
   width: 100px;  
   height: 100%;  
@@ -57,8 +55,8 @@
 
 .menu-item {
   position: relative;
-  display: flex; /* Sử dụng flex để căn chỉnh chữ và icon trên một dòng */
-  align-items: center; /* Căn giữa icon và chữ theo chiều dọc */
+  display: flex; 
+  align-items: center; 
   padding: 10px 0px;
   margin: 10px;
   margin-bottom: 10px;

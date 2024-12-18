@@ -5,17 +5,14 @@ import UploadExcel from '../components/UploadExcel';
 import DataSearch from './LookupPage'
 
 function Admin() {
-  // Trạng thái activeMenu sẽ lưu giá trị của menu đang được chọn
   const [activeMenu, setActiveMenu] = useState('uploadExcel');
 
-  // Hàm xử lý khi chọn menu
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
   };
 
   return (
     <div className="main">
-      {/* Header */}
       <nav className="header">
         <div className="header-left">BIODIVERSITY</div>
         <div className="header-right">
@@ -83,12 +80,9 @@ function Admin() {
         </aside>
 
         <div className='body'>
-          {/* Main Content */}
-          {/* Hiển thị nội dung theo menu đã chọn */}
           {activeMenu === 'accountManagement' && <AccountManagement />}
           {activeMenu === 'uploadExcel' && <UploadExcel />}
           {activeMenu === 'dataSearch' && <DataSearch />}
-          {activeMenu === '' && <div></div>}
         </div>
       </div>
     </div>

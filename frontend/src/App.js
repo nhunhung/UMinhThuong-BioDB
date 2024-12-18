@@ -11,6 +11,7 @@ import { LanguageProvider } from './components/LanguageContext';
 import Home from './components/Home';
 import LookupPage from './pages/LookupPage'
 import ContactForm from './components/ContactForm';
+import Search from './pages/Search'
 
 function FooterWrapper() {
   const location = useLocation();
@@ -35,10 +36,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/Admin-login" element={<AdminLoginForm />} />
+          <Route path="/admin-login" element={<AdminLoginForm />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/upload" element={<UploadExcel />} />
           <Route path="/search" element={<LookupPage />} />
+          <Route path="/admin-search" element={<Search />} />
           <Route path="/contact" element={<ContactForm />} />
         </Routes>
 

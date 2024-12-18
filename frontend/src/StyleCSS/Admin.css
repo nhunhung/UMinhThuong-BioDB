@@ -37,13 +37,13 @@
   margin-right: 5px;
 }
 
-.sidebar {
-  width: 100px;  
+.sidebar-admin {
+  width: 250px;  
   height: 100%;  
   background-color: #e0e0e0;
   padding: 5px 0;
   position: fixed; 
-  top: 30px; 
+  top: 55px; 
   left: 0;
   overflow-y: auto; 
 }

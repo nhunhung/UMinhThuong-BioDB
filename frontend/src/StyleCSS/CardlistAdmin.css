@@ -1,11 +1,11 @@
 .card-list-container {
-  margin: 20px 350px; 
+  margin: 20px 350px; /* Thêm khoảng cách từ cạnh phải của sidebar */
   padding: 10px;
-  width: calc(100% - 350px);
+  width: calc(100% - 350px); /* Tính chiều rộng còn lại sau khi trừ chiều rộng sidebar */
 }
 
 /* Thanh tìm kiếm và nút điều khiển */
-.search-and-buttons-row-user {
+.search-and-buttons-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -13,7 +13,7 @@
     margin-bottom: 20px;
 }
 
-.search-bar-user {
+.search-bar {
     flex: 1;
     padding: 10px;
     font-size: 16px;

@@ -2,7 +2,7 @@ import '../StyleCSS/Admin.css';
 import React, { useState } from 'react';
 import AccountManagement from '../components/AccountManagement';
 import UploadExcel from '../components/UploadExcel';
-import DataSearch from './LookupPage'
+import DataSearch from './Search'
 
 function Admin() {
   const [activeMenu, setActiveMenu] = useState('uploadExcel');
@@ -32,7 +32,7 @@ function Admin() {
 
       <div className="container">
         {/* Sidebar */}
-        <aside className="sidebar">
+        <aside className="sidebar-admin">
           <ul className="menu">
             <li
               className={`menu-item ${activeMenu === 'uploadExcel' ? 'active' : ''}`}

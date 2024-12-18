@@ -1,15 +1,15 @@
 /* Sidebar container */
-.sidebar {
+.sidebar-right {
   width: 350px; /* Giữ nguyên chiều rộng sidebar */
   padding: 10px;
   background-color: #f0f3f6;
-  margin-top: 80px;
+  margin-top: 30px;
   height: 100%; /* Chiều cao tối đa của container */
   overflow-y: auto; /* Hiển thị thanh trượt dọc khi nội dung vượt quá */
   border: 1px solid #ccc; /* Tạo viền */
   position: fixed; /* Duy trì vị trí cố định khi cuộn trang */
-  top: 0;
-  left: 0;
+  top: 25px;
+  left: 250px;
   bottom: 0;
 }
 

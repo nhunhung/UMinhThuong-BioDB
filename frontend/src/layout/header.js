@@ -33,7 +33,7 @@ const Header = () => {
     };
 
     return (
-        <header className="tw-flex tw-items-center tw-justify-between tw-px-6 tw-py-4 tw-bg-[rgb(226,232,240)] tw-text-slate-600 tw-transition-all">
+        <header className="tw-flex tw-items-center tw-justify-between tw-px-6 tw-py-4 tw-bg-[rgb(226,232,240)] tw-text-slate-600 tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-z-50 tw-shadow-md">
             {/* Logo and Menu */}
             <div className="tw-flex tw-items-center">
                 <div className="tw-mr-10">

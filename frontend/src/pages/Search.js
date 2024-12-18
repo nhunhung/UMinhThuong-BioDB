@@ -1,13 +1,12 @@
 import React from 'react';
-import Header from '../layout/header';
-import Sidebar from '../components/Sidebar';
-import Cardlist from '../components/Cardlist';
+import Sidebar from '../components/SidebarAdmin';
+import Cardlist from '../components/CardlistAdmin';
 
 function LookupPage() {
     return (
         <div className="app">
             <div className="main">
-                <div className="sidebar">
+                <div className="sidebar-right">
                     <Sidebar />
                 </div>
                 <div className="card-list">

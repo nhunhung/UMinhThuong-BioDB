@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { BsFillHouseDoorFill, BsFillTelephoneFill, BsSearch } from "react-icons/bs";
 
@@ -41,37 +42,37 @@ const Header = () => {
                 {/* Menu */}
                 <ul className="tw-flex tw-space-x-6">
                     <li className="tw-relative tw-p-2 hover:tw-bg-white hover:tw-shadow-lg tw-rounded tw-transition-all">
-                        <a
-                            href="#"
+                        <Link
+                            to="/"
                             className="tw-flex tw-items-center tw-gap-2 hover:tw-text-gray-800 tw-transition-all"
                         >
                             <BsFillHouseDoorFill className="tw-relative tw-z-10" />
                             <span className="tw-relative tw-z-10">{translations[language].home}</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="tw-relative tw-p-2 hover:tw-bg-white hover:tw-shadow-lg tw-rounded tw-transition-all">
-                        <a
-                            href="#"
+                        <Link
+                            to="/search"
                             className="tw-flex tw-items-center tw-gap-2 hover:tw-text-gray-800 tw-transition-all"
                         >
                             <BsSearch className="tw-relative tw-z-10" />
                             <span className="tw-relative tw-z-10">{translations[language].search}</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="tw-relative tw-p-2 hover:tw-bg-white hover:tw-shadow-lg tw-rounded tw-transition-all">
-                        <a
-                            href="#"
+                        <Link
+                            to="/contact"
                             className="tw-flex tw-items-center tw-gap-2 hover:tw-text-gray-800 tw-transition-all"
                         >
                             <BsFillTelephoneFill className="tw-relative tw-z-10" />
                             <span className="tw-relative tw-z-10">{translations[language].contact}</span>
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>
             <div className="tw-flex tw-space-x-4">
                 <div className="tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-bg-white tw-text-[rgb(22,78,99)] tw-rounded tw-shadow-sm hover:tw-bg-[rgb(226,232,240)] tw-cursor-pointer">
-                    <a href="#" className="tw-text-black">{translations[language].login}</a>
+                    <Link to="/login" className="tw-text-black">{translations[language].login}</Link>
                 </div>
                 <div className="tw-relative">
                     <div

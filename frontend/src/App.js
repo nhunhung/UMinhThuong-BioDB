@@ -3,6 +3,7 @@ import './App.css';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import AdminLoginForm from './components/AdminLoginForm';
+import LoginForm from './components/LoginForm';
 import UploadExcel from './components/UploadExcel';
 import Admin from './pages/Admin';
 import Header from './layout/header';
@@ -35,9 +36,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/login" element={<AdminLoginForm />} />
+          <Route path="/Admin-login" element={<AdminLoginForm />} />
+          <Route path="/login" element={<LoginForm />} />
           <Route path="/upload" element={<UploadExcel />} />
-          <Route path="/lookup" element={<LookupPage />} />
+          <Route path="/search" element={<LookupPage />} />
           <Route path="/contact" element={<ContactForm />} />
         </Routes>
 

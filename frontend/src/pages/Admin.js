@@ -2,10 +2,11 @@ import '../StyleCSS/Admin.css';
 import React, { useState } from 'react';
 import AccountManagement from '../components/AccountManagement';
 import UploadExcel from '../components/UploadExcel';
+import DataSearch from './LookupPage'
 
 function Admin() {
   // Trạng thái activeMenu sẽ lưu giá trị của menu đang được chọn
-  const [activeMenu, setActiveMenu] = useState('');
+  const [activeMenu, setActiveMenu] = useState('uploadExcel');
 
   // Hàm xử lý khi chọn menu
   const handleMenuClick = (menu) => {
@@ -86,6 +87,7 @@ function Admin() {
           {/* Hiển thị nội dung theo menu đã chọn */}
           {activeMenu === 'accountManagement' && <AccountManagement />}
           {activeMenu === 'uploadExcel' && <UploadExcel />}
+          {activeMenu === 'dataSearch' && <DataSearch />}
           {activeMenu === '' && <div></div>}
         </div>
       </div>

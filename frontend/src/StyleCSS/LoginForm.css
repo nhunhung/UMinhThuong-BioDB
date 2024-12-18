@@ -1,150 +1,105 @@
-/* .login-container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .login-left {
-    flex: 1;
-    background-color: #144d5c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .logo {
-    width: 150px;
-    height: auto;
-  }
-  
-  .login-right {
-    flex: 1;
-    padding: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .input-field {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  
-  .login-button {
-    background-color: #144d5c;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .guest-button {
-    background-color: transparent;
-    color: #144d5c;
-    padding: 10px 20px;
-    border: 1px solid #144d5c;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-   */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Đặt chiều cao của toàn bộ màn hình */
+  overflow: hidden; /* Không cho phép cuộn màn hình */
+}
 
+.login-container {
+  display: flex;
+  height: 100vh;
+}
 
+.login-left {
+  flex: 1;
+  background-color: #144d5c;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  border-top-right-radius: 3000% 2500%; /* Tăng diện tích của đường cong hình tròn */
+  border-bottom-right-radius: 3000% 2500%; /* Tăng diện tích của đường cong hình tròn */
+  position: relative;
+  width: 60%; /* Chiều rộng lớn hơn */
+  transform: translate(-0px, -150px); /* Dịch sang trái và lên trên thêm */
+  height: 150%; /* Chiều cao lớn hơn để hình tròn đầy đặn */
+  overflow: hidden;
+}
 
+.logo {
+  position: absolute;
+  top: 180px; /* Dịch logo xuống thêm 5px */
+  left: 180px; /* Dịch logo sang phải thêm 20px */
+  width: 120px;
+  height: auto;
+}
 
+.login-right {
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  transform: translateX(5cm); /* Dịch form login sang phải 5cm */
+  font-family: Arial, sans-serif; /* Font chữ là Arial */
+}
 
+h2 {
+  margin-bottom: 30px;
+  color: #333;
+  font-weight: bold;
+  font-size: 2rem;
+  font-family: Arial, sans-serif; /* Font chữ Arial */
+}
 
-   .login-container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .login-left {
-    flex: 1.5; /* Phần bên trái chiếm nhiều không gian hơn */
-    background-color: #144d5c;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Logo ở trên */
-    border-top-right-radius: 50%;
-    border-bottom-right-radius: 50%;
-    position: relative;
-  }
-  
-  .logo {
-    margin-top: 30px;
-    width: 100px;
-    height: auto;
-  }
-  
-  .login-right {
-    flex: 1;
-    padding: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-  }
-  
-  h2 {
-    margin-bottom: 30px;
-    color: #333;
-    font-weight: bold;
-    font-size: 2rem;
-  }
-  
-  .input-field {
-    width: 100%;
-    padding: 12px 15px;
-    margin: 15px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    box-sizing: border-box;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: flex-start;
-    gap: 15px;
-    margin-top: 20px;
-  }
-  
-  .login-button,
-  .guest-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    font-weight: 500;
-  }
-  
-  .login-button {
-    background-color: #144d5c;
-    color: #fff;
-  }
-  
-  .guest-button {
-    background-color: transparent;
-    color: #144d5c;
-    border: 1px solid #144d5c;
-  }
-  
-  .guest-button:hover {
-    background-color: #144d5c;
-    color: #fff;
-  }
-  
+.input-field {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 15px 0;
+  border: 1px solid #ddd;
+  border-radius: 10px; /* Tăng độ bo tròn để mềm mại hơn */
+  font-size: 1rem;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif; /* Font chữ Arial */
+  transition: border-color 0.3s ease; /* Hiệu ứng mượt khi focus */
+}
+
+.input-field:focus {
+  border-color: #144d5c; /* Đổi màu viền khi được focus */
+  outline: none;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.login-button,
+.guest-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px; /* Mềm mại hơn */
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: Arial, sans-serif; /* Font chữ Arial */
+}
+
+.login-button {
+  background-color: #144d5c;
+  color: #fff;
+}
+
+.guest-button {
+  background-color: transparent;
+  color: #144d5c;
+  border: 1px solid #144d5c;
+}
+
+.guest-button:hover {
+  background-color: #144d5c;
+  color: #fff;
+}
+

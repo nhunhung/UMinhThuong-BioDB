@@ -1,6 +1,7 @@
 import React from 'react';
-import { AiFillHome, AiOutlineSearch } from 'react-icons/ai'; // Import icons
-import '../StyleCSS/Header.css'; // Đường dẫn đến CSS
+import { Link } from 'react-router-dom'; // Import Link từ react-router-dom
+import { AiFillHome, AiOutlineSearch } from 'react-icons/ai';
+import '../StyleCSS/Header.css';
 
 const Header = () => {
     return (
@@ -12,13 +13,13 @@ const Header = () => {
 
             {/* Navigation */}
             <nav className="header-nav">
-                <a href="/">
+                <Link to="/">
                     <AiFillHome className="icon" /> Trang chủ
-                </a>
-                <a href="/search">
+                </Link>
+                <Link to="/search">
                     <AiOutlineSearch className="icon" /> Tra cứu dữ liệu
-                </a>
-                <a href="/contact">Liên hệ</a>
+                </Link>
+                <Link to="/contact">Liên hệ</Link>
             </nav>
 
             {/* Actions */}

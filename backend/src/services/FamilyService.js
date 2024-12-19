@@ -130,9 +130,40 @@ const postFamily = async (familyData) => {
         throw error;
     }
 }
+const getDetailFamily = (family_id) => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            const data = await Family.findOne({
+                where: { family_id: family_id }
+            })
+
+            if (data === null) {
+                return reject({
+                    status: 'ERROR',
+                    message: 'data is not defined'
+                })
+            }
+
+
+
+            return resolve({
+                status: 'OK',
+                message: 'lay thong tin  thanh cong',
+                data: data
+
+
+            })
+        } catch (e) {
+            reject(e)
+            console.log('lay thong tin  that bai')
+        }
+    })
+}
 module.exports = {
     createFamily,
     updateFamily,
     deleteFamily,
-    postFamily
+    postFamily,
+    getDetailFamily
 }

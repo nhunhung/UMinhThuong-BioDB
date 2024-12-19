@@ -79,9 +79,34 @@ const createNewPhylum = async (req, res) => {
 
 
 }
+const getDetailPhylum = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+
+        if (!id) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The  id is required'
+            })
+        }
+
+        const respone = await PhylumService.getDetailPhylum(id)
+
+        return res.status(200).json(respone)
+
+
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+
+}
 module.exports = {
     createPhylum,
     updatePhylum,
     deletePhylum,
-    createNewPhylum
+    createNewPhylum,
+    getDetailPhylum
 }

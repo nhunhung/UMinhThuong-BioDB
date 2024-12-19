@@ -139,35 +139,35 @@ const getUserProfile = (req, res) => {
         where: { users_id: userId },
         attributes: ['users_id', 'username', 'firstname', 'lastname', 'email', 'role_id', 'avatar']
     })
-    .then(user => {
-        if (!user) {
-            return res.status(404).json({
-                status: 'ERROR',
-                message: 'User not found'
-            });
-        }
-
-        return res.status(200).json({
-            status: 'OK',
-            message: 'SUCCESS',
-            user: {
-                users_id: user.users_id,
-                username: user.username,
-                firstname: user.firstname,
-                lastname: user.lastname,
-                email: user.email,
-                role_id: user.role_id,
-                avatar: user.avatar
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    status: 'ERROR',
+                    message: 'User not found'
+                });
             }
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'SUCCESS',
+                user: {
+                    users_id: user.users_id,
+                    username: user.username,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email,
+                    role_id: user.role_id,
+                    avatar: user.avatar
+                }
+            });
+        })
+        .catch(error => {
+            return res.status(500).json({
+                status: 'ERROR',
+                message: 'Server error',
+                error: error.message
+            });
         });
-    })
-    .catch(error => {
-        return res.status(500).json({
-            status: 'ERROR',
-            message: 'Server error',
-            error: error.message
-        });
-    });
 };
 
 const getAllUsers = async (req, res) => {
@@ -186,7 +186,6 @@ const getAllUsers = async (req, res) => {
 };
 
 
-
 module.exports = {
     getUserProfile,
     createUsers,
@@ -194,5 +193,6 @@ module.exports = {
     deleteUsers,
     loginUser,
     updateUsersPassword,
-    getAllUsers
+    getAllUsers,
+
 }

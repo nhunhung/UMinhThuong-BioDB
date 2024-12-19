@@ -4,8 +4,9 @@ const ClassController = require("../controller/ClassController");
 const { authMiddleWare } = require('../middleware/authMiddleware');
 
 router.post('/create', authMiddleWare, ClassController.createClass);
-router.put('/update/:id',authMiddleWare, ClassController.updateClass);
+router.put('/update/:id', authMiddleWare, ClassController.updateClass);
 router.delete('/delete/:id', authMiddleWare, ClassController.deleteClass);
+router.get('/get-details/:id', authMiddleWare, ClassController.getDetailClass)
 module.exports = router
 
 

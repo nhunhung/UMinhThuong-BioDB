@@ -1,24 +1,48 @@
 import React, { useState } from 'react';
 import '../StyleCSS/Sidebar.css';
+import a1 from '../assets/images/a1.png';
+import a2 from '../assets/images/a2.png';
+import a3 from '../assets/images/a3.png';
+import a4 from '../assets/images/a4.png';
+import a5 from '../assets/images/a5.png';
+import a6 from '../assets/images/a6.png';
 
+import a7 from '../assets/images/a7.png';
+import a8 from '../assets/images/a8.png';
+import a9 from '../assets/images/a9.png';
 const Sidebar = () => {
-  const [activeDropdown, setActiveDropdown] = useState(null);
-
-  const handleDropdownToggle = (index) => {
-    setActiveDropdown(activeDropdown === index ? null : index); // Toggle dropdown visibility
-  };
-
+  // const [activeDropdown, setActiveDropdown] = useState(null);
+  const [openDropdowns, setOpenDropdowns] = useState([]);
+  // const handleDropdownToggle = (index) => {
+  //   setActiveDropdown(activeDropdown === index ? null : index); // Toggle dropdown visibility
+  // };
+  // const handleDropdownToggle = (index) => {
+  //   // Kiểm tra xem index đã mở chưa
+  //   if (openDropdowns.includes(index)) {
+  //     // Nếu đã mở, loại bỏ index khỏi mảng
+  //     setOpenDropdowns(openDropdowns.filter((item) => item !== index));
+  //   } else {
+  //     // Nếu chưa mở, thêm index vào mảng
+  //     setOpenDropdowns([...openDropdowns, index]);
+  //   }
+  // };
   // Dữ liệu nhóm sinh vật
+
+  const handleDropdownToggle = (id) => {
+    setOpenDropdowns((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
   const animalGroups = [
-    { image: "n1.png", label: "32" },
-    { image: "n2.png", label: "191" },
-    { image: "n3.png", label: "46" },
-    { image: "n4.png", label: "11" },
-    { image: "n5.png", label: "110" },
-    { image: "n6.png", label: "15" },
-    { image: "n7.png", label: "20" },
-    { image: "n8.png", label: "339" },
-    { image: "n9.png", label: "3" },
+    { image: a1, label: "32" },
+    { image: a2, label: "191" },
+    { image: a3, label: "46" },
+    { image: a4, label: "11" },
+    { image: a5, label: "110" },
+    { image: a6, label: "15" },
+    { image: a7, label: "20" },
+    { image: a8, label: "339" },
+    { image: a9, label: "3" },
   ];
 
   return (
@@ -40,7 +64,7 @@ const Sidebar = () => {
           >
             ► Nhóm sinh vật
           </button>
-          {activeDropdown === 1 && (
+          {openDropdowns.includes(1) && (
             <div className="animal-groups">
               <div className="group-grid">
                 {animalGroups.map((group, index) => (
@@ -62,7 +86,7 @@ const Sidebar = () => {
           >
             ► Phân loại sinh học
           </button>
-          {activeDropdown === 2 && (
+          {openDropdowns.includes(2) && (
             <div className="classification-list">
               <ul>
                 <li>
@@ -109,20 +133,31 @@ const Sidebar = () => {
           >
             ► Tên khoa học
           </button>
-          {activeDropdown === 3 && (
-            <input type="text" className="search-input" placeholder="Nhập tên khoa học..." />
+          {openDropdowns.includes(3) && (
+            <div className="filter-content">
+              <select className="dropdown-select">
+                <option value="">Chọn tên khoa học</option>
+                <option value="A">Tên khoa học A</option>
+                <option value="B">Tên khoa học B</option>
+              </select>
+            </div>
           )}
         </div>
-
         <div className="filter-box">
           <button
             className="dropdown-btn"
             onClick={() => handleDropdownToggle(4)}
           >
-            ► Số hiệu
+            ► Tên địa phương
           </button>
-          {activeDropdown === 4 && (
-            <input type="text" className="search-input" placeholder="Nhập tên địa phương..." />
+          {openDropdowns.includes(4) && (
+            <div className="filter-content">
+              <select className="dropdown-select">
+                <option value="">Chọn tên địa phương</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+              </select>
+            </div>
           )}
         </div>
 
@@ -131,10 +166,16 @@ const Sidebar = () => {
             className="dropdown-btn"
             onClick={() => handleDropdownToggle(5)}
           >
-            ► Người ghi nhận
+            ► Số hiệu
           </button>
-          {activeDropdown === 5 && (
-            <input type="text" className="search-input" placeholder="Nhập tên địa phương..." />
+          {openDropdowns.includes(5) && (
+            <div className="filter-content">
+              <select className="dropdown-select">
+                <option value="">Chọn số hiệu</option>
+                <option value="123">123</option>
+                <option value="456">456</option>
+              </select>
+            </div>
           )}
         </div>
 
@@ -143,10 +184,16 @@ const Sidebar = () => {
             className="dropdown-btn"
             onClick={() => handleDropdownToggle(6)}
           >
-            ► Tình trạng bảo tồn
+            ► Người ghi nhận
           </button>
-          {activeDropdown === 6 && (
-            <input type="text" className="search-input" placeholder="Nhập tên địa phương..." />
+          {openDropdowns.includes(6) && (
+            <div className="filter-content">
+              <select className="dropdown-select">
+                <option value="">Chọn người ghi nhận</option>
+                <option value="123">A</option>
+                <option value="456">BB</option>
+              </select>
+            </div>
           )}
         </div>
 
@@ -155,10 +202,15 @@ const Sidebar = () => {
             className="dropdown-btn"
             onClick={() => handleDropdownToggle(7)}
           >
-            ► Loại đặc hữu
+            ► Tình trạng bảo tồn
           </button>
-          {activeDropdown === 7 && (
-            <input type="text" className="search-input" placeholder="Nhập tên địa phương..." />
+          {openDropdowns.includes(7) && (
+            <div className="filter-content">
+              <button className="filter-button">Danh mục đỏ IUCN</button>
+              <button className="filter-button">Sách Đỏ Việt Nam</button>
+              <button className="filter-button">Nghị định số 84/2021/NĐ-CP</button>
+              <button className="filter-button">Nghị định số 64/2019/NĐ-CP</button>
+            </div>
           )}
         </div>
 
@@ -167,10 +219,28 @@ const Sidebar = () => {
             className="dropdown-btn"
             onClick={() => handleDropdownToggle(8)}
           >
+            ► Loại đặc hữu
+          </button>
+          {openDropdowns.includes(8) && (
+            <div className="filter-content">
+              <button className="filter-button">Loài đặc hữu</button>
+
+            </div>
+          )}
+        </div>
+
+        <div className="filter-box">
+          <button
+            className="dropdown-btn"
+            onClick={() => handleDropdownToggle(9)}
+          >
             ► Loại ngoại lai
           </button>
-          {activeDropdown === 8 && (
-            <input type="text" className="search-input" placeholder="Nhập tên địa phương..." />
+          {openDropdowns.includes(9) && (
+            <div className="filter-content">
+              <button className="filter-button">Loài ngoại lai</button>
+
+            </div>
           )}
         </div>
 

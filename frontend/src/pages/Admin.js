@@ -2,19 +2,17 @@ import '../StyleCSS/Admin.css';
 import React, { useState } from 'react';
 import AccountManagement from '../components/AccountManagement';
 import UploadExcel from '../components/UploadExcel';
+import DataSearch from './Search'
 
 function Admin() {
-  // Trạng thái activeMenu sẽ lưu giá trị của menu đang được chọn
-  const [activeMenu, setActiveMenu] = useState('');
+  const [activeMenu, setActiveMenu] = useState('uploadExcel');
 
-  // Hàm xử lý khi chọn menu
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
   };
 
   return (
     <div className="main">
-      {/* Header */}
       <nav className="header">
         <div className="header-left">BIODIVERSITY</div>
         <div className="header-right">
@@ -30,9 +28,11 @@ function Admin() {
         </div>
       </nav>
 
+
+
       <div className="container">
         {/* Sidebar */}
-        <aside className="sidebar">
+        <aside className="sidebar-admin">
           <ul className="menu">
             <li
               className={`menu-item ${activeMenu === 'uploadExcel' ? 'active' : ''}`}
@@ -80,11 +80,9 @@ function Admin() {
         </aside>
 
         <div className='body'>
-            {/* Main Content */}
-          {/* Hiển thị nội dung theo menu đã chọn */}
           {activeMenu === 'accountManagement' && <AccountManagement />}
           {activeMenu === 'uploadExcel' && <UploadExcel />}
-          {activeMenu === '' && <div></div>}
+          {activeMenu === 'dataSearch' && <DataSearch />}
         </div>
       </div>
     </div>

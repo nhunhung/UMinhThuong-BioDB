@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Import Link từ react-router-dom
+import { Link } from 'react-router-dom';
 import { BsFillHouseDoorFill, BsFillTelephoneFill, BsSearch } from "react-icons/bs";
 
 const Header = () => {
@@ -52,7 +52,7 @@ const Header = () => {
     };
 
     return (
-        <header className="tw-flex tw-items-center tw-justify-between tw-px-6 tw-py-4 tw-bg-[rgb(226,232,240)] tw-text-slate-600 tw-transition-all">
+        <header className="tw-flex tw-items-center tw-justify-between tw-px-6 tw-py-4 tw-bg-[rgb(226,232,240)] tw-text-slate-600 tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-z-50 tw-shadow-md">
             {/* Logo and Menu */}
             <div className="tw-flex tw-items-center">
                 <div className="tw-mr-10">
@@ -80,7 +80,6 @@ const Header = () => {
                     </li>
                 </ul>
             </div>
-
             {/* Đăng nhập / Đăng xuất và Xin chào */}
             <div className="tw-flex tw-items-center tw-space-x-4">
                 {user ? (

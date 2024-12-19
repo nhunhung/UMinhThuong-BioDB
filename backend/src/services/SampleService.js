@@ -155,9 +155,40 @@ const postSample = async (SampleData) => {
         throw error;
     }
 }
+const getDetailSample = (sample_id) => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            const sample = await Sample.findOne({
+                where: { sample_id: sample_id}
+            })
+
+            if (sample === null) {
+                return reject({
+                    status: 'ERROR',
+                    message: 'sample is not defined'
+                })
+            }
+
+
+
+            return resolve({
+                status: 'OK',
+                message: 'lay thong tin sample thanh cong',
+                data: sample
+
+
+            })
+        } catch (e) {
+            reject(e)
+            console.log('lay thong tin sample that bai')
+        }
+    })
+}
 module.exports = {
     createSample,
     updateSample,
     deleteSample,
-    postSample
+    postSample,
+    getDetailSample
 }

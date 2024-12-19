@@ -16,5 +16,5 @@ const { authMiddleWare } = require('../middleware/authMiddleware');
 router.post('/create', authMiddleWare, GenusController.createGenus);
 router.put('/update/:id', authMiddleWare, GenusController.updateGenus);
 router.delete('/delete/:id', authMiddleWare, GenusController.deleteGenus);
-
+router.get('/get-details/:id', authMiddleWare, GenusController.getDetailGenus)
 module.exports = router;

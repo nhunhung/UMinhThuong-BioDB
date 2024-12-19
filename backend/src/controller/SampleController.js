@@ -78,9 +78,34 @@ const createNewSample = async (req, res) => {
 
 
 }
+const getDetailSample = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+
+        if (!id) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The  id is required'
+            })
+        }
+
+        const respone = await SampleService.getDetailSample(id)
+
+        return res.status(200).json(respone)
+
+
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+
+}
 module.exports = {
     createSample,
     updateSample,
     deleteSample,
-    createNewSample
+    createNewSample,
+    getDetailSample
 }

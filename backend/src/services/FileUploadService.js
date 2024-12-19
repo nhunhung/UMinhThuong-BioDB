@@ -99,8 +99,39 @@ const deleteFileUpLoad = (fileupload_id) => {
 
     })
 }
+const getDetailFileUpLoad = (fileupload_id) => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            const data = await FileUpLoad.findOne({
+                where: { fileupload_id: fileupload_id }
+            })
+
+            if (data === null) {
+                return reject({
+                    status: 'ERROR',
+                    message: 'data is not defined'
+                })
+            }
+
+
+
+            return resolve({
+                status: 'OK',
+                message: 'lay thong tin  thanh cong',
+                data: data
+
+
+            })
+        } catch (e) {
+            reject(e)
+            console.log('lay thong tin  that bai')
+        }
+    })
+}
 module.exports = {
     createFileUpLoad,
     updateFileUpLoad,
-    deleteFileUpLoad
+    deleteFileUpLoad,
+    getDetailFileUpLoad
 }

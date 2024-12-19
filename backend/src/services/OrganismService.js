@@ -100,7 +100,7 @@ const getOrganismByNames = async (kw) => {
 const updateOrganism = async (id, data) => {
   try {
     const organism = await Organism.findByPk(id);
-    if (!organism) {throw new Error('Organism not found');}
+    if (!organism) { throw new Error('Organism not found'); }
     // Cập nhật thông tin organism với dữ liệu mới
     const [updated] = await Organism.update(data, {
       where: { organism_id: id }  // Điều kiện xác định organism cần cập nhật
@@ -146,12 +146,12 @@ const statisticOrganisms = async (group_ids) => {
         [Sequelize.fn('COUNT', Sequelize.fn('DISTINCT', Sequelize.col('scientificName'))), 'Loài'],
 
         // Tính tổng số "Ghi nhận" (số lần xuất hiện của scientificName)
-        [Sequelize.fn('COUNT', Sequelize.col('groupoforganisms_id')), 'Ghi nhận']  
+        [Sequelize.fn('COUNT', Sequelize.col('groupoforganisms_id')), 'Ghi nhận']
       ],
       where: {
         groupoforganisms_id: { [Op.in]: group_ids }
       },
-      group: ['groupoforganisms_id'],  
+      group: ['groupoforganisms_id'],
     });
 
     return result;
@@ -163,54 +163,83 @@ const statisticOrganisms = async (group_ids) => {
 
 const postOrganism = async (organismsData) => {
   try {
-      const organism = await Organism.create({
-          cultivated: organismsData.cultivated,
-          hostPlantAnimal: organismsData.hostPlantAnimal,
-          generalNotes: organismsData.generalNotes,
-          museumNotes: organismsData.museumNotes,
-          informationSource: organismsData.informationSource,
-          speciesNameLevel1: organismsData.speciesNameLevel1,
-          firstAuthor: organismsData.firstAuthor,
-          speciesNameLevel2: organismsData.speciesNameLevel2,
-          subspeciesLevel1: organismsData.subspeciesLevel1,
-          secondAuthor: organismsData.secondAuthor,
-          subspeciesLevel2: organismsData.subspeciesLevel2,
-          speciesNameLevel3: organismsData.speciesNameLevel3,
-          thirdAuthor: organismsData.thirdAuthor,
-          nomenclatureStatus: organismsData.nomenclatureStatus,
-          nomenclatureLevel: organismsData.nomenclatureLevel,
-          scientificName: organismsData.scientificName,
-          authorName: organismsData.authorName,
-          commonName: organismsData.commonName,
-          publicationReference: organismsData.publicationReference,
-          yearOfAuthorName: organismsData.yearOfAuthorName,
-          synonymName: organismsData.synonymName,
-          treeForm: organismsData.treeForm,
-          lifeForm: organismsData.lifeForm,
-          ecologicalNiche: organismsData.ecologicalNiche,
-          speciesDescription: organismsData.speciesDescription,
-          habitat: organismsData.habitat,
-          distributionArea: organismsData.distributionArea,
-          ethnobotany: organismsData.ethnobotany,
-          usageGroup: organismsData.usageGroup,
-          endangeredRareSpecies: organismsData.endangeredRareSpecies,
-          images: organismsData.images,
-          conservationstatus_id: organismsData.conservationstatus_id,
-          groupoforganisms_id: organismsData.groupoforganisms_id,
-          kingdom_id: organismsData.kingdom_id,
-          phylum_id: organismsData.phylum_id,
-          class_id: organismsData.class_id,
-          order_id: organismsData.order_id,
-          family_id: organismsData.family_id,
-          genus_id: organismsData.genus_id
-      });
-      return organism;
+    const organism = await Organism.create({
+      cultivated: organismsData.cultivated,
+      hostPlantAnimal: organismsData.hostPlantAnimal,
+      generalNotes: organismsData.generalNotes,
+      museumNotes: organismsData.museumNotes,
+      informationSource: organismsData.informationSource,
+      speciesNameLevel1: organismsData.speciesNameLevel1,
+      firstAuthor: organismsData.firstAuthor,
+      speciesNameLevel2: organismsData.speciesNameLevel2,
+      subspeciesLevel1: organismsData.subspeciesLevel1,
+      secondAuthor: organismsData.secondAuthor,
+      subspeciesLevel2: organismsData.subspeciesLevel2,
+      speciesNameLevel3: organismsData.speciesNameLevel3,
+      thirdAuthor: organismsData.thirdAuthor,
+      nomenclatureStatus: organismsData.nomenclatureStatus,
+      nomenclatureLevel: organismsData.nomenclatureLevel,
+      scientificName: organismsData.scientificName,
+      authorName: organismsData.authorName,
+      commonName: organismsData.commonName,
+      publicationReference: organismsData.publicationReference,
+      yearOfAuthorName: organismsData.yearOfAuthorName,
+      synonymName: organismsData.synonymName,
+      treeForm: organismsData.treeForm,
+      lifeForm: organismsData.lifeForm,
+      ecologicalNiche: organismsData.ecologicalNiche,
+      speciesDescription: organismsData.speciesDescription,
+      habitat: organismsData.habitat,
+      distributionArea: organismsData.distributionArea,
+      ethnobotany: organismsData.ethnobotany,
+      usageGroup: organismsData.usageGroup,
+      endangeredRareSpecies: organismsData.endangeredRareSpecies,
+      images: organismsData.images,
+      conservationstatus_id: organismsData.conservationstatus_id,
+      groupoforganisms_id: organismsData.groupoforganisms_id,
+      kingdom_id: organismsData.kingdom_id,
+      phylum_id: organismsData.phylum_id,
+      class_id: organismsData.class_id,
+      order_id: organismsData.order_id,
+      family_id: organismsData.family_id,
+      genus_id: organismsData.genus_id
+    });
+    return organism;
   } catch (error) {
-      console.error("Error creating a new organism: ", error.message);
-      throw error;
+    console.error("Error creating a new organism: ", error.message);
+    throw error;
   }
 }
+const getDetailOrganism = (organism_id) => {
+  return new Promise(async (resolve, reject) => {
 
+    try {
+      const data = await Organism.findOne({
+        where: { organism_id: organism_id }
+      })
+
+      if (data === null) {
+        return reject({
+          status: 'ERROR',
+          message: 'data is not defined'
+        })
+      }
+
+
+
+      return resolve({
+        status: 'OK',
+        message: 'lay thong tin  thanh cong',
+        data: data
+
+
+      })
+    } catch (e) {
+      reject(e)
+      console.log('lay thong tin  that bai')
+    }
+  })
+}
 
 module.exports = {
   getAllOrganisms,
@@ -220,5 +249,6 @@ module.exports = {
   updateOrganism,
   statisticOrganisms,
   getOrganismByNames,
-  postOrganism
+  postOrganism,
+  getDetailOrganism
 };

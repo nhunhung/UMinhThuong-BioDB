@@ -5,4 +5,5 @@ const { authMiddleWare } = require('../middleware/authMiddleware');
 router.post('/create', authMiddleWare, LocationSampleController.createLocationSample);
 router.put('/update/:id', authMiddleWare, LocationSampleController.updateLocationSample);
 router.delete('/delete/:id', authMiddleWare, LocationSampleController.deleteLocationSample);
+router.get('/get-details/:id', authMiddleWare, LocationSampleController.getDetailLocationSample)
 module.exports = router

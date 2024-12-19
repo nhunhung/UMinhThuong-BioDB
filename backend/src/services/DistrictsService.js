@@ -120,10 +120,40 @@ const postDistrict = async (districtsData) => {
         throw error;
     }
 }
+const getDetailDistricts = (districts_id) => {
+    return new Promise(async (resolve, reject) => {
 
+        try {
+            const data = await Districts.findOne({
+                where: { districts_id: districts_id }
+            })
+
+            if (data === null) {
+                return reject({
+                    status: 'ERROR',
+                    message: 'data is not defined'
+                })
+            }
+
+
+
+            return resolve({
+                status: 'OK',
+                message: 'lay thong tin  thanh cong',
+                data: data
+
+
+            })
+        } catch (e) {
+            reject(e)
+            console.log('lay thong tin  that bai')
+        }
+    })
+}
 module.exports = {
     createDistricts,
     updateDistricts,
     deleteDistricts,
-    postDistrict
+    postDistrict,
+    getDetailDistricts
 }

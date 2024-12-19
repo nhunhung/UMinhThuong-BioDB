@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { getAllOrganism, getOrganismsByGroups, 
-    getOrganismById, deleteOrganismController, 
-    updateOrganism, statisticOrganism, 
-    getOrganismByNames} = require("../controller/OrganismController");
+const { getAllOrganism, getOrganismsByGroups,
+    getOrganismById, deleteOrganismController,
+    updateOrganism, statisticOrganism,
+    getOrganismByNames, getDetailOrganisms } = require("../controller/OrganismController");
 
+const { authMiddleWare } = require('../middleware/authMiddleware');
 const { authMiddleWareUpdate } = require("../middleware/authMiddleware");
+const Organism = require('../models/OrganismModel');
 
 router.get('/all-organism/?', getAllOrganism); //OK url: http://127.0.0.1:3001/api/organism/all-organism?page=1&limit=2
 
@@ -19,6 +21,7 @@ router.get('/:organism_Id', getOrganismById); //OK url: http://127.0.0.1:3001/ap
 
 router.delete('/:organism_Id', authMiddleWareUpdate, deleteOrganismController);
 
-router.put('/:organism_Id',authMiddleWareUpdate, updateOrganism); //OK url http://127.0.0.1:3001/api/organism/1
+router.put('/:organism_Id', authMiddleWareUpdate, updateOrganism); //OK url http://127.0.0.1:3001/api/organism/1
 
+router.get('/get-details/:id', authMiddleWare, getDetailOrganisms)
 module.exports = router;

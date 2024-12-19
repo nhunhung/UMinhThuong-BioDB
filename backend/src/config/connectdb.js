@@ -1,7 +1,7 @@
 require('dotenv').config({ path: './src/.env' });
 const { Sequelize } = require('sequelize');
 
-console.log(process.env.DB_USER); // Kiểm tra giá trị của DB_USER
+console.log('db user', process.env.DB_USER); // Kiểm tra giá trị của DB_USER
 
 const sequelize = new Sequelize(
     process.env.DB_NAME,

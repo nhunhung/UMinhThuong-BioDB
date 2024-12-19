@@ -6,15 +6,3 @@
   display: flex;
   justify-content: space-between; /* Đảm bảo các phần tử được chia đều không gian */
 }
-
-.InfoL, .InfoR {
-  padding: 10px;
-}
-
-.InfoL {
-  flex: 0 0 20%; /* Chiếm 30% chiều rộng */
-}
-
-.InfoR {
-  flex: 0 0 80%; /* Chiếm 70% chiều rộng */
-}

@@ -9,6 +9,7 @@ import Footer from './layout/footer';
 import { LanguageProvider } from './components/LanguageContext';
 import Home from './components/Home';
 import LookupPage from './pages/LookupPage';
+import InfoDetails from './pages/Info';
 import ContactForm from './components/ContactForm';
 import Search from './pages/Search';
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/search" element={<LookupPage />} />
           <Route path="/admin-search" element={<Search />} />
           <Route path="/contact" element={<ContactForm />} />
+          <Route path="/info" element={<InfoDetails />} />
         </Routes>
         <FooterWrapper />
       </Router>

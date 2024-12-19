@@ -4,7 +4,7 @@ import { BsFillHouseDoorFill, BsFillTelephoneFill, BsSearch } from "react-icons/
 
 const Header = () => {
     const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
-    const [language, setLanguage] = useState('vi'); // 'vi' for Vietnamese, 'en' for English
+    const [language, setLanguage] = useState('vi'); 
     const [user, setUser] = useState(null);
 
     useEffect(() => {

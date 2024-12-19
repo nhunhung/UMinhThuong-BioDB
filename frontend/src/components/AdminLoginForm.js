@@ -32,7 +32,7 @@ const LoginForm = () => {
         localStorage.setItem("token", data.token); // Lưu token
         localStorage.setItem("user", JSON.stringify(data.user));
         alert("Đăng nhập thành công!");
-        window.location.href = "/"; // Chuyển hướng về trang chính
+        window.location.href = "/admin"; // Chuyển hướng về trang chính
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Đăng nhập thất bại. Vui lòng thử lại.");

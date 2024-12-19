@@ -22,7 +22,7 @@ function HeaderWrapper() {
 function FooterWrapper() {
   const location = useLocation();
   // Không hiển thị footer ở các trang admin và login
-  const excludedPaths = ['/admin', '/admin-login', '/login'];
+  const excludedPaths = ['/admin', '/admin-login', '/login', '/contact', '/search'];
   return excludedPaths.includes(location.pathname) ? null : <Footer />;
 }
 

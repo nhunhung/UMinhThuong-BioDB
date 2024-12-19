@@ -1,0 +1,54 @@
+/* Nút Phân loại sinh học */
+.button-left {
+    width: 50%;
+    height: 40px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Nút Phân loại */
+.button-right {
+    width: 50%;
+    height: 40px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Hiệu ứng hover cho các nút */
+.button-left:hover, .button-right:hover {
+    background-color: #45a049;
+}
+
+/* Container chứa nút In */
+.print-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Nút In */
+.print-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Hiệu ứng hover cho nút In */
+.print-container button:hover {
+    background-color: #0b7dda;
+}
+
+.info-box {
+    height: 60px;
+}

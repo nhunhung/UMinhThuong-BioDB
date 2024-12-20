@@ -50,14 +50,14 @@
 
 .menu {
   list-style: none;
-  padding: 0;
+  padding: 20px 0px;
 }
 
 .menu-item {
   position: relative;
   display: flex; 
   align-items: center; 
-  padding: 10px 0px;
+  padding: 15px;
   margin: 10px;
   margin-bottom: 10px;
   font-weight: bold;
@@ -98,4 +98,8 @@
 
 .body {
   width: 100%;
+  height: calc(100vh - 40px);
+  overflow-y: auto; /* Cho phép cuộn dọc nếu nội dung vượt quá chiều cao */
+  display: flex; /* Để linh hoạt sắp xếp nội dung nếu cần */
+  flex-direction: column;
 }

@@ -84,7 +84,7 @@ function AccountManagement() {
   };
 
   return (
-    <div className="content" style={{ marginLeft: '60px' }}>
+    <div className="content">
       <h4>Đăng ký tài khoản</h4>
       <form className="form" onSubmit={handleCreate}>
         <input

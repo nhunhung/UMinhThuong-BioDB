@@ -8,6 +8,9 @@
     height: 70px; /* Chiều cao header */
     width: 100%; /* Đảm bảo chiếm toàn bộ chiều ngang */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+    position: fixed; /* Cố định header */
+    top: 0; /* Vị trí cách trên cùng 0 */
+    z-index: 1000; /* Đảm bảo header hiển thị phía trên các phần tử khác */
 }
 
 /* Logo */

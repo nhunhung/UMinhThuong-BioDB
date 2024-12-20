@@ -7,7 +7,7 @@ function EditAccountModal({ account, onSave, onCancel, onChange }) {
     return (
       <div className="modal-backdrop">
         <form className="form-edit" onSubmit={(e) => e.preventDefault()}>
-          <h3>Chỉnh sửa tài khoản</h3>
+        <h3 style={{ fontSize: '17px' }}>Chỉnh sửa tài khoản</h3>
           <div className="form-group">
             <label>Tài khoản</label>
             <input

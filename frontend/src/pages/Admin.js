@@ -22,9 +22,9 @@ function Admin() {
     }
   }, []);
 
-  if (!isAuthenticated) {
-    return <Navigate to="/admin-login" />;
-  }
+  // if (!isAuthenticated) {
+  //   return <Navigate to="/admin-login" />;
+  // }
 
   return (
     <div className="main">

@@ -1,6 +1,9 @@
 /* Font chữ chính */
 body {
   font-family: 'Arial', sans-serif;
+  font-size: 14px !important;
+
+  
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -14,15 +17,8 @@ p, span, a {
 .app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; 
-  overflow: auto; /* Cho phép cuộn ngang và dọc */
-}
-
-.main {
-  display: flex;
-  flex-grow: 1;
-  justify-content: space-between; 
-  overflow: auto; /* Cho phép cuộn ngang và dọc */
+  
+  /* Cho phép cuộn ngang và dọc */
 }
 
 .InfoL, .InfoR {

@@ -14,13 +14,15 @@ p, span, a {
 .app {
   display: flex;
   flex-direction: column;
-  height: 100vh; 
+  min-height: 100vh; 
+  overflow: auto; /* Cho phép cuộn ngang và dọc */
 }
 
 .main {
   display: flex;
   flex-grow: 1;
-  justify-content: space-between; /* Đảm bảo các phần tử được chia đều không gian */
+  justify-content: space-between; 
+  overflow: auto; /* Cho phép cuộn ngang và dọc */
 }
 
 .InfoL, .InfoR {
@@ -28,10 +30,9 @@ p, span, a {
 }
 
 .InfoL {
-  flex: 0 0 20%; /* Chiếm 30% chiều rộng */
+  flex: 0 0 20%; /* Chiếm 20% chiều rộng */
 }
 
 .InfoR {
-  flex: 0 0 80%; /* Chiếm 70% chiều rộng */
+  flex: 0 0 80%; /* Chiếm 80% chiều rộng */
 }
-

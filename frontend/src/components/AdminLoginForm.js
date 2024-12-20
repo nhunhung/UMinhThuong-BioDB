@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../StyleCSS/LoginForm.css";
 import logoUMT from "../assets/logo_UMT.png";
 
-const LoginForm = () => {
+const AdminLoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Thêm useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +23,7 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/api/users/sign-in", {
+      const response = await fetch("http://localhost:3001/api/users/admin-sign-in", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -32,7 +34,7 @@ const LoginForm = () => {
         localStorage.setItem("token", data.token); // Lưu token
         localStorage.setItem("user", JSON.stringify(data.user));
         alert("Đăng nhập thành công!");
-        window.location.href = "/admin"; // Chuyển hướng về trang chính
+        navigate("/admin"); // Sử dụng navigate thay cho window.location.href
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Đăng nhập thất bại. Vui lòng thử lại.");
@@ -81,4 +83,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default AdminLoginForm;

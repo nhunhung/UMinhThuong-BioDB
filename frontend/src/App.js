@@ -23,12 +23,12 @@ function HeaderWrapper() {
 function FooterWrapper() {
   const location = useLocation();
   // Không hiển thị footer ở các trang admin và login
-  const excludedPaths = ['/admin', '/admin-login', '/login', '/contact', '/search'];
+  const excludedPaths = ['/admin', '/admin-login', '/login', '/contact', '/search', '/info'];
   return excludedPaths.includes(location.pathname) ? null : <Footer />;
 }
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <LanguageProvider>
@@ -38,10 +38,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin-login" element={<AdminLoginForm />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/upload" element={<UploadExcel />} />
+          {/* <Route path="/login" element={<LoginForm />} /> */}
+          {/* <Route path="/upload" element={<UploadExcel />} /> */}
           <Route path="/search" element={<LookupPage />} />
-          <Route path="/admin-search" element={<Search />} />
+          {/* <Route path="/admin-search" element={<Search />} /> */}
           <Route path="/contact" element={<ContactForm />} />
           <Route path="/info" element={<InfoDetails />} />
         </Routes>

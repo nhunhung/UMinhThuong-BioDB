@@ -114,6 +114,66 @@ const loginUser = (userLogin) => {
         }
     })
 }
+
+const loginAdmin = (userLogin) => {
+    return new Promise(async (resolve, reject) => {
+        const { email, password } = userLogin;
+        try {
+            const admin = await Users.findOne({
+                where: { email: email, role_id: [1, 2] }  // Chỉ chấp nhận role_id là 1 (admin) hoặc 2 (editor)
+            });
+
+            if (!admin) {
+                return reject({
+                    status: 'ERROR',
+                    message: 'Email not exists or not authorized as admin/editor'
+                });
+            }
+
+            const comparePassword = bcrypt.compareSync(password, admin.password);
+
+            if (!comparePassword) {
+                return reject({
+                    status: 'ERROR',
+                    message: 'The password or user is incorrect'
+                });
+            }
+
+            const access_token = await generalAccessToken({
+                id: admin.users_id,
+                role_id: admin.role_id
+            });
+
+            const refresh_token = await generalRefreshToken({
+                id: admin.users_id,
+                role_id: admin.role_id
+            });
+
+            return resolve({
+                status: 'OK',
+                message: 'SUCCESS',
+                user: {
+                    users_id: admin.users_id,
+                    username: admin.username,
+                    firstname: admin.firstname,
+                    lastname: admin.lastname,
+                    email: admin.email,
+                    role_id: admin.role_id,
+                    avatar: admin.avatar
+                },
+                access_token: access_token,
+                refresh_token: refresh_token
+            });
+
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+
+
+
 const updateUsers = (users_id, data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -287,5 +347,5 @@ module.exports = {
     loginUser,
     updateUsersPassword,
     getAllUsers,
-
+    loginAdmin
 }

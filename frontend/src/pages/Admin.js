@@ -1,15 +1,30 @@
 import '../StyleCSS/Admin.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom'; // Thêm thư viện để điều hướng khi chưa đăng nhập
 import AccountManagement from '../components/AccountManagement';
 import UploadExcel from '../components/UploadExcel';
-import DataSearch from './Search'
+import DataSearch from './Search';
 
 function Admin() {
   const [activeMenu, setActiveMenu] = useState('uploadExcel');
+  const [isAuthenticated, setIsAuthenticated] = useState(true); 
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
+
+  if (!isAuthenticated) {
+    return <Navigate to="/admin-login" />;
+  }
 
   return (
     <div className="main">
@@ -27,8 +42,6 @@ function Admin() {
           <span className="account-name">quantri@uminhthuong.girs.vn</span>
         </div>
       </nav>
-
-
 
       <div className="container">
         {/* Sidebar */}
@@ -88,4 +101,5 @@ function Admin() {
     </div>
   );
 }
+
 export default Admin;

@@ -73,6 +73,44 @@ const loginUser = async (req, res) => {
         })
     }
 }
+
+const loginAdmin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const reg = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+
+        const isCheckEmail = reg.test(email);
+        if (!email || !password) {
+            return res.status(400).json({
+                status: 'ERR',
+                message: 'The input is required'
+            });
+        } else if (!isCheckEmail) {
+            return res.status(400).json({
+                status: 'ERR',
+                message: 'The input must be an email'
+            });
+        }
+
+        const response = await UsersService.loginAdmin(req.body);
+        const { refresh_token, ...newResponse } = response;
+        res.cookie('refresh_token', refresh_token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict'
+        });
+
+        return res.status(200).json(response);
+
+    } catch (e) {
+        return res.status(404).json({
+            message: e.message || 'Login failed'
+        });
+    }
+};
+
+
+
 const updateUsers = async (req, res) => {
     try {
         const users_id = req.params.id;
@@ -194,5 +232,5 @@ module.exports = {
     loginUser,
     updateUsersPassword,
     getAllUsers,
-
+    loginAdmin
 }

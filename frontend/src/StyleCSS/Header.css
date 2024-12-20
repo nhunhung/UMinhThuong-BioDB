@@ -6,6 +6,8 @@
     background-color: #eaf0f6; /* Màu nền */
     padding: 0 20px; /* Khoảng cách bên trong */
     height: 70px; /* Chiều cao header */
+    width: 100%; /* Đảm bảo chiếm toàn bộ chiều ngang */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng */
 }
 
 /* Logo */
@@ -53,6 +55,11 @@
     cursor: pointer; /* Con trỏ */
     font-size: 14px; /* Kích thước chữ */
     border: none; /* Xóa viền */
+    transition: background-color 0.3s, transform 0.2s; /* Hiệu ứng hover */
+}
+
+.header-actions button:hover {
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
 }
 
 /* Đăng nhập button */
@@ -76,4 +83,20 @@
 
 .btn-primary:hover {
     background-color: #0d3b66; /* Đổi nền khi hover */
+}
+
+/* Responsive header (tùy chọn thêm) */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column; /* Xếp dọc cho màn hình nhỏ */
+        padding: 10px;
+        height: auto;
+    }
+    .header-nav {
+        flex-wrap: wrap; /* Chia hàng nếu cần */
+        gap: 10px;
+    }
+    .header-actions {
+        justify-content: center;
+    }
 }

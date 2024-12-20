@@ -1,16 +1,16 @@
 import React from 'react';
-import InfoR from '../components/InfoR';
-import InfoL from '../components/InfoL';
-import '../App.css';
+import InfoL from '../components/InfoL'; 
+import InfoR from '../components/InfoR'; 
+import '../StyleCSS/Info.css';
 
 function Info() {
   return (
-    <div className="info-container">
+    <div className="Info">
       <div className="info-main">
-        <div className="info-left">
+        <div className="InfoL">
           <InfoL />
         </div>
-        <div className="info-right">
+        <div className="InfoR">
           <InfoR />
         </div>
       </div>

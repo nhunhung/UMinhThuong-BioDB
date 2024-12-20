@@ -19,9 +19,9 @@ const InfoL = () => {
             ho: "Malvaceae",
             chi: "Abelmoschus"
         };
-    
+
         return (
-            <div className="info1">
+            <div className="info1" >
                 <table>
                     <tbody>
                         <tr>
@@ -130,7 +130,7 @@ const InfoL = () => {
         // Render component thành HTML string
         const printContent = activeInfo === 'Info1' ? renderInfo1() : renderInfo2();
         const printWindow = window.open('', '', 'height=600,width=800');
-        
+
         // Sử dụng ReactDOMServer để render nội dung thành chuỗi HTML
         const printHTML = ReactDOMServer.renderToString(printContent);
 
@@ -143,30 +143,31 @@ const InfoL = () => {
     };
 
     return (
-      <div>
-        {/* Nút In thông tin, thay thế ô chữ nhật màu trắng */}
-        <div className="info-box" onClick={handlePrint}>
-            {/* Nội dung trong ô chữ nhật có thể được làm trống hoặc hiển thị gì đó */}
-        </div>
+        <div>
+            {/* Nút In thông tin, thay thế ô chữ nhật màu trắng */}
+            <div className="info-box" onClick={handlePrint}>
+                {/* Nội dung trong ô chữ nhật có thể được làm trống hoặc hiển thị gì đó */}
+                click
+            </div>
 
-        {/* Hiển thị thông tin chi tiết khi nhấn vào ô chữ nhật */}
-        <div className="info-details">
-            {infoDetails && <pre>{infoDetails}</pre>}
-        </div>
+            {/* Hiển thị thông tin chi tiết khi nhấn vào ô chữ nhật */}
+            <div className="info-details">
+                {infoDetails && <pre>{infoDetails}</pre>}
+            </div>
 
-        {/* Các nút nằm cùng một hàng */}
-        <div className="button-container">
-          <button className="button-left" onClick={showInfo1}>
-            Phân loại sinh học
-          </button>
-          <button className="button-right" onClick={showInfo2}>
-            Phân loại
-          </button>
-        </div>
+            {/* Các nút nằm cùng một hàng */}
+            <div className="button-container">
+                <button className="button-left" onClick={showInfo1}>
+                    Phân loại sinh học
+                </button>
+                <button className="button-right" onClick={showInfo2}>
+                    Phân loại
+                </button>
+            </div>
 
-        {/* Hiển thị Info1 hoặc Info2 tùy vào trạng thái */}
-        {activeInfo === 'Info1' ? renderInfo1() : renderInfo2()}
-      </div>
+            {/* Hiển thị Info1 hoặc Info2 tùy vào trạng thái */}
+            {activeInfo === 'Info1' ? renderInfo1() : renderInfo2()}
+        </div>
     );
 };
 

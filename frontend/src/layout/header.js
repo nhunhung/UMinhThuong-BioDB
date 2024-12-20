@@ -4,7 +4,7 @@ import { BsFillHouseDoorFill, BsFillTelephoneFill, BsSearch } from "react-icons/
 
 const Header = () => {
     const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
-    const [language, setLanguage] = useState('vi'); 
+    const [language, setLanguage] = useState('vi');
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -27,6 +27,7 @@ const Header = () => {
         localStorage.removeItem('user');
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
+        localStorage.removeItem('token');
         setUser(null);
     };
 

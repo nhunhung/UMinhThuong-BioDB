@@ -1,30 +1,32 @@
 import '../StyleCSS/Admin.css';
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom'; // Thêm thư viện để điều hướng khi chưa đăng nhập
+import { Navigate, useNavigate } from 'react-router-dom'; // Thêm thư viện để điều hướng khi chưa đăng nhập
 import AccountManagement from '../components/AccountManagement';
 import UploadExcel from '../components/UploadExcel';
 import DataSearch from './Search';
 
 function Admin() {
   const [activeMenu, setActiveMenu] = useState('uploadExcel');
-  const [isAuthenticated, setIsAuthenticated] = useState(false); 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
   };
+  const navigate = useNavigate();
+
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      setIsAuthenticated(true);
+      console.log('Token found: yes');
+
     } else {
-      setIsAuthenticated(false);
+      console.log('No token found');
+      navigate("/admin-login")
     }
   }, []);
 
-  if (!isAuthenticated) {
-    return <Navigate to="/admin-login" />;
-  }
 
   return (
     <div className="main">

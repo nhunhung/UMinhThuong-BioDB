@@ -1,0 +1,28 @@
+.table-container {
+    overflow-x: auto; /* Cho phép cuộn ngang nếu bảng quá rộng */
+  }
+  
+  table {
+    border-collapse: collapse; /* Loại bỏ khoảng cách giữa các ô */
+    width: 100%; /* Bảng chiếm toàn bộ chiều rộng container */
+  }
+  
+  th, td {
+    border: 1px solid #ccc; /* Thêm viền ô */
+    width: 100px;
+    padding: 10px; /* Thêm khoảng cách trong ô */
+    text-align: left; /* Canh trái nội dung */
+    white-space: normal; /* Cho phép xuống dòng */
+    word-wrap: break-word; /* Bọc từ dài nếu vượt quá chiều rộng ô */
+  }
+  
+  th {
+    background-color: #f4f4f4; /* Màu nền cho tiêu đề */
+    line-height: 1.5; /* Tăng khoảng cách giữa các dòng */
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9; /* Màu nền xen kẽ cho các hàng */
+  }
+
+  

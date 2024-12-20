@@ -1,6 +1,6 @@
 import React from 'react';
-import InfoL from '../components/InfoL'; 
-import InfoR from '../components/InfoR'; 
+import InfoL from '../components/InfoL';
+import InfoR from '../components/InfoR';
 import '../StyleCSS/Info.css';
 
 function Info() {

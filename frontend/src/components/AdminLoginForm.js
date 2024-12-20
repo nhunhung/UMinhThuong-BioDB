@@ -31,10 +31,12 @@ const AdminLoginForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("token", data.token); // Lưu token
+        console.log("data", data)
+        localStorage.setItem("token", data.access_token); // Lưu token
+        console.log("check token", data.access_token);
         localStorage.setItem("user", JSON.stringify(data.user));
         alert("Đăng nhập thành công!");
-        navigate("/admin"); // Sử dụng navigate thay cho window.location.href
+        navigate('/admin'); // Sử dụng navigate thay cho window.location.href
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Đăng nhập thất bại. Vui lòng thử lại.");

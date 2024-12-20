@@ -4,7 +4,7 @@
   
   .info-main {
     display: flex;
-    justify-content: space-between; /* Đảm bảo các phần tử được chia đều không gian */
+    justify-content: space-between; 
   }
   .InfoL {
     flex: 0 0 20%; /* Chiếm 30% chiều rộng */

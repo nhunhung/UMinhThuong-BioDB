@@ -123,6 +123,7 @@ const InfoR = () => {
                 <td>{record.project}</td>
               </tr>
             ))}
+
           </tbody>
         </table>
       </div>

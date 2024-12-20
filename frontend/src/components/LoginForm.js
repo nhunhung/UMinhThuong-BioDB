@@ -30,7 +30,8 @@ const LoginForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("token", data.token); // Save token
+        console.log('data token', data.access_token);
+        localStorage.setItem("token", data.access_token); // Save token
         localStorage.setItem("user", JSON.stringify(data.user));
         alert("Đăng nhập thành công!");
         window.location.href = "/"; // Redirect to the home page

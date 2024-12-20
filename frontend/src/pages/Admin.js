@@ -7,7 +7,7 @@ import DataSearch from './Search';
 
 function Admin() {
   const [activeMenu, setActiveMenu] = useState('uploadExcel');
-  const [isAuthenticated, setIsAuthenticated] = useState(true); 
+  const [isAuthenticated, setIsAuthenticated] = useState(false); 
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);

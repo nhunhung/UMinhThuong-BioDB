@@ -221,41 +221,7 @@ const updateUsers = (users_id, data) => {
         }
     })
 }
-// const updateUsersPassword = (users_id, passwordObj) => {
-//     return new Promise(async (resolve, reject) => {
-//         try {
-//             const checkUsers = await Users.findByPk(users_id);  // Tìm theo khóa chính
-//             console.log('check')
-//             if (checkUsers === null) {
-//                 return reject({
-//                     status: 'ERROR',
-//                     message: 'User is not defined'
-//                 })
 
-//             }
-//             const password = passwordObj?.password;
-//             if (!password) {
-//                 return reject({
-//                     status: 'ERROR',
-//                     message: 'Password is required',
-//                 });
-//             }
-//             const hash = bcrypt.hashSync(password, 10)
-//             // await Users.update({ password: hash }, { where: { users_id: users_id } });
-//             checkUsers.password = hash;
-//             await checkUsers.save();
-//             const updatedUsers = await Users.findByPk(users_id);
-//             return resolve({
-//                 status: 'OK',
-//                 message: 'SUCCESS',
-//                 data: updatedUsers,
-//             })
-//         } catch (e) {
-//             reject(e)
-//             console.log('not success', e)
-//         }
-//     })
-// }
 const updateUsersPassword = (users_id, passwordObj) => {
     return new Promise(async (resolve, reject) => {
         try {

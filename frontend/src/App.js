@@ -22,10 +22,17 @@ function HeaderWrapper() {
 
 function FooterWrapper() {
   const location = useLocation();
-  // Không hiển thị footer ở các trang admin và login
-  const excludedPaths = ['/admin', '/admin-login', '/login', '/contact', '/search', '/info'];
+  // Không hiển thị footer ở các trang admin, login và /details/:id
+  const excludedPaths = ['/admin', '/admin-login', '/login', '/contact', '/search'];
+
+  // Kiểm tra xem path có phải là '/details/:id' hay không
+  if (location.pathname.startsWith('/details/')) {
+    return null;
+  }
+
   return excludedPaths.includes(location.pathname) ? null : <Footer />;
 }
+
 
 function App() {
   // const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -38,12 +45,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin-login" element={<AdminLoginForm />} />
-          {/* <Route path="/login" element={<LoginForm />} /> */}
+          <Route path="/login" element={<LoginForm />} />
           {/* <Route path="/upload" element={<UploadExcel />} /> */}
           <Route path="/search" element={<LookupPage />} />
           {/* <Route path="/admin-search" element={<Search />} /> */}
           <Route path="/contact" element={<ContactForm />} />
-          <Route path="/info" element={<InfoDetails />} />
+          <Route path="/details/:id" element={<InfoDetails />} />
         </Routes>
         <FooterWrapper />
       </Router>

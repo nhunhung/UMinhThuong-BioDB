@@ -1,189 +1,187 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import '../StyleCSS/Cardlist.css';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import L from 'leaflet';
 import '../StyleCSS/leaflet.css';
 import b1 from '../assets/images/b1.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 
-const Cardlist = () => {
-    const [viewMode, setViewMode] = useState("grid"); // Quản lý chế độ hiển thị
-    const [searchTerm, setSearchTerm] = useState(""); // Quản lý giá trị ô tìm kiếm
-    const [currentPageGrid, setCurrentPageGrid] = useState(1); // Phân trang riêng cho Grid
-    const [currentPageList, setCurrentPageList] = useState(1); // Phân trang riêng cho List
+const Cardlist = ({ selectedImageId }) => {
+    const [viewMode, setViewMode] = useState("grid");
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPageGrid, setCurrentPageGrid] = useState(1);
+    const [currentPageList, setCurrentPageList] = useState(1);
+    const [data, setData] = useState([]);
+    const [speciesData, setSpeciesData] = useState([]);
+    const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#00c49f', '#ffbb28', '#ff8042'];
+    const [handleImageClick, sethandleImageClick] = useState(null);
 
-    const items = Array(400).fill({
-        title: "",
-        description: "",
-        group: "",
-        count: ""
-    });
+    useEffect(() => {
+        fetchData("http://127.0.0.1:3001/api/organism/all-organism?page=1&limit=20");
+    }, []);
 
+    useEffect(() => {
+        console.log('Image ID cl:', selectedImageId); 
+        if (selectedImageId) {
+            fetchData(`http://127.0.0.1:3001/api/organism?groupOfOrganismId=${selectedImageId}`);
+        }
+    }, [selectedImageId]);
+    
+    const fetchData = async (url) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const result = await response.json();
+            setData(url.includes("groupOfOrganismId") ? result.data : result.organisms);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    
+
+    useEffect(() => {
+        const fetchSpeciesData = async () => {
+            try {
+                const response = await fetch("http://127.0.0.1:3001/api/organism/statics?groupOfOrganismId=1&groupOfOrganismId=2&groupOfOrganismId=3&groupOfOrganismId=4&groupOfOrganismId=5&groupOfOrganismId=6&groupOfOrganismId=7&groupOfOrganismId=8");
+                const result = await response.json();
+                setSpeciesData(result.map(item => ({
+                    name: item.goo_name || 'Unknown',
+                    Ghinhan: parseInt(item.Ghinhan) || 0,
+                    Loai: parseInt(item.Loai) || 0
+                })));
+            } catch (error) {
+                console.error('Error fetching species data:', error);
+                setSpeciesData([]);
+            }
+        };
+        fetchSpeciesData();
+    }, []);
+
+    const itemsPerPageGrid = 20;
     const itemsPerPageList = 20;
 
-    const filteredItems = items.filter(item =>
-        item.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const totalPagesGrid = Math.ceil(data.length / itemsPerPageGrid);
+    const indexOfLastItemGrid = currentPageGrid * itemsPerPageGrid;
+    const indexOfFirstItemGrid = indexOfLastItemGrid - itemsPerPageGrid;
+    const currentItemsGrid = data.slice(indexOfFirstItemGrid, indexOfLastItemGrid);
 
-    // Phân trang cho list
+    const totalPagesList = Math.ceil(data.length / itemsPerPageList);
     const indexOfLastItemList = currentPageList * itemsPerPageList;
     const indexOfFirstItemList = indexOfLastItemList - itemsPerPageList;
-    const currentItemsList = filteredItems.slice(indexOfFirstItemList, indexOfLastItemList);
+    const currentItemsList = data.slice(indexOfFirstItemList, indexOfLastItemList);
 
-    // Chế độ hiển thị dạng lưới (grid)
-    const renderGridView = () => {
-        const itemsPerPageGrid = 20; // 20 items mỗi trang
-        const totalPagesGrid = Math.ceil(filteredItems.length / itemsPerPageGrid);
-        const indexOfLastItemGrid = currentPageGrid * itemsPerPageGrid;
-        const indexOfFirstItemGrid = indexOfLastItemGrid - itemsPerPageGrid;
-        const currentItemsGrid = filteredItems.slice(indexOfFirstItemGrid, indexOfLastItemGrid);
-        return (
-            <div>
-                {/* Hiển thị các card */}
-                <div className="card-grid-user">
-                    {currentItemsGrid.map((item, index) => (
-                        <div className="card-user" key={index}>
+    const renderGridView = () => (
+        <div>
+            <div className="card-grid-user">
+                {currentItemsGrid.map((item, index) => (
+                    <div className="card-user" key={index}>
+                        <a href={`/details/${item.organism_id}`} className="card-link">
                             <img src={b1} alt="Hình đại diện" className="card-avatar-user" />
-                            <h4>{item.genus}</h4>
-                            <p>{item.localName}</p>
-                            <p>{item.group}</p>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Phân trang */}
-                <div className="pagination-user">
-                    <button
-                        onClick={() => setCurrentPageGrid(currentPageGrid - 1)}
-                        disabled={currentPageGrid === 1}
-                    >
-                        Previous
-                    </button>
-                    <span>
-                        {`Page ${currentPageGrid} of ${totalPagesGrid}`}
-                    </span>
-                    <button
-                        onClick={() => setCurrentPageGrid(currentPageGrid + 1)}
-                        disabled={currentPageGrid === totalPagesGrid}
-                    >
-                        Next
-                    </button>
-                </div>
+                        </a>
+                        <h4>{item.order || "N/A"}</h4>
+                        <p>{item.scientificName || "N/A"}</p>
+                        <p>{item.goo || "N/A"}</p>
+                        <p>(1 ghi nhận)</p>
+                    </div>
+                ))}
             </div>
-        );
-    };
 
-    // Chế độ hiển thị dạng danh sách (list)
-    const renderListView = () => {
-        const totalPagesList = Math.ceil(filteredItems.length / itemsPerPageList);
-        const indexOfLastItemList = currentPageList * itemsPerPageList;
-        const indexOfFirstItemList = indexOfLastItemList - itemsPerPageList;
-        const currentItemsList = filteredItems.slice(indexOfFirstItemList, indexOfLastItemList);
+            <div className="pagination-user">
+                <button
+                    onClick={() => setCurrentPageGrid(currentPageGrid - 1)}
+                    disabled={currentPageGrid === 1}
+                >
+                    Previous
+                </button>
+                <span>{`Page ${currentPageGrid} of ${totalPagesGrid}`}</span>
+                <button
+                    onClick={() => setCurrentPageGrid(currentPageGrid + 1)}
+                    disabled={currentPageGrid === totalPagesGrid}
+                >
+                    Next
+                </button>
+            </div>
+        </div>
+    );
 
-        return (
-            <div>
-                <table className="card-list-view-user">
-                    <thead>
-                        <tr>
-                            <th>Chi tiết</th>
-                            <th>Hình đại diện</th>
-                            <th>Nhóm sinh vật</th>
-                            <th>Bộ</th>
-                            <th>Họ</th>
-                            <th>Chi</th>
-                            <th>Tên khoa học</th>
-                            <th>Tên tác giả</th>
-                            <th>Tên địa phương</th>
+    const renderListView = () => (
+        <div>
+            <table className="card-list-view-user">
+                <thead>
+                    <tr>
+                        <th>Chi tiết</th>
+                        <th>Hình đại diện</th>
+                        <th>Nhóm sinh vật</th>
+                        <th>Bộ</th>
+                        <th>Họ</th>
+                        <th>Chi</th>
+                        <th>Tên khoa học</th>
+                        <th>Tên tác giả</th>
+                        <th>Tên địa phương</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {currentItemsList.map((item, index) => (
+                        <tr key={index}>
+                            <td>
+                                <a href={`/details/${item.organism_id}`} className="link-icon">
+                                    <FontAwesomeIcon icon={faEye} />
+                                </a>
+                            </td>
+
+                            <td>
+                                <img src={b1} alt="Hình đại diện" className="table-avatar-user" />
+                            </td>
+                            <td>{item.goo || "N/A"}</td>
+                            <td>{item.order || "N/A"}</td>
+                            <td>{item.family || "N/A"}</td>
+                            <td>{item.genus || "N/A"}</td>
+                            <td>{item.scientificName || "N/A"}</td>
+                            <td>{item.authorName || "N/A"}</td>
+                            <td>{item.commonName || "N/A"}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {currentItemsList.map((item, index) => (
-                            <tr key={index}>
-                                <td>{item.details}</td>
-                                <td>
-                                    <img src={item.avatar} alt="Hình đại diện" className="table-avatar-user" />
-                                </td>
-                                <td>{item.group}</td>
-                                <td>{item.order}</td>
-                                <td>{item.family}</td>
-                                <td>{item.genus}</td>
-                                <td>{item.scientificName}</td>
-                                <td>{item.author}</td>
-                                <td>{item.localName}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                    ))}
+                </tbody>
+            </table>
 
-                {/* Phân trang */}
-                <div className="pagination-user">
-                    <button
-                        onClick={() => setCurrentPageList(currentPageList - 1)}
-                        disabled={currentPageList === 1}
-                    >
-                        Previous
-                    </button>
-                    <span>
-                        {`Page ${currentPageList} of ${totalPagesList}`}
-                    </span>
-                    <button
-                        onClick={() => setCurrentPageList(currentPageList + 1)}
-                        disabled={currentPageList === totalPagesList}
-                    >
-                        Next
-                    </button>
-                </div>
+            <div className="pagination-user">
+                <button
+                    onClick={() => setCurrentPageList(currentPageList - 1)}
+                    disabled={currentPageList === 1}
+                >
+                    Previous
+                </button>
+                <span>{`Page ${currentPageList} of ${totalPagesList}`}</span>
+                <button
+                    onClick={() => setCurrentPageList(currentPageList + 1)}
+                    disabled={currentPageList === totalPagesList}
+                >
+                    Next
+                </button>
             </div>
-        );
-    };
+        </div>
+    );
 
-    // Chế độ hiển thị dạng đồ thị tròn (stats)
     const renderStatsView = () => {
-        const speciesData = [
-            { name: 'undefined', value: 50 },
-            { name: 'Thực vật hạt kín', value: 120 },
-            { name: 'Khuyết thực vật', value: 80 },
-            { name: 'Chim', value: 150 },
-            { name: 'Thú', value: 100 },
-            { name: 'Bò sát', value: 90 },
-            { name: 'Động vật không xương sống', value: 70 },
-            { name: 'Lưỡng cư', value: 30 },
-            { name: 'Cá', value: 77 },
-        ];
+        if (speciesData.length === 0) {
+            return <div>Không có dữ liệu thống kê</div>;
+        }
 
-        const recordsData = [
-            { name: 'undefined', value: 100 },
-            { name: 'Thực vật hạt kín', value: 300 },
-            { name: 'Khuyết thực vật', value: 200 },
-            { name: 'Chim', value: 400 },
-            { name: 'Thú', value: 300 },
-            { name: 'Bò sát', value: 250 },
-            { name: 'Động vật không xương sống', value: 150 },
-            { name: 'Lưỡng cư', value: 80 },
-            { name: 'Cá', value: 150 },
-        ];
-
-        const COLORS = [
-            '#f9c74f',
-            '#90be6d',
-            '#f94144',
-            '#43aa8b',
-            '#577590',
-            '#277da1',
-            '#f3722c',
-            '#4d908e',
-            '#577590',
-        ];
+        const totalSpecies = speciesData.reduce((acc, item) => acc + (item.Loai ? parseInt(item.Loai) : 0), 0);
+        const totalObservations = speciesData.reduce((acc, item) => acc + (item.Ghinhan ? parseInt(item.Ghinhan) : 0), 0);
 
         return (
             <div className="card-stats-user" style={{ display: 'flex', justifyContent: 'space-around' }}>
-                {/* Biểu đồ 1 */}
                 <div>
-                    <h3>Loài: 767</h3>
+                    <h3>Tổng loài: {totalSpecies}</h3>
                     <PieChart width={400} height={400}>
                         <Pie
                             data={speciesData}
-                            dataKey="value"
-                            nameKey="name"
+                            dataKey="Loai"
+                            nameKey="goo_name"
                             cx="50%"
                             cy="50%"
                             outerRadius={150}
@@ -197,21 +195,19 @@ const Cardlist = () => {
                         <Legend />
                     </PieChart>
                 </div>
-
-                {/* Biểu đồ 2 */}
                 <div>
-                    <h3>Ghi nhận: 1664</h3>
+                    <h3>Tổng ghi nhận: {totalObservations}</h3>
                     <PieChart width={400} height={400}>
                         <Pie
-                            data={recordsData}
-                            dataKey="value"
-                            nameKey="name"
+                            data={speciesData}
+                            dataKey="Ghinhan"
+                            nameKey="goo_name"
                             cx="50%"
                             cy="50%"
                             outerRadius={150}
                             label
                         >
-                            {recordsData.map((entry, index) => (
+                            {speciesData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                         </Pie>
@@ -223,15 +219,13 @@ const Cardlist = () => {
         );
     };
 
-    // Chế độ hiển thị dạng bản đồ (map)
     const renderMapView = () => (
         <div className="card-map-user">
             <div id="map-user" style={{ height: "100%" }}></div>
         </div>
     );
 
-    // Khởi tạo bản đồ Leaflet
-    React.useEffect(() => {
+    useEffect(() => {
         const mapContainer = document.getElementById("map-user");
 
         if (mapContainer && !mapContainer._leaflet_id) {
@@ -247,7 +241,7 @@ const Cardlist = () => {
                 .openPopup();
 
             setTimeout(() => {
-                map.invalidateSize(); // Xử lý lỗi không load kích thước
+                map.invalidateSize();
             }, 100);
         }
     }, []);
@@ -277,13 +271,12 @@ const Cardlist = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="search-bar-user"
                 />
-                <div className="view-buttons-button-user">
+                <div className="view-mode-buttons-user">
                     <button onClick={() => setViewMode("grid")}>Lưới</button>
                     <button onClick={() => setViewMode("list")}>Danh sách</button>
                     <button onClick={() => setViewMode("stats")}>Thống kê</button>
                     <button onClick={() => setViewMode("map")}>Bản đồ</button>
                 </div>
-
             </div>
             {renderView()}
         </div>

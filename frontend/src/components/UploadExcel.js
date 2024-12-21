@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 import "../StyleCSS/style.css";
-import "../App.css"
-import "../StyleCSS/Upload.css";
+import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faListCheck, faDeleteLeft, faUpload } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';

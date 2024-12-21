@@ -48,7 +48,7 @@ const getOrganismsByGroups = async (req, res) => {
 
     // Lấy tham số page và limit từ query string (mặc định page = 1, limit = 16)
     page = parseInt(page) || 1;
-    limit = parseInt(limit) || 16;
+    limit = parseInt(limit) || 20;
     const offset = (page - 1) * limit;
 
     // Lấy organisms theo các groupId và phân trang

@@ -1,32 +1,42 @@
 import '../StyleCSS/Admin.css';
 import React, { useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom'; // Thêm thư viện để điều hướng khi chưa đăng nhập
+import { useNavigate } from 'react-router-dom';
 import AccountManagement from '../components/AccountManagement';
 import UploadExcel from '../components/UploadExcel';
 import DataSearch from './Search';
 
 function Admin() {
   const [activeMenu, setActiveMenu] = useState('uploadExcel');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const handleMenuClick = (menu) => {
-    setActiveMenu(menu);
-  };
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
-
-
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      console.log('Token found: yes');
+      const userData = JSON.parse(localStorage.getItem('user')); // Dữ liệu user từ localStorage
+      setUser(userData);
 
+      if (!userData) {
+        navigate('/admin-login');
+      }
     } else {
-      console.log('No token found');
-      navigate("/admin-login")
+      navigate('/admin-login');
     }
-  }, []);
+  }, [navigate]);
 
+  const handleMenuClick = (menu) => {
+    if (menu === 'accountManagement' && user?.role_id === 2) {
+      alert('Bạn không có quyền truy cập vào mục này!');
+      return;
+    }
+    setActiveMenu(menu);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    navigate('/admin-login');
+  };
 
   return (
     <div className="main">
@@ -41,12 +51,16 @@ function Admin() {
           >
             <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z" />
           </svg>
-          <span className="account-name">quantri@uminhthuong.girs.vn</span>
+          <span className="account-name">
+            {user?.email || 'guest@domain.com'}
+          </span>
+          <button className="logout-button" onClick={handleLogout}>
+            Đăng xuất
+          </button>
         </div>
       </nav>
 
       <div className="container">
-        {/* Sidebar */}
         <aside className="sidebar-admin">
           <ul className="menu">
             <li
@@ -94,7 +108,7 @@ function Admin() {
           </ul>
         </aside>
 
-        <div className='body'>
+        <div className="body">
           {activeMenu === 'accountManagement' && <AccountManagement />}
           {activeMenu === 'uploadExcel' && <UploadExcel />}
           {activeMenu === 'dataSearch' && <DataSearch />}

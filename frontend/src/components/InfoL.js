@@ -1,24 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOMServer from 'react-dom/server';  // Import ReactDOMServer
 import '../StyleCSS/InfoL.css';
+import { useParams } from 'react-router-dom';
 
 const InfoL = () => {
-    // State để theo dõi thông tin đang hiển thị (Info1 hoặc Info2)
+    const { id } = useParams(); 
     const [activeInfo, setActiveInfo] = useState('Info1');
-    // State để lưu thông tin của bảng khi nhấn ô chữ nhật
     const [infoDetails, setInfoDetails] = useState('');
+    const [data, setData] = useState(null);
+
+    // Fetch dữ liệu từ API khi component mount
+    useEffect(() => {
+        fetch(`http://127.0.0.1:3001/api/organism/${id}`) 
+            .then(response => response.json())
+            .then(data => setData(data))
+            .catch(error => console.error('Lỗi khi lấy dữ liệu:', error));
+    }, []);
 
     // Hàm hiển thị Info1 (Phân loại sinh học)
     const renderInfo1 = () => {
-        const data = {
-            gioi: "Plantae",
-            nganh: "Tracheophyta",
-            lop: "Magnoliopsida",
-            bo: "Malvales",
-            nhomSinhVat: "Thực vật hạt kín",
-            ho: "Malvaceae",
-            chi: "Abelmoschus"
-        };
+        if (!data) return null;
 
         return (
             <div className="info1" >
@@ -26,34 +27,31 @@ const InfoL = () => {
                     <tbody>
                         <tr>
                             <td>Giới</td>
-                            <td>{data.gioi}</td>
+                            <td>{data.Giới || 'N/A'}</td>
                         </tr>
                         <tr>
                             <td>Ngành</td>
-                            <td>{data.nganh}</td>
+                            <td>{data.Ngành || 'N/A'}</td>
                         </tr>
                         <tr>
                             <td>Lớp</td>
-                            <td>{data.lop}</td>
+                            <td>{data.Lớp || 'N/A'}</td>
                         </tr>
                         <tr>
                             <td>Bộ</td>
-                            <td>{data.bo}</td>
+                            <td>{data.order || 'N/A'}</td>
                         </tr>
                         <tr>
                             <td>Nhóm sinh vật</td>
-                            <td>{data.nhomSinhVat}</td>
+                            <td>{data.goo || 'N/A'}</td>
                         </tr>
                         <tr>
                             <td>Họ</td>
-                            <td>{data.ho}</td>
+                            <td>{data.family || 'N/A'}</td>
                         </tr>
                         <tr>
                             <td>Chi</td>
-                            <td>{data.chi}</td>
-                        </tr>
-                        <tr>
-                            <td colSpan="2">Thư viện ảnh trống</td>
+                            <td>{data.genus || 'N/A'}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -69,27 +67,31 @@ const InfoL = () => {
                     <tbody>
                         <tr>
                             <td>Đặc điểm hình thái</td>
+                            <td>{data['Đặc điểm hình thái'] || 'N/A'}</td>
                         </tr>
                         <tr>
                             <td>Khu vực phân bố</td>
+                            <td>{data['Khu vực phân bố'] || 'N/A'}</td>
                         </tr>
                         <tr>
                             <td>Sinh thái</td>
+                            <td>{data['Sinh cảnh sống'] || 'N/A'}</td>
                         </tr>
                         <tr>
                             <td>Tình trạng bảo tồn</td>
+                            <td>{data['Tình trạng bảo tồn'] || 'N/A'}</td>
                         </tr>
                         <tr>
                             <td>Loài đặc hữu</td>
+                            <td>{data['Loài đặc hữu'] || 'N/A'}</td>
                         </tr>
                         <tr>
                             <td>Loài ngoại lai</td>
+                            <td>{data['Loài ngoại lai'] || 'N/A'}</td>
                         </tr>
                         <tr>
                             <td>Ghi nhận</td>
-                        </tr>
-                        <tr>
-                            <td colSpan="2">Thư viện ảnh trống</td>
+                            <td>{data['Ghi nhận'] || 'N/A'}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -112,13 +114,13 @@ const InfoL = () => {
         if (activeInfo === 'Info1') {
             setInfoDetails(
                 `Thông tin bảng: 
-                1. Giới: Plantae
-                2. Ngành: Tracheophyta
-                3. Lớp: Magnoliopsida
-                4. Bộ: Malvales
-                5. Nhóm sinh vật: Thực vật hạt kín
-                6. Họ: Malvaceae
-                7. Chi: Abelmoschus`
+                1. Giới: ${data.Giới || 'N/A'}
+                2. Ngành: ${data.Ngành || 'N/A'}
+                3. Lớp: ${data.Lớp || 'N/A'}
+                4. Bộ: ${data.order || 'N/A'}
+                5. Nhóm sinh vật: ${data.goo || 'N/A'}
+                6. Họ: ${data.family || 'N/A'}
+                7. Chi: ${data.genus || 'N/A'}`
             );
         } else if (activeInfo === 'Info2') {
             setInfoDetails('Thông tin Thư viện ảnh trống');

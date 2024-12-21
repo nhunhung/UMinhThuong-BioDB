@@ -11,10 +11,10 @@ const { Sequelize } = require('../config/database');
 
 
 const organismInclude = [
-  { model: Order, attributes: ['name'] },
-  { model: Family, attributes: ['name'] },
-  { model: Genus, attributes: ['name'] },
-  { model: GroupOfOrganism, attributes: ['name'] },
+  { model: Order, attributes: ['order_name'] },
+  { model: Family, attributes: ['family_name'] },
+  { model: Genus, attributes: ['genus_name'] },
+  { model: GroupOfOrganism, attributes: ['goo_name'] },
 ];
 
 const addCustomInclude = (addCustomIncludes = []) => {
@@ -60,9 +60,9 @@ const getOrganismsByGroups = async (limit, offset, groupIdsArray) => {
 const getOrganinsmById = async (organism_Id) => {
   try {
     const customIncludes = [
-      { model: Kingdom, attributes: ['name'] },
-      { model: Phylum, attributes: ['name'] },
-      { model: Class, attributes: ['name'] },
+      { model: Kingdom, attributes: ['kingdom_name'] },
+      { model: Phylum, attributes: ['phylum_name'] },
+      { model: Class, attributes: ['class_name'] },
     ];
 
     return await Organism.findByPk(organism_Id, {
@@ -139,14 +139,14 @@ const statisticOrganisms = async (group_ids) => {
     const result = await Organism.findAll({
       attributes: [
         // Lấy tên nhóm loài từ bảng "GroupOfOrganisms"
-        [Sequelize.literal(`(SELECT "name" FROM "GroupOfOrganisms" 
-          WHERE "GroupOfOrganisms"."groupoforganisms_id" = "Organism"."groupoforganisms_id")`), 'name'],
+        [Sequelize.literal(`(SELECT "goo_name" FROM "GroupOfOrganisms" 
+          WHERE "GroupOfOrganisms"."groupoforganisms_id" = "Organism"."groupoforganisms_id")`), 'goo_name'],
 
         // Đếm số loài duy nhất (distinct scientificName)
-        [Sequelize.fn('COUNT', Sequelize.fn('DISTINCT', Sequelize.col('scientificName'))), 'Loài'],
+        [Sequelize.fn('COUNT', Sequelize.fn('DISTINCT', Sequelize.col('scientificName'))), 'Loai'],
 
         // Tính tổng số "Ghi nhận" (số lần xuất hiện của scientificName)
-        [Sequelize.fn('COUNT', Sequelize.col('groupoforganisms_id')), 'Ghi nhận']
+        [Sequelize.fn('COUNT', Sequelize.col('groupoforganisms_id')), 'Ghinhan']
       ],
       where: {
         groupoforganisms_id: { [Op.in]: group_ids }

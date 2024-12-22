@@ -117,10 +117,26 @@ const getDetailConservationStatus = async (req, res) => {
     }
 
 }
+const getAllConservationStatus = async (req, res) => {
+    try {
+
+        const respone = await ConservationStatusService.getAllConservationStatus();
+
+        return res.status(200).json(respone)
+
+
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+
+}
 module.exports = {
     createConservationStatus,
     updateConservationStatus,
     deleteConservationStatus,
     createNewConservationStatus,
-    getDetailConservationStatus
+    getDetailConservationStatus,
+    getAllConservationStatus
 }

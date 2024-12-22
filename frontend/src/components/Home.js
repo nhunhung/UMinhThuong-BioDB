@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Map from "./Map";
-
+import '../StyleCSS/Home.css';
 const Home = () => {
     const [slideIndex, setSlideIndex] = useState(0);
 
@@ -35,7 +35,7 @@ const Home = () => {
     };
 
     return (
-        <>
+        <div className="home">
             <div className="tw-container tw-mx-auto">
                 {/* Slideshow */}
                 <div className="tw-relative tw-w-full tw-h-64 tw-bg-gray-100 tw-shadow-md tw-mb-8 tw-flex tw-items-center tw-justify-center">
@@ -69,7 +69,7 @@ const Home = () => {
                 </div>
 
                 {/* Container */}
-                <div className="tw-content tw-bg-white tw-shadow-lg tw-p-6 tw-mb-8 tw-mx-7">
+                <div className="tw-content tw-bg-white tw-shadow-lg tw-p-6 tw-mb-8 tw-mx-7" style={{ width: '100%' }}>
                     <h3 className="tw-text-2xl tw-font-semibold tw-mb-4 tw-text-center">Giới thiệu nền tảng Web-GIS về đa dạng sinh học Vườn Quốc gia U Minh Thượng</h3>
                     <p className="tw-mb-4 tw-text-gray-600 tw-text-lg tw-leading-[30px]">
                         Vườn Quốc gia U Minh Thượng (VQG UMT) nằm ở tỉnh Kiên Giang, Việt Nam. Được thành lập năm 2002 trên cơ sở nâng cấp Khu bảo tồn thiên nhiên U Minh Thượng, VQG UMT có tổng diện tích 21.107 ha, bao gồm vùng lõi 8.038 ha và vùng đệm 13.069 ha. Vùng đệm do Ủy ban nhân dân huyện U Minh Thượng quản lý. VQG UMT có hai kiểu thảm thực vật chính: rừng tràm (bao gồm rừng tràm trên đất than bùn, rừng tràm trên đất sét, rừng hỗn giao và rừng trồng) và trảng cỏ ngập nước theo mùa. Hệ sinh thái thủy sinh của VQG UMT bao gồm đầm lầy và hệ thống kênh rạch tự nhiên và nhân tạo.
@@ -176,10 +176,41 @@ const Home = () => {
                 </div>
 
             </div>
+            <footer className="tw-bg-[rgb(16,62,78)] tw-text-white tw-py-6">
+                <div className="tw-container tw-mx-auto tw-flex tw-flex-col tw-items-center tw-space-y-4">
+                    <div className="tw-flex tw-flex-col tw-items-center">
+                        <h2 className="tw-text-xl tw-font-bold tw-text-white tw-padding tw-p-0 tw-m-0">Cơ sở dữ liệu đa dạng sinh học Vườn Quốc gia U Minh Thượng</h2>
+                    </div>
+
+                    <div className="tw-flex tw-flex-col tw-items-center tw-mt-2">
+                        <h2 className="tw-text-lg tw-text-white tw-p-0 tw-m-0">Phiên bản 1.0</h2>
+                    </div>
+
+                    <div className="tw-flex tw-flex-col tw-items-center tw-mt-2">
+                        <h2 className="tw-text-lg tw-text-white tw-p-0 tw-m-0">Ngã tư Công Sự, xã An Minh Bắc, huyện U Minh Thượng, Kiên Giang</h2>
+                    </div>
+
+                    <div className="tw-flex tw-flex-col tw-items-center tw-mt-2">
+                        <h2 className="tw-text-lg tw-text-white tw-p-0 tw-m-0">Số điện thoại: 0290.3870.545 | Di động: 0856.883.646 (Quản trị kỹ thuật)</h2>
+                    </div>
+
+                    <div className="tw-flex tw-flex-col tw-items-center tw-mt-2">
+                        <h2 className="tw-text-lg tw-text-white tw-p-0 tw-m-0">
+                            <a href="" className="tw-hover:tw-underline">Email: </a> {/* Added email link */}
+                        </h2>
+                    </div>
+
+                    <div className="tw-flex tw-flex-col tw-items-center tw-mt-2">
+                        <h2 className="tw-text-lg tw-text-white tw-p-0 tw-m-0">
+                            <a href="" className="tw-hover:tw-underline">Website:</a> {/* Added website link */}
+                        </h2>
+                    </div>
+                </div>
+            </footer>
 
 
 
-        </>
+        </div>
     );
 };
 

@@ -7,9 +7,9 @@ const ConservationStatus = sequelize.define('ConservationStatus', {
         primaryKey: true,
     },
     iucnRedList: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.STRING,
         allowNull: true,
-        defaultValue: null, // Mặc định là null nếu không có giá trị cụ thể
+        defaultValue: 'N/A', // Mặc định là null nếu không có giá trị cụ thể
     },
 
     // Phiên bản sách đỏ Thế giới: iucnRedListVersion (String) - Phiên bản của Sách đỏ Thế giới
@@ -28,9 +28,9 @@ const ConservationStatus = sequelize.define('ConservationStatus', {
 
     // Sách đỏ Việt Nam: vietnamRedList (Boolean) - Có trong danh sách Sách đỏ Việt Nam
     vietnamRedList: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.STRING,
         allowNull: true,
-        defaultValue: null, // Mặc định là null nếu không có giá trị cụ thể
+        defaultValue: 'N/A', // Mặc định là null nếu không có giá trị cụ thể
     },
 
     // Nghị định số 81/2021/NĐ-CP: decree81 (String) - Thông tin liên quan đến Nghị định 81/2021/NĐ-CP

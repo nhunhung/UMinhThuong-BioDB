@@ -15,7 +15,7 @@ const Footer = () => {
                         <h2 className="tw-text-lg tw-text-white tw-p-0 tw-m-0">Ngã tư Công Sự, xã An Minh Bắc, huyện U Minh Thượng, Kiên Giang</h2>
                     </div>
 
-                    <div className="tw-flex tw-flex-col tw-items-center tw-mt-2"> 
+                    <div className="tw-flex tw-flex-col tw-items-center tw-mt-2">
                         <h2 className="tw-text-lg tw-text-white tw-p-0 tw-m-0">Số điện thoại: 0290.3870.545 | Di động: 0856.883.646 (Quản trị kỹ thuật)</h2>
                     </div>
 
@@ -25,7 +25,7 @@ const Footer = () => {
                         </h2>
                     </div>
 
-                    <div className="tw-flex tw-flex-col tw-items-center tw-mt-2"> 
+                    <div className="tw-flex tw-flex-col tw-items-center tw-mt-2">
                         <h2 className="tw-text-lg tw-text-white tw-p-0 tw-m-0">
                             <a href="" className="tw-hover:tw-underline">Website:</a> {/* Added website link */}
                         </h2>

@@ -6,4 +6,5 @@ router.post('/create', authMiddleWare, ConservationStatusController.createConser
 router.put('/update/:id', authMiddleWare, ConservationStatusController.updateConservationStatus);
 router.delete('/delete/:id', authMiddleWare, ConservationStatusController.deleteConservationStatus);
 router.get('/get-details/:id', authMiddleWare, ConservationStatusController.getDetailConservationStatus)
+router.get('/get-all', ConservationStatusController.getAllConservationStatus)
 module.exports = router

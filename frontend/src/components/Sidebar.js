@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../StyleCSS/Sidebar.css';
 import a1 from '../assets/images/a1.png';
 import a2 from '../assets/images/a2.png';
@@ -11,9 +11,90 @@ import a7 from '../assets/images/a7.png';
 import a8 from '../assets/images/a8.png';
 import a9 from '../assets/images/a9.png';
 
-const Sidebar = ({ onImageClick, onCheckboxChange }) => {
+const Sidebar = ({ onImageClick, onCheckboxChange, handleCheckiucnRedList, handleCheckdecree81, handleCheckdecree64, handleCheckvietnamRedList, handleCheckendemic }) => {
   const [openDropdowns, setOpenDropdowns] = useState([]);
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
+  const [accounts, setAccounts] = useState([]);
+
+  const [isDropdownOpenButton, setIsDropdownOpenButton] = useState(null); // Quản lý trạng thái hiển thị danh sách
+  const [selectedOptionsButton, setSelectedOptionsButton] = useState([]); // Lưu trữ các lựa chọn
+  const options = ["EX", "EW", "CR", "EN", "VU", "NT", "LC", "DD", "N/A"];
+  // const toggleDropdownButton = () => {
+  //   setIsDropdownOpenButton(!isDropdownOpenButton);
+  // };
+  // const handleCheckboxChange = (option) => {
+  //   setSelectedOptionsButton((prevSelected) =>
+  //     prevSelected.includes(option)
+  //       ? prevSelected.filter((item) => item !== option) // Bỏ chọn nếu đã có
+  //       : [...prevSelected, option] // Thêm vào danh sách chọn
+  //   );
+  // };
+  const toggleDropdownButton = (index) => {
+    setIsDropdownOpenButton(isDropdownOpenButton === index ? null : index);
+  };
+
+  // Xử lý khi checkbox được chọn
+  // const handleCheckboxChange = (option) => {
+  //   console.log('option', option)
+  //   setSelectedOptionsButton((prevSelected) =>
+  //     prevSelected.includes(option)
+  //       ? prevSelected.filter((item) => item !== option)
+  //       : [...prevSelected, option]
+  //   );
+  // };
+
+
+  const handleCheckboxChangeiucnRedList = (index, option) => {
+    console.log('option', option)
+    handleCheckiucnRedList(option);
+    const updatedSelection = [...selectedOptionsButton];
+    updatedSelection[index] = updatedSelection[index] === option ? null : option; // Chỉ chọn một option cho mỗi danh sách
+    setSelectedOptionsButton(updatedSelection);
+  };
+  const handleCheckboxChangedecree81 = (index, option) => {
+    console.log('option', option)
+    handleCheckdecree81(option)
+    const updatedSelection = [...selectedOptionsButton];
+    updatedSelection[index] = updatedSelection[index] === option ? null : option; // Chỉ chọn một option cho mỗi danh sách
+    setSelectedOptionsButton(updatedSelection);
+  };
+  const handleCheckboxChangedecree64 = (index, option) => {
+    console.log('option', option)
+    handleCheckdecree64(option)
+    const updatedSelection = [...selectedOptionsButton];
+    updatedSelection[index] = updatedSelection[index] === option ? null : option; // Chỉ chọn một option cho mỗi danh sách
+    setSelectedOptionsButton(updatedSelection);
+  };
+  const handleCheckboxChangeendemic = (index, option) => {
+    console.log('option', option)
+    handleCheckendemic(option)
+    const updatedSelection = [...selectedOptionsButton];
+    updatedSelection[index] = updatedSelection[index] === option ? null : option; // Chỉ chọn một option cho mỗi danh sách
+    setSelectedOptionsButton(updatedSelection);
+  };
+  const handleCheckboxChangvietnamRedList = (index, option) => {
+    console.log('option', option)
+    handleCheckvietnamRedList(option)
+    const updatedSelection = [...selectedOptionsButton];
+    updatedSelection[index] = updatedSelection[index] === option ? null : option; // Chỉ chọn một option cho mỗi danh sách
+    setSelectedOptionsButton(updatedSelection);
+  };
+
+
+
+  //   const handleCheckboxChange = (option) => {
+  //     console.log('Label được chọn:', option);
+  //     // Cập nhật trạng thái selectedOptionsButton
+  //     if (selectedOptionsButton.includes(option)) {
+  //         setSelectedOptionsButton(selectedOptionsButton.filter((item) => item !== option));
+  //     } else {
+  //         setSelectedOptionsButton([...selectedOptionsButton, option]);
+  //     }
+  // };
+
+
+
+
 
   const handleDropdownToggle = (id) => {
     setOpenDropdowns((prev) =>
@@ -49,6 +130,62 @@ const Sidebar = ({ onImageClick, onCheckboxChange }) => {
       onCheckboxChange(parentPage);
     }
   };
+
+
+  useEffect(() => {
+    fetchAccounts();
+  }, []);
+
+  const fetchAccounts = async () => {
+    try {
+
+
+      const response = await fetch('http://localhost:3001/api/conservationstatus/get-all', {
+        method: 'GET',
+
+      });
+
+      if (!response.ok) {
+        throw new Error(`Lỗi API: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('data', data);
+
+      if (data.status === 'OK') {
+        const formattedAccounts = data.data.map(conservationstatus => ({
+          iucnRedList: conservationstatus.iucnRedList,
+          decree81: conservationstatus.decree81,
+          decree64: conservationstatus.decree64,
+          endemic: conservationstatus.endemic,
+          vietnamRedList: conservationstatus.vietnamRedList
+
+        }));
+        setAccounts(formattedAccounts);
+      } else {
+        alert('Không thể tải danh sách ');
+      }
+    } catch (error) {
+      console.error('Lỗi khi gọi API:', error.message || error);
+    }
+  };
+  // Loại bỏ phần tử trùng lặp
+  const uniqueArray = (array) => [...new Set(array)];
+
+  const iucnRedList = uniqueArray(accounts.map((item) => item.iucnRedList));
+  console.log('iu', iucnRedList);
+
+  const decree81 = uniqueArray(accounts.map((item) => item.decree81));
+  console.log('decree81', decree81);
+
+  const decree64 = uniqueArray(accounts.map((item) => item.decree64));
+  console.log('decree64', decree64);
+
+  const endemic = uniqueArray(accounts.map((item) => item.endemic));
+  console.log('endemic', endemic);
+
+  const vietnamRedList = uniqueArray(accounts.map((item) => item.vietnamRedList));
+  console.log('vietnamRedList', vietnamRedList);
 
 
   return (
@@ -203,14 +340,108 @@ const Sidebar = ({ onImageClick, onCheckboxChange }) => {
             ► Tình trạng bảo tồn
           </button>
           {openDropdowns.includes(7) && (
+
+
+
             <div className="filter-content">
-              <button className="filter-button">Danh mục đỏ IUCN</button>
-              <button className="filter-button">Sách Đỏ Việt Nam</button>
-              <button className="filter-button">Nghị định số 84/2021/NĐ-CP</button>
-              <button className="filter-button">Nghị định số 64/2019/NĐ-CP</button>
+              <div>
+                <button
+                  className="filter-button"
+                  onClick={() => toggleDropdownButton(0)} // Hiển thị danh sách đầu tiên
+                >
+                  Danh mục đỏ IUCN
+                </button>
+                {isDropdownOpenButton === 0 && (
+                  <div className="dropdown-menu">
+                    {iucnRedList.map((option) => (
+                      <div key={option} className="dropdown-item">
+                        <input
+                          type="checkbox"
+                          id={option}
+                          checked={selectedOptionsButton[0] === option} // Chỉ cho phép một checkbox được chọn
+                          onChange={() => handleCheckboxChangeiucnRedList(0, option)} // Gửi danh sách và option khi thay đổi
+                        />
+                        <label htmlFor={option}>{option}</label>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div>
+                <button
+                  className="filter-button"
+                  onClick={() => toggleDropdownButton(1)} // Hiển thị danh sách thứ hai
+                >
+                  Sách Đỏ Việt Nam
+                </button>
+                {isDropdownOpenButton === 1 && (
+                  <div className="dropdown-menu">
+                    {vietnamRedList.map((option) => (
+                      <div key={option} className="dropdown-item">
+                        <input
+                          type="checkbox"
+                          id={option}
+                          checked={selectedOptionsButton[1] === option} // Chỉ cho phép một checkbox được chọn
+                          onChange={() => handleCheckboxChangvietnamRedList(1, option)} // Gửi danh sách và option khi thay đổi
+                        />
+                        <label htmlFor={option}>{option}</label>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div>
+                <button
+                  className="filter-button"
+                  onClick={() => toggleDropdownButton(2)} // Hiển thị danh sách thứ ba
+                >
+                  Nghị định số 84/2021/NĐ-CP
+                </button>
+                {isDropdownOpenButton === 2 && (
+                  <div className="dropdown-menu">
+                    {decree81.map((option) => (
+                      <div key={option} className="dropdown-item">
+                        <input
+                          type="checkbox"
+                          id={option}
+                          checked={selectedOptionsButton[2] === option} // Chỉ cho phép một checkbox được chọn
+                          onChange={() => handleCheckboxChangedecree81(2, option)} // Gửi danh sách và option khi thay đổi
+                        />
+                        <label htmlFor={option}>{option}</label>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div>
+                <button
+                  className="filter-button"
+                  onClick={() => toggleDropdownButton(3)} // Hiển thị danh sách thứ tư
+                >
+                  Nghị định số 64/2019/NĐ-CP
+                </button>
+                {isDropdownOpenButton === 3 && (
+                  <div className="dropdown-menu">
+                    {decree64.map((option) => (
+                      <div key={option} className="dropdown-item">
+                        <input
+                          type="checkbox"
+                          id={option}
+                          checked={selectedOptionsButton[3] === option} // Chỉ cho phép một checkbox được chọn
+                          onChange={() => handleCheckboxChangedecree64(3, option)} // Gửi danh sách và option khi thay đổi
+                        />
+                        <label htmlFor={option}>{option}</label>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>
+
+
+
 
         <div className="filter-box">
           <button
@@ -221,7 +452,29 @@ const Sidebar = ({ onImageClick, onCheckboxChange }) => {
           </button>
           {openDropdowns.includes(8) && (
             <div className="filter-content">
-              <button className="filter-button">Loài đặc hữu</button>
+              <div>
+                <button
+                  className="filter-button"
+                  onClick={() => toggleDropdownButton(3)} // Hiển thị danh sách thứ tư
+                >
+                  Loài đặc hữu
+                </button>
+                {isDropdownOpenButton === 3 && (
+                  <div className="dropdown-menu">
+                    {endemic.map((option) => (
+                      <div key={option} className="dropdown-item">
+                        <input
+                          type="checkbox"
+                          id={option}
+                          checked={selectedOptionsButton[4] === option} // Chỉ cho phép một checkbox được chọn
+                          onChange={() => handleCheckboxChangeendemic(4, option)} // Gửi danh sách và option khi thay đổi
+                        />
+                        <label htmlFor={option}>{option}</label>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
             </div>
           )}

@@ -1,0 +1,7 @@
+.home {
+   
+    height: 100%; /* Chiều cao tối đa của container */
+    overflow-y: auto; /* Hiển thị thanh trượt dọc khi nội dung vượt quá */
+    border: 1px solid #ccc; /* Tạo viền */
+    position: fixed; /* Duy trì vị trí cố định khi cuộn trang */
+  }

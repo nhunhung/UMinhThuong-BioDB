@@ -7,7 +7,7 @@ import b1 from '../assets/images/b1.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 
-const Cardlist = ({ selectedImageId }) => {
+const Cardlist = ({ selectedImageId, decree64, decree81, endemic, vietnamRedList, iucnRedList }) => {
     const [viewMode, setViewMode] = useState("grid");
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -21,14 +21,19 @@ const Cardlist = ({ selectedImageId }) => {
     useEffect(() => {
         fetchData("http://127.0.0.1:3001/api/organism/all-organism?page=1&limit=20");
     }, []);
+    console.log("cart list decree81", decree81)
+    console.log("cart list decree64", decree64)
+    console.log("cart list veitnam", vietnamRedList)
+    console.log("cart list iucnRedlist", iucnRedList)
+    console.log("cart list endemic", endemic)
 
     useEffect(() => {
-        console.log('Image ID cl:', selectedImageId); 
+        console.log('Image ID cl:', selectedImageId);
         if (selectedImageId) {
             fetchData(`http://127.0.0.1:3001/api/organism?groupOfOrganismId=${selectedImageId}`);
         }
     }, [selectedImageId]);
-    
+
     const fetchData = async (url) => {
         try {
             const response = await fetch(url);
@@ -41,7 +46,7 @@ const Cardlist = ({ selectedImageId }) => {
             console.error('Error fetching data:', error);
         }
     };
-    
+
 
     useEffect(() => {
         const fetchSpeciesData = async () => {

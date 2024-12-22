@@ -52,8 +52,9 @@ function App() {
           <Route path="/contact" element={<ContactForm />} />
           <Route path="/details/:id" element={<InfoDetails />} />
         </Routes>
-        <FooterWrapper />
+        {/* <FooterWrapper /> */}
       </Router>
+
     </LanguageProvider>
   );
 }

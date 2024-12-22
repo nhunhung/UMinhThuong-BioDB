@@ -4,7 +4,7 @@
   padding: 10px;
   background-color: #f0f3f6;
   margin-top: 80px;
-  height: 100%; /* Chiều cao tối đa của container */
+  height: 90%; /* Chiều cao tối đa của container */
   overflow-y: auto; /* Hiển thị thanh trượt dọc khi nội dung vượt quá */
   border: 1px solid #ccc; /* Tạo viền */
   position: fixed; /* Duy trì vị trí cố định khi cuộn trang */
@@ -255,4 +255,52 @@
 /* Add smooth transitions */
 * {
   transition: all 0.3s ease;
+}
+
+
+
+.dropdown-menu {
+  margin-top: 5px;
+  background-color: #ffffff;
+  border: 1px solid #cfd8dc;
+  border-radius: 4px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.dropdown-item:last-child {
+  margin-bottom: 0;
+}
+
+.dropdown-item input {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.dropdown-item label {
+  font-size: 14px;
+  color: #37474f;
+  cursor: pointer;
+}
+
+.dropdown-button:hover {
+  border-color: #b0bec5;
+}
+
+.dropdown-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background: #b0bec5;
+  border-radius: 4px;
 }

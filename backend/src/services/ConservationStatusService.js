@@ -119,10 +119,31 @@ const getDetailConservationStatus = (conservationstatus_id) => {
         }
     })
 }
+const getAllConservationStatus = () => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            const data = await ConservationStatus.findAll();
+            console.log('data', data)
+            return resolve({
+                status: 'OK',
+                message: 'success',
+                data: data,
+            })
+
+
+
+        } catch (e) {
+            reject(e)
+            console.log('not successs')
+        }
+    })
+}
 module.exports = {
     createConservationStatus,
     updateConservationStatus,
     deleteConservationStatus,
     postConservationStatus,
-    getDetailConservationStatus
+    getDetailConservationStatus,
+    getAllConservationStatus,
 }

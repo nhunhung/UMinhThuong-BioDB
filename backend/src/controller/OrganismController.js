@@ -28,26 +28,33 @@ const getAllOrganism = async (req, res) => {
   }
 };
 
-const fetchOrganismsByKingdom = async (req, res) => {
-  const { kingdomId } = req.params; // Lấy kingdomId từ URL params
-  const { limit = 20, page = 1 } = req.query; // Lấy limit và page từ query (mặc định)
+const getOrganismsByKingdom = async (req, res) => {
+  const { id: kingdomId } = req.params; // Lấy kingdomId từ params
+  const { limit = 20, page = 1 } = req.query;
 
   try {
-    const offset = (page - 1) * limit; // Tính offset dựa trên page và limit
-    const organisms = await getOrganismsByKingdom(kingdomId, parseInt(limit), parseInt(offset));
+    const offset = (page - 1) * limit;
+    const organisms = await organismService.getOrganismsByKingdom(kingdomId, parseInt(limit), parseInt(offset));
+
+    // Map organisms thành DTOs nếu cần thiết
+    const organismsDTO = organisms.map(organism => new OrganismDTO(organism));
 
     res.status(200).json({
       success: true,
-      data: organisms,
+      data: organismsDTO,
       message: `Fetched organisms for kingdom_id = ${kingdomId}`,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: `Error fetching organisms by kingdom: ${error.message}`,
     });
   }
 };
+
+
+module.exports = { getOrganismsByKingdom };
+
 
 const getOrganismsByGroups = async (req, res) => {
   try {
@@ -217,5 +224,5 @@ module.exports = {
   statisticOrganism,
   getOrganismByNames,
   getDetailOrganisms,
-  fetchOrganismsByKingdom
+  getOrganismsByKingdom
 };

@@ -6,13 +6,12 @@ import a3 from '../assets/images/a3.png';
 import a4 from '../assets/images/a4.png';
 import a5 from '../assets/images/a5.png';
 import a6 from '../assets/images/a6.png';
-
 import a7 from '../assets/images/a7.png';
 import a8 from '../assets/images/a8.png';
 import a9 from '../assets/images/a9.png';
 
 const Sidebar = ({ onImageClick, onCheckboxChange }) => {
-  const [openDropdowns, setOpenDropdowns] = useState([]);
+  const [openDropdowns, setOpenDropdowns] = useState([1, 2]); // Open the first two dropdowns by default
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
 
   const handleDropdownToggle = (id) => {
@@ -49,7 +48,6 @@ const Sidebar = ({ onImageClick, onCheckboxChange }) => {
       onCheckboxChange(parentPage);
     }
   };
-
 
   return (
     <div className="sidebar">
@@ -121,7 +119,6 @@ const Sidebar = ({ onImageClick, onCheckboxChange }) => {
               </ul>
             </div>
           )}
-
         </div>
 
         <div className="filter-box">
@@ -141,6 +138,7 @@ const Sidebar = ({ onImageClick, onCheckboxChange }) => {
             </div>
           )}
         </div>
+
         <div className="filter-box">
           <button
             className="dropdown-btn"
@@ -222,7 +220,6 @@ const Sidebar = ({ onImageClick, onCheckboxChange }) => {
           {openDropdowns.includes(8) && (
             <div className="filter-content">
               <button className="filter-button">Loài đặc hữu</button>
-
             </div>
           )}
         </div>
@@ -237,13 +234,9 @@ const Sidebar = ({ onImageClick, onCheckboxChange }) => {
           {openDropdowns.includes(9) && (
             <div className="filter-content">
               <button className="filter-button">Loài ngoại lai</button>
-
             </div>
           )}
         </div>
-
-
-
       </div>
     </div>
   );

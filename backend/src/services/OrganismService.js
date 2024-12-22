@@ -37,10 +37,10 @@ const getAllOrganisms = async (limit, offset) => {
 const getOrganismsByKingdom = async (kingdomId, limit, offset) => {
   try {
     return await Organism.findAll({
-      where: { kingdom_id: kingdomId }, // Lọc theo kingdom_id
+      where: { kingdom_id: kingdomId }, 
       include: organismInclude,
-      limit: limit,     // Giới hạn số lượng kết quả mỗi trang
-      offset: offset    // Vị trí bắt đầu (dựa vào page và limit)
+      limit: limit,     
+      offset: offset    
     });
   } catch (err) {
     throw new Error(`Error fetching organisms by kingdom: ${err.message}`);

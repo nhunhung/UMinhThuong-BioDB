@@ -1,6 +1,7 @@
 /* Container cho nội dung */
 .content {
-  padding: 60px 30px;
+  padding: 30px 40px;
+  width: 100%;
 }
 
 /* Header */

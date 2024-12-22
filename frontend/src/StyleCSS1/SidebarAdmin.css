@@ -1,0 +1,258 @@
+/* Sidebar container */
+.sidebar-right {
+  width: 350px; /* Giữ nguyên chiều rộng sidebar */
+  padding: 10px;
+  background-color: #f0f3f6;
+  margin-top: 30px;
+  height: 100%; /* Chiều cao tối đa của container */
+  overflow-y: auto; /* Hiển thị thanh trượt dọc khi nội dung vượt quá */
+  border: 1px solid #ccc; /* Tạo viền */
+  position: fixed; /* Duy trì vị trí cố định khi cuộn trang */
+  top: 25px;
+  left: 250px;
+  bottom: 0;
+}
+
+/* Header section */
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.sidebar-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.filter-buttons button {
+  padding: 5px 10px;
+  /* margin-left: 10px; */
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.filter-header .dropdown-arrow {
+  margin-right: 10px;
+}
+
+.filter-content {
+  display: block;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.dropdown-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #333;
+  outline: none;
+}
+
+.dropdown-select:focus {
+  border-color: #007bff;
+}
+.filter-button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  color: #333;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.filter-button:hover {
+  background-color: #e6e6e6;
+}
+
+.filter-button:last-child {
+  margin-bottom: 0; /* Xóa khoảng cách dưới cùng */
+}
+
+
+
+
+
+
+
+
+
+.filter-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.filter-buttons button.reset-btn {
+  background-color: #ff6f61;
+}
+
+.filter-buttons button.reset-btn:hover {
+  background-color: #e05245;
+}
+
+/* Filter options */
+.filter-options {
+  background-color: white;
+  margin-top: 20px;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* .filter-box {
+  margin-bottom: 15px;
+} */
+.filter-box {
+  margin-bottom: 10px;
+  background-color: #d7e8e8; /* Màu nền giống hình */
+  border: 1px solid #c3d8d8;
+}
+.dropdown-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  padding: 10px 0;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-btn:hover {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+.dropdown-btn:focus {
+  outline: none;
+  background-color: #e8f0fe;
+}
+
+/* Input for search */
+.search-input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  display: block;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Animal groups (grid layout) */
+.animal-groups {
+  /* padding: 10px; */
+  background-color: #f7f9fc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  
+}
+
+.title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.group-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 ảnh trên một hàng */
+  gap: 10px; /* Khoảng cách giữa các ảnh */
+}
+
+.group-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.group-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.group-item img {
+  max-width: 100%; /* Đảm bảo ảnh không vượt quá kích thước container */
+  height: auto; /* Duy trì tỷ lệ ảnh */
+  max-height: 60px; /* Giới hạn chiều cao ảnh */
+  object-fit: contain; /* Giúp ảnh vừa khung mà không bị cắt */
+  margin-bottom: 5px;
+}
+
+.group-item p {
+  font-size: 12px;
+  color: #555;
+  text-align: center;
+  margin: 0;
+}
+
+/* Classification list */
+.classification-list ul {
+  list-style: none;
+  padding-left: 20px;
+}
+
+.classification-list ul ul {
+  margin-left: 15px;
+  padding-left: 10px;
+  border-left: 1px solid #ddd;
+}
+
+.classification-list input[type="checkbox"] {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.classification-list label {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* General button styles */
+.filter-options button {
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.filter-options button:focus {
+  outline: none;
+  background-color: #e8f0fe;
+}
+
+/* Add smooth transitions */
+* {
+  transition: all 0.3s ease;
+}

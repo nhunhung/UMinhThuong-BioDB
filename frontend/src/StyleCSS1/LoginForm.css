@@ -1,3 +1,9 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Đặt chiều cao của toàn bộ màn hình */
+  overflow: hidden; /* Không cho phép cuộn màn hình */
+}
 
 .login-container {
   display: flex;
@@ -15,7 +21,8 @@
   position: relative;
   width: 60%; /* Chiều rộng lớn hơn */
   transform: translate(-0px, -150px); /* Dịch sang trái và lên trên thêm */
-  height: 150%; 
+  height: 150%; /* Chiều cao lớn hơn để hình tròn đầy đặn */
+  overflow: hidden;
 }
 
 .logo {

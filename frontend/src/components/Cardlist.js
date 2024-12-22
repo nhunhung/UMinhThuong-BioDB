@@ -7,7 +7,7 @@ import b1 from '../assets/images/b1.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 
-const Cardlist = ({ selectedImageId }) => {
+const Cardlist = ({ selectedImageId, checkboxId }) => {
     const [viewMode, setViewMode] = useState("grid");
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -16,10 +16,9 @@ const Cardlist = ({ selectedImageId }) => {
     const [data, setData] = useState([]);
     const [speciesData, setSpeciesData] = useState([]);
     const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#00c49f', '#ffbb28', '#ff8042'];
-    const [handleImageClick, sethandleImageClick] = useState(null);
 
     useEffect(() => {
-        fetchData("http://127.0.0.1:3001/api/organism/all-organism?page=1&limit=20");
+        fetchData("http://127.0.0.1:3001/api/organism/all-organism?page=1&limit=1000");
     }, []);
 
     useEffect(() => {
@@ -28,6 +27,37 @@ const Cardlist = ({ selectedImageId }) => {
             fetchData(`http://127.0.0.1:3001/api/organism?groupOfOrganismId=${selectedImageId}`);
         }
     }, [selectedImageId]);
+
+    useEffect(() => {
+        console.log('checkboxId:', checkboxId);
+        if (checkboxId) {
+            fetchDataKingdom(checkboxId);
+        } else {
+            console.warn("checkboxId is undefined or falsy");
+        }
+    }, [checkboxId]);
+    
+
+    const fetchDataKingdom = async (kingdomId) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:3001/api/organism/kingdom/${kingdomId}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const result = await response.json();
+            console.log('Fetched kingdom data:', result);
+    
+            if (result.success && result.data) {
+                setData(result.data);
+            } else {
+                console.warn('No valid kingdom data found:', result.message || 'Unknown error');
+            }
+        } catch (error) {
+            console.error('Error fetching kingdom data:', error);
+        }
+    };
+    
+     
     
     const fetchData = async (url) => {
         try {
@@ -36,11 +66,14 @@ const Cardlist = ({ selectedImageId }) => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const result = await response.json();
+            console.log('Fetched data:', result);
             setData(url.includes("groupOfOrganismId") ? result.data : result.organisms);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
+    
+    
     
 
     useEffect(() => {

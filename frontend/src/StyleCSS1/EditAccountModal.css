@@ -15,12 +15,13 @@
 /* Modal box */
 .form-edit {
   background: white;
-  padding: 40px;
+  padding: 20px;
   width: 750px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .form-edit h3 {
+  font-size: 16px;
   margin-bottom: 20px;
 }
 
@@ -40,6 +41,7 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 14px;
 }
 
 /* Placeholder style */

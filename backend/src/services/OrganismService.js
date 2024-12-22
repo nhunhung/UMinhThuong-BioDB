@@ -34,6 +34,19 @@ const getAllOrganisms = async (limit, offset) => {
   }
 };
 
+const getOrganismsByKingdom = async (kingdomId, limit, offset) => {
+  try {
+    return await Organism.findAll({
+      where: { kingdom_id: kingdomId }, // Lọc theo kingdom_id
+      include: organismInclude,
+      limit: limit,     // Giới hạn số lượng kết quả mỗi trang
+      offset: offset    // Vị trí bắt đầu (dựa vào page và limit)
+    });
+  } catch (err) {
+    throw new Error(`Error fetching organisms by kingdom: ${err.message}`);
+  }
+};
+
 // Lấy Organism theo groupId
 const getOrganismsByGroups = async (limit, offset, groupIdsArray) => {
   try {
@@ -250,5 +263,6 @@ module.exports = {
   statisticOrganisms,
   getOrganismByNames,
   postOrganism,
-  getDetailOrganism
+  getDetailOrganism,
+  getOrganismsByKingdom
 };

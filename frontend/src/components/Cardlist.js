@@ -10,6 +10,7 @@ import { faEye } from '@fortawesome/free-solid-svg-icons';
 const Cardlist = ({ selectedImageId }) => {
     const [viewMode, setViewMode] = useState("grid");
     const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
     const [currentPageGrid, setCurrentPageGrid] = useState(1);
     const [currentPageList, setCurrentPageList] = useState(1);
     const [data, setData] = useState([]);
@@ -245,6 +246,24 @@ const Cardlist = ({ selectedImageId }) => {
             }, 100);
         }
     }, []);
+
+    useEffect(() => {
+        if (searchTerm.trim() !== "") {
+            const fetchSearchResults = async () => {
+                try {
+                    const response = await fetch(`http://127.0.0.1:3001/api/organism/search?kw=${encodeURIComponent(searchTerm)}`);
+                    const result = await response.json();
+                    setSearchResults(result.data || []); // Assuming API returns data array
+                } catch (error) {
+                    console.error("Error fetching search results:", error);
+                }
+            };
+
+            fetchSearchResults();
+        } else {
+            setSearchResults([]); // Clear results when searchTerm is empty
+        }
+    }, [searchTerm]);
 
     const renderView = () => {
         switch (viewMode) {

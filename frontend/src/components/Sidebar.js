@@ -11,8 +11,9 @@ import a7 from '../assets/images/a7.png';
 import a8 from '../assets/images/a8.png';
 import a9 from '../assets/images/a9.png';
 
-const Sidebar = ({ onImageClick }) => {
+const Sidebar = ({ onImageClick, onCheckboxChange }) => {
   const [openDropdowns, setOpenDropdowns] = useState([]);
+  const [selectedCheckbox, setSelectedCheckbox] = useState(null);
 
   const handleDropdownToggle = (id) => {
     setOpenDropdowns((prev) =>
@@ -33,11 +34,22 @@ const Sidebar = ({ onImageClick }) => {
   ];
 
   const handleImageClick = (id) => {
-    console.log('Image ID:', id); 
+    console.log('Image ID:', id);
     if (onImageClick) {
       onImageClick(id);
     }
   };
+
+  const handleCheckboxClick = (parentPage) => {
+    if (selectedCheckbox === parentPage) {
+      setSelectedCheckbox(null);
+      onCheckboxChange(null);
+    } else {
+      setSelectedCheckbox(parentPage);
+      onCheckboxChange(parentPage);
+    }
+  };
+
 
   return (
     <div className="sidebar">
@@ -45,7 +57,12 @@ const Sidebar = ({ onImageClick }) => {
         <h3 className="sidebar-title">Lọc dữ liệu</h3>
         <div className="filter-buttons">
           <button className="apply-btn">Áp dụng</button>
-          <button className="reset-btn">Xóa lọc</button>
+          <button
+            className="reset-btn"
+            onClick={() => (window.location.href = "http://localhost:3000/search")}
+          >
+            Xóa lọc
+          </button>
         </div>
       </div>
 
@@ -84,40 +101,27 @@ const Sidebar = ({ onImageClick }) => {
             <div className="classification-list">
               <ul>
                 <li>
-                  <input type="checkbox" id="animalia" />
+                  <input
+                    type="checkbox"
+                    id="animalia"
+                    checked={selectedCheckbox === 1} // Kiểm tra trạng thái
+                    onChange={() => handleCheckboxClick(1)} // Gửi parentPage là 1
+                  />
                   <label htmlFor="animalia">Animalia</label>
-                  <ul>
-                    <li>
-                      <input type="checkbox" id="chordata" />
-                      <label htmlFor="chordata">Chordata</label>
-                    </li>
-                    <li>
-                      <input type="checkbox" id="mollusca" />
-                      <label htmlFor="mollusca">Mollusca</label>
-                    </li>
-                    <li>
-                      <input type="checkbox" id="arthropoda" />
-                      <label htmlFor="arthropoda">Arthropoda</label>
-                    </li>
-                  </ul>
                 </li>
                 <li>
-                  <input type="checkbox" id="plantae" />
+                  <input
+                    type="checkbox"
+                    id="plantae"
+                    checked={selectedCheckbox === 2} // Kiểm tra trạng thái
+                    onChange={() => handleCheckboxClick(2)} // Gửi parentPage là 2
+                  />
                   <label htmlFor="plantae">Plantae</label>
-                  <ul>
-                    <li>
-                      <input type="checkbox" id="chordata-plant" />
-                      <label htmlFor="chordata-plant">Chordata</label>
-                    </li>
-                    <li>
-                      <input type="checkbox" id="tracheophyta" />
-                      <label htmlFor="tracheophyta">Tracheophyta</label>
-                    </li>
-                  </ul>
                 </li>
               </ul>
             </div>
           )}
+
         </div>
 
         <div className="filter-box">

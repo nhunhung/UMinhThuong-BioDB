@@ -10,40 +10,35 @@ import a6 from '../assets/images/a6.png';
 import a7 from '../assets/images/a7.png';
 import a8 from '../assets/images/a8.png';
 import a9 from '../assets/images/a9.png';
-const Sidebar = () => {
-  // const [activeDropdown, setActiveDropdown] = useState(null);
+
+
+const Sidebar = ({ onImageClick }) => {
   const [openDropdowns, setOpenDropdowns] = useState([]);
-  // const handleDropdownToggle = (index) => {
-  //   setActiveDropdown(activeDropdown === index ? null : index); // Toggle dropdown visibility
-  // };
-  // const handleDropdownToggle = (index) => {
-  //   // Kiểm tra xem index đã mở chưa
-  //   if (openDropdowns.includes(index)) {
-  //     // Nếu đã mở, loại bỏ index khỏi mảng
-  //     setOpenDropdowns(openDropdowns.filter((item) => item !== index));
-  //   } else {
-  //     // Nếu chưa mở, thêm index vào mảng
-  //     setOpenDropdowns([...openDropdowns, index]);
-  //   }
-  // };
-  // Dữ liệu nhóm sinh vật
 
   const handleDropdownToggle = (id) => {
     setOpenDropdowns((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
+
   const animalGroups = [
-    { image: a1, label: "32" },
-    { image: a2, label: "191" },
-    { image: a3, label: "46" },
-    { image: a4, label: "11" },
-    { image: a5, label: "110" },
-    { image: a6, label: "15" },
-    { image: a7, label: "20" },
-    { image: a8, label: "339" },
-    { image: a9, label: "3" },
+    { image: a1, label: "32", id: 1 },
+    { image: a2, label: "191", id: 2 },
+    { image: a3, label: "46", id: 3 },
+    { image: a4, label: "11", id: 4 },
+    { image: a5, label: "110", id: 5 },
+    { image: a6, label: "15", id: 6 },
+    { image: a7, label: "20", id: 7 },
+    { image: a8, label: "339", id: 8 },
+    { image: a9, label: "3", id: null },
   ];
+
+  const handleImageClick = (id) => {
+    console.log('Image ID:', id); 
+    if (onImageClick) {
+      onImageClick(id);
+    }
+  };
 
   return (
     <div className="sidebar-right">
@@ -67,9 +62,9 @@ const Sidebar = () => {
           {openDropdowns.includes(1) && (
             <div className="animal-groups">
               <div className="group-grid">
-                {animalGroups.map((group, index) => (
-                  <div className="group-item" key={index}>
-                    <img src={group.image} alt={`Group ${index + 1}`} />
+                {animalGroups.map((group) => (
+                  <div className="group-item" key={group.id} onClick={() => handleImageClick(group.id)}>
+                    <img src={group.image} alt={`Group ${group.id}`} />
                     <p>{group.label}</p>
                   </div>
                 ))}

@@ -28,6 +28,27 @@ const getAllOrganism = async (req, res) => {
   }
 };
 
+const fetchOrganismsByKingdom = async (req, res) => {
+  const { kingdomId } = req.params; // Lấy kingdomId từ URL params
+  const { limit = 20, page = 1 } = req.query; // Lấy limit và page từ query (mặc định)
+
+  try {
+    const offset = (page - 1) * limit; // Tính offset dựa trên page và limit
+    const organisms = await getOrganismsByKingdom(kingdomId, parseInt(limit), parseInt(offset));
+
+    res.status(200).json({
+      success: true,
+      data: organisms,
+      message: `Fetched organisms for kingdom_id = ${kingdomId}`,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const getOrganismsByGroups = async (req, res) => {
   try {
     // Lấy các groupOfOrganismId từ query params (ví dụ: ?groupOfOrganismId=1&groupOfOrganismId=2 hoặc ?groupOfOrganismId=1)
@@ -195,5 +216,6 @@ module.exports = {
   updateOrganism,
   statisticOrganism,
   getOrganismByNames,
-  getDetailOrganisms
+  getDetailOrganisms,
+  fetchOrganismsByKingdom
 };
